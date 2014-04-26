@@ -1,0 +1,33 @@
+---
+title: "O título do seu post"
+categories: [Tradução, Transifex]
+author: O seu nome
+---
+<p>O texto do seu post</p>
+
+<h4>Os seus subtítulos</h4>
+
+<div class="post-img">
+    <a href="{{ site.url }}/blog/images/posts/nome_da_sua_imagem.png" rel="prettyPhoto" title="">
+        {% img img-responsive thumbnail http://qgis.pt/blog/images/posts/nome_da_sua_imagem.png 500 '' 'Legenda da sua imagem' %}
+    </a>
+</div>
+
+<ul> <!-- a sua lista -->
+    <li>primeiro item da lista</li>
+    <li>segundo item da lista<l/i>
+</ul>
+
+<table class="table table-striped"> <!-- a sua tabela -->
+    <tr> <!-- primeira linha da tabela, títulos das colunas -->
+        <th>Primeira coluna</th>
+        <th>Segunda coluna</th>
+    </tr>
+    <tr> <!-- segunda linha da tabela -->
+        <td>valores, texto, imagens na primeira coluna</td>
+        <td>valores, texto, imagens na segunda coluna</td>
+    </tr>
+</table>
+
+<br />
+{% gravatar o_seu_email@dominio %}
