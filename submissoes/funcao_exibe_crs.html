@@ -1,0 +1,87 @@
+---
+title: "Colocar o Sistema de Coordenadas do Projecto num rótulo"
+categories: [SRC, Compositor de Mapas, Mapas]
+author: João Gaspar
+---
+<p>Este artigo mostra como podemos preencher um rótulo no mapa com o sistema de coordenadas do projecto.</p>
+
+<h4>Problema</h4>
+<p>No QGIS por vezes precisamos de produzir informação que possua o sistema de coordenadas do projecto e que fique registada no layout do mapa. A necessidade de conhecer o sistema de coordenadas do layout do mapa permite enquadrar os mapas que são produzidos.
+</p>
+<p></p>
+<p>Actualmente o QGIS não tem qualquer tipo de função ou forma de inserir no compositor de mapas o sistema de coordenadas do projecto. Nestas situações recorre-se à introdução manual do sistema de coordenadas num rótulo dentro do compositor de mapas. Mas este tipo de <i>workaround</i> por vezes não é prático, por exemplo quando mudamos o sistema de coordenadas do projecto.</p>
+<p></p>
+<h4>O que se pretende</h4>
+<p>Pretende-se uma função sem argumentos de entrada que possa ser inserido como expressão num rótulo dentro do compositor de mapas de forma a exibir o sistema de coordenadas do projecto e que permita ser actualizado de forma automática quando se procede à alteração do SRC do projecto.</p>
+
+<h4>O que se alcançou</h4>
+Com o presente código foi permitido a criação de uma função do QGIS para ser utilizado como expressão no rótulo do compositor de mapas e que permite ser actualizado sem a necessidade de alteração do rótulo, pois o SRC é actualizado de forma automática dentro do rótulo sempre que o SRC do projecto é alterado. O código resultante do script e da função estão exibidos em baixo:
+<p></p>
+<p>Código do script pode ser executado na linha de comandos python do QGIS ou num ficheiro .py dentro do QGIS.</p>
+{% codeblock [lang:python] [Código do script] [][Download text]%}
+crs=iface.mapCanvas().mapSettings().destinationCrs()
+print crs.authid() +' - '+ crs.description()
+{% endcodeblock %}
+<p></p>
+<p>O código da função pode ser escrito no separador Editor de Funções e atribuir um nome à função. Caso queira utilizar o ficheiro .py e ficar disponível no QGIS clique na moldura do script onde diz Download. De seguida, copie o ficheiro crs.py e coloque na pasta /.qgis2/python/expressions. Reinicie o QGIS, e estará um novo grupo com o nome CRS. </p>
+
+
+<!-- Imagem do Editor de funções -->
+<div class="post-img">
+    <a href="{{ site.url }}/blog/images/posts/consola_editor.png" rel="prettyPhoto" title="">
+        {% img img-responsive thumbnail http://qgis.pt/blog/images/posts/Screenshot-Field_calculator.png 500 '' 'Editor de Funções' %}
+    </a>
+</div>
+<p></p>
+{% codeblock [lang:python] [Código da função][][Download text] %}
+from qgis.utils import iface
+from qgis.core import *
+from qgis.gui import *
+
+@qgsfunction(args=0, group='CRS')
+def crslabel(value1,feature, parent):
+    """
+    Returns the project CRS 
+    
+    <h4>Syntax</h4>
+    <p>crslabel(<i>value</i>)</p>
+    <h4>Arguments</h4>
+    <p><i>none</i> &rarr; 0</p>
+    <h4>Example</h4>
+    <p><!-- Show example of function.-->
+    crslabel &rarr; EPSG:4326 - WGS84</p>
+    <h4>Note:</h4>
+    <p>This function only produces the EPSG code and the description.
+    </p>
+    """
+    crs=iface.mapCanvas().mapSettings().destinationCrs()
+    return crs.authid() +' - '+ crs.description() 
+{% endcodeblock %}
+<p></p>
+
+<!-- Resultado no Compositor de mapas -->
+<div class="post-img">
+    <a href="{{ site.url }}/blog/images/posts/consola_editor.png" rel="prettyPhoto" title="">
+        {% img img-responsive thumbnail http://qgis.pt/blog/images/posts/Screenshot.png 500 '' 'Função aplicada no compositor de mapas' %}
+    </a>
+
+
+<p></p>
+<p>Veja aqui a função em acção:</p>
+<!-- Vídeo a mostrar a funcionalidade -->
+<iframe src="https://drive.google.com/file/d/0B98hU-Ebn7VvckRzWTl2WjQ0R3c/preview" width="640" height="480"></iframe>
+
+
+<h4>Problemas encontrados</h4>
+<p>Quando são utilizados sistemas de coordenadas definidos pelo utilizador, se não for definido um nome para o sistema de coordenadas, o rótulo assume os parâmetros todos do .proj. 
+<p>Além disso, em vez de aparecer ESPG: aparece USER: com o código gerado. A possível solução poderá passar por remover o crs.auth.id() e deixar apenas a descrição do sistema de coordenadas.</p>
+
+<h4>Notas Futuras</h4>
+<p>Pretendo enviar esta função para o projecto QGIS de forma a ser integrada no conjunto de expressões. Gostava ainda de adicionar mais algumas funções dentro deste grupo criado que permite adicionar mais informações para além do sistema de coordenadas.</p>
+<p>Eventualmente este tipo de função poderá passar de uma função para um botão dentro do compositor de mapas a longo prazo e com a possibilidade de ter mais funcionalidades.</p>
+
+<h4>Considerações Finais e Agradecimentos</h4>
+<p>Este código foi escrito durante o Encontro de Programadores QGIS realizado em Nodebo, Dinamarca. O espírito de equipa e a capacidade de entreajuda são coisas fortes nesta comunidade. Quero agradecer ao Raymond, Nyall, Matthias pelas orientações e dicas que me deram durante o Encontro de Programadores.
+
+
+{% gravatar joao.f.r.gaspar@gmail.com %}
