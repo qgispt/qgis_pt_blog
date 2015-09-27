@@ -3,37 +3,34 @@ title: "Colocar o Sistema de Coordenadas do Projecto num rótulo"
 categories: [SRC, Compositor de Mapas, Mapas]
 author: João Gaspar
 ---
-<p>Este artigo mostra como podemos preencher um rótulo no mapa com o sistema de coordenadas do projecto.</p>
+<p>Este artigo mostra como podemos mostrar automáticamente o sistema de coordenadas do projecto numa etiqueta da compositor de impressão do QGIS.</p>
 
-<h4>Problema</h4>
-<p>No QGIS por vezes precisamos de produzir informação que possua o sistema de coordenadas do projecto e que fique registada no layout do mapa. A necessidade de conhecer o sistema de coordenadas do layout do mapa permite enquadrar os mapas que são produzidos.
-</p>
-<p></p>
-<p>Actualmente o QGIS não tem qualquer tipo de função ou forma de inserir no compositor de mapas o sistema de coordenadas do projecto. Nestas situações recorre-se à introdução manual do sistema de coordenadas num rótulo dentro do compositor de mapas. Mas este tipo de <i>workaround</i> por vezes não é prático, por exemplo quando mudamos o sistema de coordenadas do projecto.</p>
-<p></p>
-<h4>O que se pretende</h4>
-<p>Pretende-se uma função sem argumentos de entrada que possa ser inserido como expressão num rótulo dentro do compositor de mapas de forma a exibir o sistema de coordenadas do projecto e que permita ser actualizado de forma automática quando se procede à alteração do SRC do projecto.</p>
+<h4>O problema</h4>
+<p>No QGIS por vezes precisamos de exportar mapas que mostrem o sistema de coordenadas do projecto, este permite enquadrar de forma melhor os mesmos.</p>
 
-<h4>O que se alcançou</h4>
-Com o presente código foi permitido a criação de uma função do QGIS para ser utilizado como expressão no rótulo do compositor de mapas e que permite ser actualizado sem a necessidade de alteração do rótulo, pois o SRC é actualizado de forma automática dentro do rótulo sempre que o SRC do projecto é alterado. O código resultante do script e da função estão exibidos em baixo:
-<p></p>
-<p>Código do script pode ser executado na linha de comandos python do QGIS ou num ficheiro .py dentro do QGIS.</p>
-{% codeblock [lang:python] [Código do script] [][Download text]%}
+<!-- more -->
+
+<p>Actualmente o QGIS não tem uma função que permita inserir no compositor de impressão o SRC do projecto. Nestas situações recorre-se à introdução manual do sistema de coordenadas numa etiqueta, mas este método por vezes não é prático, pois no caso de se usarem templates de impressão, esta etiqueta deverá ser alterada manualmente caso o SRC do projecto mude.</p>
+
+<h4>A solução</h4>
+<p>Com o seguinte código é criada uma função que permite a actualização automática do SRC numa etiqueta do compositor de impressão. O código pode ser executado na consola python do QGIS ou pode ser gravado num ficheiro .py a seguir colocado na pasta ".qgis2" do QGIS.</p>
+
+{% codeblock lang:python %}
 crs=iface.mapCanvas().mapSettings().destinationCrs()
 print crs.authid() +' - '+ crs.description()
 {% endcodeblock %}
-<p></p>
-<p>O código da função pode ser escrito no separador Editor de Funções e atribuir um nome à função. Caso queira utilizar o ficheiro .py e ficar disponível no QGIS clique na moldura do script onde diz Download. De seguida, copie o ficheiro crs.py e coloque na pasta /.qgis2/python/expressions. Reinicie o QGIS, e estará um novo grupo com o nome CRS. </p>
+
+<p>O código da função pode ser introduzido no separador "Editor de Funções" da calculadora de campos do QGIS (que permite atribuir um nome à função). Em alternativa copie o ficheiro <a href="{{ site.url }}/blog/images/dados/crs.py">crs.py</a> na pasta /.qgis2/python/expressions - reinicie o QGIS, e a nova função irá se encontrar num um novo grupo "CRS" da calculadora de campos.</p>
 
 
 <!-- Imagem do Editor de funções -->
 <div class="post-img">
-    <a href="{{ site.url }}/blog/images/posts/consola_editor.png" rel="prettyPhoto" title="">
-        {% img img-responsive thumbnail http://qgis.pt/blog/images/posts/Screenshot-Field_calculator.png 500 '' 'Editor de Funções' %}
+    <a href="{{ site.url }}/blog/images/posts/crs_field_calculator.png" rel="prettyPhoto" title="">
+        {% img img-responsive thumbnail http://qgis.pt/blog/images/posts/crs_field_calculator.png 500 '' 'Editor de Funções' %}
     </a>
 </div>
-<p></p>
-{% codeblock [lang:python] [Código da função][][Download text] %}
+
+{% codeblock lang:python %}
 from qgis.utils import iface
 from qgis.core import *
 from qgis.gui import *
@@ -61,27 +58,24 @@ def crslabel(value1,feature, parent):
 
 <!-- Resultado no Compositor de mapas -->
 <div class="post-img">
-    <a href="{{ site.url }}/blog/images/posts/consola_editor.png" rel="prettyPhoto" title="">
-        {% img img-responsive thumbnail http://qgis.pt/blog/images/posts/Screenshot.png 500 '' 'Função aplicada no compositor de mapas' %}
+    <a href="{{ site.url }}/blog/images/posts/crs_composer_layout.png" rel="prettyPhoto" title="">
+        {% img img-responsive thumbnail http://qgis.pt/blog/images/posts/crs_composer_layout.png 500 '' 'Função aplicada no compositor de mapas' %}
     </a>
+</div>
 
-
-<p></p>
 <p>Veja aqui a função em acção:</p>
 <!-- Vídeo a mostrar a funcionalidade -->
-<iframe src="https://drive.google.com/file/d/0B98hU-Ebn7VvckRzWTl2WjQ0R3c/preview" width="640" height="480"></iframe>
-
+<p align="center"><iframe frameborder="0" src="https://drive.google.com/file/d/0B98hU-Ebn7VvckRzWTl2WjQ0R3c/preview" width="640" height="480"></iframe></p>
 
 <h4>Problemas encontrados</h4>
-<p>Quando são utilizados sistemas de coordenadas definidos pelo utilizador, se não for definido um nome para o sistema de coordenadas, o rótulo assume os parâmetros todos do .proj. 
-<p>Além disso, em vez de aparecer ESPG: aparece USER: com o código gerado. A possível solução poderá passar por remover o crs.auth.id() e deixar apenas a descrição do sistema de coordenadas.</p>
+<p>Se o projecto for configurado de forma usar um SRC personalizado e este não tiver um nome associado então na etiquetas serão mostrados os parametros PROJ4 do SRC. Além disso em vez de aparecer "ESPG:" irá aparece "USER:". A possível solução poderá passar por remover o <i>crs.auth.id()</i> da função e deixar apenas a descrição do sistema de coordenadas.</p>
 
 <h4>Notas Futuras</h4>
-<p>Pretendo enviar esta função para o projecto QGIS de forma a ser integrada no conjunto de expressões. Gostava ainda de adicionar mais algumas funções dentro deste grupo criado que permite adicionar mais informações para além do sistema de coordenadas.</p>
-<p>Eventualmente este tipo de função poderá passar de uma função para um botão dentro do compositor de mapas a longo prazo e com a possibilidade de ter mais funcionalidades.</p>
+<p>Pretendo enviar esta função para o projecto QGIS de forma a ser integrada no conjunto de expressões disponíveis por defeito. Gostava ainda de adicionar outras funções que permitam adicionar informações para além do CRS. Eventualmente este tipo de funcionalidade poderá se tornar um botão/painel dentro do compositor impressão.</p>
 
 <h4>Considerações Finais e Agradecimentos</h4>
-<p>Este código foi escrito durante o Encontro de Programadores QGIS realizado em Nodebo, Dinamarca. O espírito de equipa e a capacidade de entreajuda são coisas fortes nesta comunidade. Quero agradecer ao Raymond, Nyall, Matthias pelas orientações e dicas que me deram durante o Encontro de Programadores.
+<p>Este código foi escrito durante o Encontro de Programadores QGIS realizado em <a href="https://qgis2015.wordpress.com/">Nødebo, Dinamarca</a>. O espírito de equipa e a capacidade de entreajuda são coisas fortes nesta comunidade. Quero agradecer ao Raymond Nijssen, Nyall Dawson e Matthias Khun pelas orientações e dicas que me deram durante o encontro de programadores.
+</p>
 
-
+<br />
 {% gravatar joao.f.r.gaspar@gmail.com %}
