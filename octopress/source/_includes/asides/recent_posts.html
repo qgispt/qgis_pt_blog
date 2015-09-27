@@ -1,0 +1,13 @@
+<section>
+    <a href="/archives" class="btn btn-success btn-lg" style="width: 100%; margin-top: 18px;">Arquivo</a>
+</section>
+<section class="well blog-section">
+  <h1>PUBLICAÇÕES RECENTES</h1>
+  <ul id="recent_posts">
+    {% for post in site.posts limit: site.recent_posts %}
+      <li class="post">
+        <a href="{{ root_url }}{{ post.url }}">{% if site.titlecase %}{{ post.title | titlecase }}{% else %}{{ post.title }}{% endif %}</a>
+      </li>
+    {% endfor %}
+  </ul>
+</section>

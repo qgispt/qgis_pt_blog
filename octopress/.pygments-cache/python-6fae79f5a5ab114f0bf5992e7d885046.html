@@ -1,0 +1,27 @@
+<div class="highlight"><pre><span class="kn">from</span> <span class="nn">qgis.utils</span> <span class="kn">import</span> <span class="n">iface</span>
+<span class="kn">from</span> <span class="nn">qgis.core</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">qgis.gui</span> <span class="kn">import</span> <span class="o">*&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+
+<span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="nd">@qgsfunction</span><span class="p">(</span><span class="n">args</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">group</span><span class="o">=&amp;</span><span class="n">lsquo</span><span class="p">;</span><span class="n">CRS</span><span class="o">&amp;</span><span class="n">rsquo</span><span class="p">;)</span>
+<span class="k">def</span> <span class="nf">crslabel</span><span class="p">(</span><span class="n">value1</span><span class="p">,</span><span class="n">feature</span><span class="p">,</span> <span class="n">parent</span><span class="p">):</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+
+<span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="s">&quot;&quot;&quot;</span>
+<span class="s">Returns the project CRS </span>
+
+<span class="s">&amp;lt;h4&amp;gt;Syntax&amp;lt;/h4&amp;gt;</span>
+<span class="s">&amp;lt;p&amp;gt;crslabel(&amp;lt;i&amp;gt;value&amp;lt;/i&amp;gt;)&amp;lt;/p&amp;gt;</span>
+<span class="s">&amp;lt;h4&amp;gt;Arguments&amp;lt;/h4&amp;gt;</span>
+<span class="s">&amp;lt;p&amp;gt;&amp;lt;i&amp;gt;none&amp;lt;/i&amp;gt; &amp;amp;rarr; 0&amp;lt;/p&amp;gt;</span>
+<span class="s">&amp;lt;h4&amp;gt;Example&amp;lt;/h4&amp;gt;</span>
+<span class="s">&amp;lt;p&amp;gt;&amp;lt;!-- Show example of function.--&amp;gt;</span>
+<span class="s">crslabel &amp;amp;rarr; EPSG:4326 - WGS84&amp;lt;/p&amp;gt;</span>
+<span class="s">&amp;lt;h4&amp;gt;Note:&amp;lt;/h4&amp;gt;</span>
+<span class="s">&amp;lt;p&amp;gt;This function only produces the EPSG code and the description.</span>
+<span class="s">&amp;lt;/p&amp;gt;</span>
+<span class="s">&quot;&quot;&quot;</span>
+<span class="n">crs</span><span class="o">=</span><span class="n">iface</span><span class="o">.</span><span class="n">mapCanvas</span><span class="p">()</span><span class="o">.</span><span class="n">mapSettings</span><span class="p">()</span><span class="o">.</span><span class="n">destinationCrs</span><span class="p">()</span>
+<span class="k">return</span> <span class="n">crs</span><span class="o">.</span><span class="n">authid</span><span class="p">()</span> <span class="o">+</span><span class="s">&#39; - &#39;</span><span class="o">+</span> <span class="n">crs</span><span class="o">.</span><span class="n">description</span><span class="p">()</span> 
+<span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+
+<span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span>
+</pre></div>

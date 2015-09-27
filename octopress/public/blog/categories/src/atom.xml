@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: SRC | QGIS-PT]]></title>
+  <link href="http://qgis.pt/categories/src/atom.xml" rel="self"/>
+  <link href="http://qgis.pt/"/>
+  <updated>2015-09-27T10:38:09+01:00</updated>
+  <id>http://qgis.pt/</id>
+  <author>
+    <name><![CDATA[Grupo de Utilizadores QGIS PT]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Mostrar Automáticamente O SRC Do Projecto Numa Etiqueta Do Compositor De Impressão]]></title>
+    <link href="http://qgis.pt/2015/09/27/mostrar-dinamicamente-o-src-do-projecto-numa-etiqueta/"/>
+    <updated>2015-09-27T08:43:18+01:00</updated>
+    <id>http://qgis.pt/2015/09/27/mostrar-dinamicamente-o-src-do-projecto-numa-etiqueta</id>
+    <content type="html"><![CDATA[<p>Este artigo mostra como podemos mostrar automáticamente o sistema de coordenadas do projecto numa etiqueta da compositor de impressão do QGIS.</p>
+
+
+
+
+<h4>O problema</h4>
+
+
+<p>No QGIS por vezes precisamos de exportar mapas que mostrem o sistema de coordenadas do projecto, este permite enquadrar de forma melhor os mesmos.</p>
+
+
+
+
+<!-- more -->
+
+
+
+
+<p>Actualmente o QGIS não tem uma função que permita inserir no compositor de impressão o SRC do projecto. Nestas situações recorre-se à introdução manual do sistema de coordenadas numa etiqueta, mas este método por vezes não é prático, pois no caso de se usarem templates de impressão, esta etiqueta deverá ser alterada manualmente caso o SRC do projecto mude.</p>
+
+
+
+
+<h4>A solução</h4>
+
+
+<p>Com o seguinte código é criada uma função que permite a actualização automática do SRC numa etiqueta do compositor de impressão. O código pode ser executado na consola python do QGIS ou pode ser gravado num ficheiro .py a seguir colocado na pasta ".qgis2" do QGIS.</p>
+
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="n">crs</span><span class="o">=</span><span class="n">iface</span><span class="o">.</span><span class="n">mapCanvas</span><span class="p">()</span><span class="o">.</span><span class="n">mapSettings</span><span class="p">()</span><span class="o">.</span><span class="n">destinationCrs</span><span class="p">()</span>
+</span><span class='line'><span class="k">print</span> <span class="n">crs</span><span class="o">.</span><span class="n">authid</span><span class="p">()</span> <span class="o">+&amp;</span><span class="n">lsquo</span><span class="p">;</span> <span class="o">&amp;</span><span class="n">ndash</span><span class="p">;</span> <span class="o">&amp;</span><span class="n">rsquo</span><span class="p">;</span><span class="o">+</span> <span class="n">crs</span><span class="o">.</span><span class="n">description</span><span class="p">()</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>O código da função pode ser introduzido no separador "Editor de Funções" da calculadora de campos do QGIS (que permite atribuir um nome à função). Em alternativa copie o ficheiro <a href="http://qgis.pt/blog/images/dados/crs.py">crs.py</a> na pasta /.qgis2/python/expressions - reinicie o QGIS, e a nova função irá se encontrar num um novo grupo "CRS" da calculadora de campos.</p>
+
+
+
+
+<!-- Imagem do Editor de funções -->
+
+
+<div class="post-img">
+    <a href="http://qgis.pt/blog/images/posts/crs_field_calculator.png" rel="prettyPhoto" title="">
+        <img class="img-responsive thumbnail" src="http://qgis.pt/blog/images/posts/crs_field_calculator.png" width="500"  alt="Editor de Funções">
+    </a>
+</div>
+
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="kn">from</span> <span class="nn">qgis.utils</span> <span class="kn">import</span> <span class="n">iface</span>
+</span><span class='line'><span class="kn">from</span> <span class="nn">qgis.core</span> <span class="kn">import</span> <span class="o">*</span>
+</span><span class='line'><span class="kn">from</span> <span class="nn">qgis.gui</span> <span class="kn">import</span> <span class="o">*&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="nd">@qgsfunction</span><span class="p">(</span><span class="n">args</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">group</span><span class="o">=&amp;</span><span class="n">lsquo</span><span class="p">;</span><span class="n">CRS</span><span class="o">&amp;</span><span class="n">rsquo</span><span class="p">;)</span>
+</span><span class='line'><span class="k">def</span> <span class="nf">crslabel</span><span class="p">(</span><span class="n">value1</span><span class="p">,</span><span class="n">feature</span><span class="p">,</span> <span class="n">parent</span><span class="p">):</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="s">&quot;&quot;&quot;</span>
+</span><span class='line'><span class="s">Returns the project CRS </span>
+</span><span class='line'>
+</span><span class='line'><span class="s">&amp;lt;h4&amp;gt;Syntax&amp;lt;/h4&amp;gt;</span>
+</span><span class='line'><span class="s">&amp;lt;p&amp;gt;crslabel(&amp;lt;i&amp;gt;value&amp;lt;/i&amp;gt;)&amp;lt;/p&amp;gt;</span>
+</span><span class='line'><span class="s">&amp;lt;h4&amp;gt;Arguments&amp;lt;/h4&amp;gt;</span>
+</span><span class='line'><span class="s">&amp;lt;p&amp;gt;&amp;lt;i&amp;gt;none&amp;lt;/i&amp;gt; &amp;amp;rarr; 0&amp;lt;/p&amp;gt;</span>
+</span><span class='line'><span class="s">&amp;lt;h4&amp;gt;Example&amp;lt;/h4&amp;gt;</span>
+</span><span class='line'><span class="s">&amp;lt;p&amp;gt;&amp;lt;!-- Show example of function.--&amp;gt;</span>
+</span><span class='line'><span class="s">crslabel &amp;amp;rarr; EPSG:4326 - WGS84&amp;lt;/p&amp;gt;</span>
+</span><span class='line'><span class="s">&amp;lt;h4&amp;gt;Note:&amp;lt;/h4&amp;gt;</span>
+</span><span class='line'><span class="s">&amp;lt;p&amp;gt;This function only produces the EPSG code and the description.</span>
+</span><span class='line'><span class="s">&amp;lt;/p&amp;gt;</span>
+</span><span class='line'><span class="s">&quot;&quot;&quot;</span>
+</span><span class='line'><span class="n">crs</span><span class="o">=</span><span class="n">iface</span><span class="o">.</span><span class="n">mapCanvas</span><span class="p">()</span><span class="o">.</span><span class="n">mapSettings</span><span class="p">()</span><span class="o">.</span><span class="n">destinationCrs</span><span class="p">()</span>
+</span><span class='line'><span class="k">return</span> <span class="n">crs</span><span class="o">.</span><span class="n">authid</span><span class="p">()</span> <span class="o">+</span><span class="s">&#39; - &#39;</span><span class="o">+</span> <span class="n">crs</span><span class="o">.</span><span class="n">description</span><span class="p">()</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p></p>
+
+
+
+
+<!-- Resultado no Compositor de mapas -->
+
+
+<div class="post-img">
+    <a href="http://qgis.pt/blog/images/posts/crs_composer_layout.png" rel="prettyPhoto" title="">
+        <img class="img-responsive thumbnail" src="http://qgis.pt/blog/images/posts/crs_composer_layout.png" width="500"  alt="Função aplicada no compositor de mapas">
+    </a>
+</div>
+
+
+
+
+<p>Veja aqui a função em acção:</p>
+
+
+<!-- Vídeo a mostrar a funcionalidade -->
+
+
+<p align="center"><iframe frameborder="0" src="https://drive.google.com/file/d/0B98hU-Ebn7VvckRzWTl2WjQ0R3c/preview" width="640" height="480"></iframe></p>
+
+
+
+
+<h4>Problemas encontrados</h4>
+
+
+<p>Se o projecto for configurado de forma usar um SRC personalizado e este não tiver um nome associado então na etiquetas serão mostrados os parametros PROJ4 do SRC. Além disso em vez de aparecer "ESPG:" irá aparece "USER:". A possível solução poderá passar por remover o <i>crs.auth.id()</i> da função e deixar apenas a descrição do sistema de coordenadas.</p>
+
+
+
+
+<h4>Notas Futuras</h4>
+
+
+<p>Pretendo enviar esta função para o projecto QGIS de forma a ser integrada no conjunto de expressões disponíveis por defeito. Gostava ainda de adicionar outras funções que permitam adicionar informações para além do CRS. Eventualmente este tipo de funcionalidade poderá se tornar um botão/painel dentro do compositor impressão.</p>
+
+
+
+
+<h4>Considerações Finais e Agradecimentos</h4>
+
+
+<p>Este código foi escrito durante o Encontro de Programadores QGIS realizado em <a href="https://qgis2015.wordpress.com/">Nødebo, Dinamarca</a>. O espírito de equipa e a capacidade de entreajuda são coisas fortes nesta comunidade. Quero agradecer ao Raymond Nijssen, Nyall Dawson e Matthias Khun pelas orientações e dicas que me deram durante o encontro de programadores.
+</p>
+
+
+
+
+<br />
+
+
+<p><img class="gravatar img-circle" src="http://www.gravatar.com/avatar/3df032a91b2b4b41fc386987b27a8c63></img></p>
+]]></content>
+  </entry>
+  
+</feed>

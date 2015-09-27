@@ -1,0 +1,13 @@
+{% capture category %}{{ post.categories | size }}{% endcapture %}
+<div class="jumbotron adjust-jumbotron">
+<h2><a href="{{ root_url }}{{ post.url }}">{% if site.titlecase %}{{ post.title | titlecase }}{% else %}{{ post.title }}{% endif %}</a></h2>
+{% capture date %}{{ post.date }}{% endcapture %}
+{% capture date_formatted %}{{ post.date_formatted }}{% endcapture %}
+{% capture date_formatted %}{{ date_formatted | replace:'January','Janeiro' | replace:'February','Fevereiro' | replace:'March','Março' | replace:'April','Abril' | replace:'May','Maio' | replace:'June','Junho' | replace:'July','Julho' | replace:'August','Agosto' | replace:'September','Setembro' | replace:'October','Outubro' | replace:'November','Novembro' | replace:'December','Dezembro'  }}{% endcapture %}
+<div class="blog-time" datetime="{{ date | datetime | date_to_xmlschema }}" pubdate{% if updated %} data-updated="true"{% endif %}>{{ date_formatted }}</div>
+{% if category != '0' %}
+<div class="post-metadata">
+  <span class="categories">Categorias: {{ post.categories | category_links }}</span>
+</div>
+{% endif %}
+</div>

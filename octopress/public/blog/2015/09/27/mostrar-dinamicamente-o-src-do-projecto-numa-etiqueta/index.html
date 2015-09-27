@@ -1,0 +1,418 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <link rel="shortcut icon" type="image/png" href="http://qgis.pt/images/favicon.png">
+    <title>QGIS-PT</title>
+    <meta name="author" content="Grupo de Utilizadores QGIS PT">
+
+    
+    <meta name="description" content="Mostrar Automáticamente O SRC Do Projecto Numa Etiqueta Do Compositor De Impressão 27 de Setembro, 2015 Este artigo mostra como podemos mostrar &hellip;">
+    
+
+    <!-- http://t.co/dKP3o1e -->
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    
+    <link rel="canonical" href="http://qgis.pt/2015/09/27/mostrar-dinamicamente-o-src-do-projecto-numa-etiqueta">
+    <!-- CUSTOM CSS -->
+    <link href="http://fonts.googleapis.com/css?family=Roboto:400,300,100,100italic,300italic,400italic,700,700italic" rel="stylesheet" type='text/css'>
+    <link href="http://qgis.pt/libs/bootstrap/css/bootstrap.css" rel="stylesheet">
+    <link rel="stylesheet" href="http://qgis.pt/libs/prettyPhoto/css/prettyPhoto.css" type="text/css" media="screen" charset="utf-8" />
+    <link href="http://qgis.pt/styles/style.css" rel="stylesheet">
+    <link href="http://qgis.pt/styles/blog.css" rel="stylesheet">
+    <!--<link href="http://localhost/styles/style.css" rel="stylesheet">-->
+    
+    <link href="/blog/atom.xml" rel="alternate" title="QGIS-PT" type="application/atom+xml">
+    
+</head>
+
+<body   >
+  <!-- Fixed navbar -->
+<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="http://qgis.pt"></a>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-left">
+                <li><a href="http://qgis.org/pt_PT/site/forusers/download.html" target="_blank">Download</a></li>
+                <li><a href="http://qgis.org/pt_PT/docs/index.html" target="_blank">Documentação</a></li>
+                <li><a href="http://qgis.pt/participar.html">Como participar</a></li>
+                <!-- <li><a href="http://qgis.pt/eventos.html">Eventos</a></li> -->
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">QGIS PT <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="http://qgis.pt/traducao.html">Tradução</a></li>
+                        <li><a href="http://qgis.pt/plugins.html">Módulos para QGIS</a></li>
+                        <li><a href="http://qgis.pt/pdm2qgis.html">Norma PDM2QGIS</a></li>
+                        <!--<li><a href="">Casos de estudo</a></li>
+                        <li><a href="">Estilos e simbologia</a></li>
+                        <li><a href="">Modelos de processamento</a></li>-->
+                    </ul>
+                </li>
+                <li class="active"><a href="/blog">Blog</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right" data-subscription="rss">
+                <li>
+                    <a class="rss" title="Subscrever via RSS" rel="subscribe-rss" href="/blog/atom.xml" target="_blank"></a>
+                </li>
+                
+            </ul>
+            
+            <form class="navbar-form navbar-right search-box" role="search" action="https://www.google.com/search" method="get">
+                <div class="form-group">
+                    <input type="hidden" name="q" value="site:qgis.pt/blog" />
+                    <input type="text" class="form-control search-glow" name="q" results="0" placeholder="Pesquisar">
+                </div>
+            </form>
+            
+        </div>
+    </div>
+</div>
+
+
+  <div id="main" class="container">
+    <div id="content" class="row">
+      <div class="col-sm-9">
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h2 class="entry-title-static">Mostrar Automáticamente O SRC Do Projecto Numa Etiqueta Do Compositor De Impressão</h2>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+<div class="blog-time" datetime="2015-09-27T08:43:18+01:00" pubdate data-updated="true">27 de Setembro, 2015</div>
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>Este artigo mostra como podemos mostrar automáticamente o sistema de coordenadas do projecto numa etiqueta da compositor de impressão do QGIS.</p>
+
+<h4>O problema</h4>
+<p>No QGIS por vezes precisamos de exportar mapas que mostrem o sistema de coordenadas do projecto, este permite enquadrar de forma melhor os mesmos.</p>
+
+<!-- more -->
+
+<p>Actualmente o QGIS não tem uma função que permita inserir no compositor de impressão o SRC do projecto. Nestas situações recorre-se à introdução manual do sistema de coordenadas numa etiqueta, mas este método por vezes não é prático, pois no caso de se usarem templates de impressão, esta etiqueta deverá ser alterada manualmente caso o SRC do projecto mude.</p>
+
+<h4>A solução</h4>
+<p>Com o seguinte código é criada uma função que permite a actualização automática do SRC numa etiqueta do compositor de impressão. O código pode ser executado na consola python do QGIS ou pode ser gravado num ficheiro .py a seguir colocado na pasta &#8220;.qgis2&#8221; do QGIS.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="n">crs</span><span class="o">=</span><span class="n">iface</span><span class="o">.</span><span class="n">mapCanvas</span><span class="p">()</span><span class="o">.</span><span class="n">mapSettings</span><span class="p">()</span><span class="o">.</span><span class="n">destinationCrs</span><span class="p">()</span>
+</span><span class='line'><span class="k">print</span> <span class="n">crs</span><span class="o">.</span><span class="n">authid</span><span class="p">()</span> <span class="o">+</span><span class="s">&#39; - &#39;</span><span class="o">+</span> <span class="n">crs</span><span class="o">.</span><span class="n">description</span><span class="p">()</span>
+</span></code></pre></td></tr></table></div></figure>
+
+<p>O código da função pode ser introduzido no separador &#8220;Editor de Funções&#8221; da calculadora de campos do QGIS (que permite atribuir um nome à função). Em alternativa copie o ficheiro <a href="http://qgis.pt/blog/images/dados/crs.py">crs.py</a> na pasta /.qgis2/python/expressions - reinicie o QGIS, e a nova função irá se encontrar num um novo grupo &#8220;CRS&#8221; da calculadora de campos.</p>
+
+
+<!-- Imagem do Editor de funções -->
+<div class="post-img">
+    <a href="http://qgis.pt/blog/images/posts/crs_field_calculator.png" rel="prettyPhoto" title="">
+        <img class="img-responsive thumbnail" src="http://qgis.pt/blog/images/posts/crs_field_calculator.png" width="500"  alt="Editor de Funções">
+    </a>
+</div>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="kn">from</span> <span class="nn">qgis.utils</span> <span class="kn">import</span> <span class="n">iface</span>
+</span><span class='line'><span class="kn">from</span> <span class="nn">qgis.core</span> <span class="kn">import</span> <span class="o">*</span>
+</span><span class='line'><span class="kn">from</span> <span class="nn">qgis.gui</span> <span class="kn">import</span> <span class="o">*</span>
+</span><span class='line'>
+</span><span class='line'><span class="nd">@qgsfunction</span><span class="p">(</span><span class="n">args</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">group</span><span class="o">=</span><span class="s">&#39;CRS&#39;</span><span class="p">)</span>
+</span><span class='line'><span class="k">def</span> <span class="nf">crslabel</span><span class="p">(</span><span class="n">value1</span><span class="p">,</span><span class="n">feature</span><span class="p">,</span> <span class="n">parent</span><span class="p">):</span>
+</span><span class='line'>    <span class="sd">&quot;&quot;&quot;</span>
+</span><span class='line'><span class="sd">    Returns the project CRS </span>
+</span><span class='line'><span class="sd">    </span>
+</span><span class='line'><span class="sd">    &lt;h4&gt;Syntax&lt;/h4&gt;</span>
+</span><span class='line'><span class="sd">    &lt;p&gt;crslabel(&lt;i&gt;value&lt;/i&gt;)&lt;/p&gt;</span>
+</span><span class='line'><span class="sd">    &lt;h4&gt;Arguments&lt;/h4&gt;</span>
+</span><span class='line'><span class="sd">    &lt;p&gt;&lt;i&gt;none&lt;/i&gt; &amp;rarr; 0&lt;/p&gt;</span>
+</span><span class='line'><span class="sd">    &lt;h4&gt;Example&lt;/h4&gt;</span>
+</span><span class='line'><span class="sd">    &lt;p&gt;&lt;!-- Show example of function.--&gt;</span>
+</span><span class='line'><span class="sd">    crslabel &amp;rarr; EPSG:4326 - WGS84&lt;/p&gt;</span>
+</span><span class='line'><span class="sd">    &lt;h4&gt;Note:&lt;/h4&gt;</span>
+</span><span class='line'><span class="sd">    &lt;p&gt;This function only produces the EPSG code and the description.</span>
+</span><span class='line'><span class="sd">    &lt;/p&gt;</span>
+</span><span class='line'><span class="sd">    &quot;&quot;&quot;</span>
+</span><span class='line'>    <span class="n">crs</span><span class="o">=</span><span class="n">iface</span><span class="o">.</span><span class="n">mapCanvas</span><span class="p">()</span><span class="o">.</span><span class="n">mapSettings</span><span class="p">()</span><span class="o">.</span><span class="n">destinationCrs</span><span class="p">()</span>
+</span><span class='line'>    <span class="k">return</span> <span class="n">crs</span><span class="o">.</span><span class="n">authid</span><span class="p">()</span> <span class="o">+</span><span class="s">&#39; - &#39;</span><span class="o">+</span> <span class="n">crs</span><span class="o">.</span><span class="n">description</span><span class="p">()</span>
+</span></code></pre></td></tr></table></div></figure>
+<p></p>
+
+<!-- Resultado no Compositor de mapas -->
+<div class="post-img">
+    <a href="http://qgis.pt/blog/images/posts/crs_composer_layout.png" rel="prettyPhoto" title="">
+        <img class="img-responsive thumbnail" src="http://qgis.pt/blog/images/posts/crs_composer_layout.png" width="500"  alt="Função aplicada no compositor de mapas">
+    </a>
+</div>
+
+<p>Veja aqui a função em acção:</p>
+<!-- Vídeo a mostrar a funcionalidade -->
+<p align="center"><iframe frameborder="0" src="https://drive.google.com/file/d/0B98hU-Ebn7VvckRzWTl2WjQ0R3c/preview" width="640" height="480"></iframe></p>
+
+<h4>Problemas encontrados</h4>
+<p>Se o projecto for configurado de forma usar um SRC personalizado e este não tiver um nome associado então na etiquetas serão mostrados os parametros PROJ4 do SRC. Além disso em vez de aparecer &#8220;ESPG:&#8221; irá aparece &#8220;USER:&#8221;. A possível solução poderá passar por remover o <i>crs.auth.id()</i> da função e deixar apenas a descrição do sistema de coordenadas.</p>
+
+<h4>Notas Futuras</h4>
+<p>Pretendo enviar esta função para o projecto QGIS de forma a ser integrada no conjunto de expressões disponíveis por defeito. Gostava ainda de adicionar outras funções que permitam adicionar informações para além do CRS. Eventualmente este tipo de funcionalidade poderá se tornar um botão/painel dentro do compositor impressão.</p>
+
+<h4>Considerações Finais e Agradecimentos</h4>
+<p>Este código foi escrito durante o Encontro de Programadores QGIS realizado em <a href="https://qgis2015.wordpress.com/">Nødebo, Dinamarca</a>. O espírito de equipa e a capacidade de entreajuda são coisas fortes nesta comunidade. Quero agradecer ao Raymond Nijssen, Nyall Dawson e Matthias Khun pelas orientações e dicas que me deram durante o encontro de programadores.
+</p>
+
+<br />
+<img class="gravatar img-circle" src="http://www.gravatar.com/avatar/0edb9f3a1e5191476215ce32183d80a4></img></div>
+
+
+  <div class="post-metadata">
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Publicado pelo utilizador: <span class="fn">João Gaspar</span></span>
+
+      <br />
+      
+
+<span class="categories">Categorias: 
+  
+    <a class='category' href='/blog/categories/compositor-de-mapas/'>Compositor de Mapas</a>, <a class='category' href='/blog/categories/mapas/'>Mapas</a>, <a class='category' href='/blog/categories/src/'>SRC</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://qgis.pt/2015/09/27/mostrar-dinamicamente-o-src-do-projecto-numa-etiqueta/" data-via="" data-counturl="http://qgis.pt/2015/09/27/mostrar-dinamicamente-o-src-do-projecto-numa-etiqueta/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+  
+  <div class="fb-like" data-send="true" data-width="450" data-layout="button_count" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <hr>
+  </div>
+  <ul class="pager">
+    
+      <li class="previous"><a class="basic-alignment left" href="/blog/2015/05/06/plugin-reffunctions/" title="Previous Post: Plugin refFunctions">&laquo; Plugin refFunctions</a></li>
+    
+    
+  </ul>
+ 
+</article>
+
+  <section class="disqus">
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="col-sm-3">
+  
+    <section>
+    <a href="/blog/archives" class="btn btn-success btn-lg" style="width: 100%; margin-top: 18px;">Arquivo</a>
+</section>
+<section class="well blog-section">
+  <h1>PUBLICAÇÕES RECENTES</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2015/09/27/mostrar-dinamicamente-o-src-do-projecto-numa-etiqueta/">Mostrar Automáticamente O SRC Do Projecto Numa Etiqueta Do Compositor De Impressão</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/05/06/plugin-reffunctions/">Plugin refFunctions</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/10/04/participacao-no-hackfest-do-qgis/">Participação No Hackfest Do QGIS</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/08/14/utilizacao-de-ferramentas-opensource-para-a-caracterizacao-de-uma-paisagem-o-modulo-lecos-do-qgis/">Utilização De Ferramentas Opensource Para a Caracterização De Uma Paisagem. O Módulo LecoS Do QGIS</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/08/14/qgis-e-o-software-estatistico-r/">QGIS E O Software Estatístico R</a>
+      </li>
+    
+  </ul>
+</section>
+<section class="well blog-section">
+  <h1>CATEGORIAS</h1>
+    <span id="tag-cloud"><a class='tag' href='/blog/categories/accoes'>Acções</a> <a class='tag' href='/blog/categories/colaboracao'>Colaboração</a> <a class='tag' href='/blog/categories/compositor-de-mapas'>Compositor de Mapas</a> <a class='tag' href='/blog/categories/comunidade'>Comunidade</a> <a class='tag' href='/blog/categories/desktop'>Desktop</a> <a class='tag' href='/blog/categories/estatistica'>Estatística</a> <a class='tag' href='/blog/categories/eventos'>Eventos</a> <a class='tag' href='/blog/categories/github'>Github</a> <a class='tag' href='/blog/categories/grelhas-ntv2'>Grelhas NTv2</a> <a class='tag' href='/blog/categories/hackfest'>Hackfest</a> <a class='tag' href='/blog/categories/instalacao'>Instalação</a> <a class='tag' href='/blog/categories/intersect'>Intersect</a> <a class='tag' href='/blog/categories/lecos'>LecoS</a> <a class='tag' href='/blog/categories/mapas'>Mapas</a> <a class='tag' href='/blog/categories/osgeo4w'>OSGeo4W</a> <a class='tag' href='/blog/categories/paisagem'>Paisagem</a> <a class='tag' href='/blog/categories/plugin'>Plugin</a> <a class='tag' href='/blog/categories/plugins'>Plugins</a> <a class='tag' href='/blog/categories/processamento'>Processamento</a> <a class='tag' href='/blog/categories/python'>Python</a> <a class='tag' href='/blog/categories/qgis-pt'>QGIS-PT</a> <a class='tag' href='/blog/categories/r'>R</a> <a class='tag' href='/blog/categories/spatial-operators'>Spatial operators</a> <a class='tag' href='/blog/categories/src'>SRC</a> <a class='tag' href='/blog/categories/traducao'>Tradução</a> <a class='tag' href='/blog/categories/transformacao-de-coordenadas'>Transformação de Coordenadas</a> <a class='tag' href='/blog/categories/transifex'>Transifex</a> </span>
+</section>
+
+
+  
+</aside>
+
+
+      <div class="col-md-12 powered">Blog desenvolvido com <a href="http://octopress.org/" target="_blank">Octopress</a></div>
+
+
+    </div>
+  </div>
+  <footer><div class="container">
+    <div class="row">
+        <div class="copyright">
+            <b>Grupo de Utilizadores QGIS PT, 2014-2015</b>
+            <br>
+            <p>Se não for mencionado o contrário, todos os conteúdos licenciados sobre licença <a href="http://creativecommons.org/licenses/by-sa/3.0/" target="_blank">Creative Commons Atribuição-Compartilha Igual 3.0 (CC BY-SA)</a></p>
+        </div>
+        <div class="social">
+            <a class="footer-btn facebook" href="https://www.facebook.com/QGISPT" target="_blank"></a>
+            <a class="footer-btn google-plus" href="https://plus.google.com/102851374948205667454/posts" target="_blank"></a>
+            <a class="footer-btn twitter" href="https://twitter.com/QGISPT" target="_blank"></a>
+            <a class="footer-btn github" href="https://github.com/qgispt" target="_blank"></a>
+            <a class="footer-btn mailing-list" href="http://osgeo-org.1560.x6.nabble.com/QGIS-pt-f5128248.html" target="_blank"></a>
+        </div>
+    </div>
+    <div class="row hosting">
+        <div class="copyright">
+            <b>Alojamento do site e dos serviços:</b>
+            <br>
+            <p><a href="http://www.naturalgis.pt" target="_blank"><b>NaturalGIS</b></a> - Sistemas de Informação Geográfica</p>
+        </div>
+        <div class="naturalgis-btn">
+            <a class="footer-naturalgis naturalgisfooter" href="http://www.naturalgis.pt/" target="_blank"></a>
+        </div>
+    </div>
+</div>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'qgispt';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_config = function(){
+            console.log(this.callbacks);
+            this.callbacks.onReady =[function(){
+                var footer = $('footer');
+                footer.css('position', 'inherit');
+                var innerHeight = $(window).height();
+                if (footer.position().top < innerHeight - 106){
+                    footer.css('position', 'fixed');
+                    footer.css('width', '100%');
+                }
+            }];
+        }
+        var disqus_identifier = 'http://qgis.pt/2015/09/27/mostrar-dinamicamente-o-src-do-projecto-numa-etiqueta/';
+        var disqus_url = 'http://qgis.pt/2015/09/27/mostrar-dinamicamente-o-src-do-projecto-numa-etiqueta/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+<!-- Core JavaScript -->
+<script src="http://qgis.pt/libs/jquery.min.js"></script>
+<script src="http://qgis.pt/libs/bootstrap/js/bootstrap.min.js"></script>
+<script src="http://qgis.pt/libs/prettyPhoto/js/jquery.prettyPhoto.js" type="text/javascript" charset="utf-8"></script>
+<script src="http://qgis.pt/utils.js"></script>
+<script src="http://qgis.pt/analytics.js"></script>
+
+
+</body>
+</html>

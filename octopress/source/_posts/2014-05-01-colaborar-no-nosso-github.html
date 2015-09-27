@@ -1,0 +1,199 @@
+---
+layout: post
+title: "Colaborar no nosso github"
+date: 2014-05-01 15:29:16 +0100
+comments: true
+categories: [Colaboração, Github]
+author: Hugo Martins
+---
+
+<p>A melhor forma de colaborar directamente connosco e partilhar os seus conteúdos com a comunidade de utilizadores QGIS-PT é através da utilização do <a href="http://git-scm.com/"target="_blank">Git</a> e da 
+   plataforma <a href="https://github.com/" target="_blank">Github</a>. <!-- more --> O <i>Git</i> é um sistema distribuído de controlo de versões de código aberto desenhado para lidar com diferentes tipos de ficheiros e podendo ser
+   utilizado em projectos de pequena a grande dimensão. O <i>Github</i> é um serviço de alojamento <i>web</i> para projectos que recorrem ao <i>Git</i> como ferramenta de controlo de versões. Este tutorial
+   pertende demonstrar os passos que deverá seguir para colaborar connosco utilizando estas ferramentas de uma forma simples e eficaz.
+</p>
+
+<p>Deverá começar por instalar o <i>software Git</i>. Para isso consulte a informação disponível em <a href="http://git-scm.com/book/en/Getting-Started-Installing-Git" target="_blank">http://git-scm.com/book/en/Getting-Started-Installing-Git</a>.
+   Aqui encontrará toda a informação de que necessita para instalar o <i>Git</i> no seu sistema operativo (seja este Linux, MacOS ou Windows).
+</p>
+<p>Para poder começar a utilizar o <i>Github</i> deverá efectuar o seu registo em  <a href="https://github.com/" target="_blank">https://github.com</a>, introduzindo um nome de utilizador, o seu email e 
+   a sua password.
+</p>
+<div class="post-img">
+    <a href="{{ site.url }}/blog/images/posts/register_github.png" rel="prettyPhoto" title="">
+        {% img img-responsive thumbnail http://qgis.pt/blog/images/posts/register_github.png 500 '' 'Efectuar registo no Github' %}
+    </a>
+</div>
+
+<p>Terminados estes passos, está agora em condições de colaborar nos nossos repositórios sem grande esforço. Se consultar o <a href="https://github.com/qgispt" target="_blank">Github</a> do grupo de utilizadores
+   QGIS-PT deverá encontrar vários repositórios. Neste tutorial iremos utilizar o repositório chamado <b>blog</b> e demonstrar como submeter as suas contribuições <i>upstream</i>. Faça <i>login</i> no seu <i>Github</i>
+   recentemente criado (se é que ainda não fez). A primeira coisa que deverá fazer é efectuar um <i>fork</i> do repositório <b>blog</b> para o seu <i>Github</i>. Para isso, escreva <i><b>@qgispt</b></i> na 
+   caixa de pesquisa que se encontra no topo do <i>site</i>.
+</p>
+<div class="post-img">
+    <a href="{{ site.url }}/blog/images/posts/search_qgispt.png" rel="prettyPhoto" title="">
+        {% img img-responsive thumbnail http://qgis.pt/blog/images/posts/search_qgispt.png 500 '' 'Pesquisar pelo o Github do QGIS-PT' %}
+    </a>
+</div>
+
+<p>Ao seleccionar a opção que lhe é mostrada irá ser redireccionado para o <i>Github</i> do grupo. Na lista de repositórios apresentada, seleccione o repositório <b>blog</b>.</p>
+<div class="post-img">
+    <a href="{{ site.url }}/blog/images/posts/blog_repo.png" rel="prettyPhoto" title="">
+        {% img img-responsive thumbnail http://qgis.pt/blog/images/posts/blog_repo.png 500 '' 'Selecção do repositório do Blog' %}
+    </a>
+</div>
+
+<p>De seguida carregue no botão <i><b>Fork</b></i> e aguarde enquanto o repositório é replicado no seu <i>Github</i>.</p>
+<div class="post-img">
+    <a href="{{ site.url }}/blog/images/posts/fork.png" rel="prettyPhoto" title="">
+        {% img img-responsive thumbnail http://qgis.pt/blog/images/posts/fork.png 500 '' 'Fork do repositório do Blog' %}
+    </a>
+</div>
+
+<p>Deverá agora visualizar uma réplica do repositório <b>blog</b> no seu <i>Github</i>. Tome nota do endereço <i>https</i> que é mostrado no lado direito da página (nota: se estiver à vontade com a 
+utilização de <i>ssh</i> poderá usar o endereço apropriado e configurar o seu <i>Github</i> com a sua chave pública).</p>
+<div class="post-img">
+    <a href="{{ site.url }}/blog/images/posts/git_address.png" rel="prettyPhoto" title="">
+        {% img img-responsive thumbnail http://qgis.pt/blog/images/posts/git_address.png 500 '' 'Endereço do nosso Fork' %}
+    </a>
+</div>
+
+<p>Neste tutorial iremos utilizar a linha de comandos do sistema operativo para fazermos uma cópia do nosso <i>fork</i> para o computador onde estamos a trabalhar. Os utilizadores com Windows têm
+   também uma interface gráfica disponível que é instalada conjuntamente com o <i>Git</i> e poderão, se assim o desejarem, replicar os próximos passos com essa interface. Abra o o seu terminal/consola DOS
+   e navegue até à directoria onde deseja criar a cópia local do seu <i>fork</i> (neste tutorial essa directoria será <i>~/Documents/QGISPT</i>). De seguida efectue os seguintes passos substituindo a entrada
+   <i>o_seu_nome_de_utilizador</i> pelo valor apropriado:
+</p>
+
+{% codeblock lang:bash %}
+cd ~/Documents/QGISPT
+git clone https://github.com/o_seu_nome_de_utilizador/blog.git
+cd blog
+git remote add upstream https://github.com/o_seu_nome_de_utilizador/blog.git
+{% endcodeblock %}
+
+<p>Neste momento tem tudo configurado e pronto para começar a produzir conteúdos no seu computador e mais tarde submetê-los para o <i>Github</i>. Repare que existe agora uma nova directoria chamada <b>blog</b>
+   dentro da directoria que especificou anteriormente (neste caso <i>~/Documents/QGISPT</i>) com todos os conteúdos existentes no repositório. Suponha agora que desejaria criar uma nova pasta
+   dentro do repositório e colocar lá um ficheiro de sua autoria. Usando as ferramentas do seu sistema operativo iria criar uma nova directoria (neste caso iremos chamá-la de <b>exemplos</b>).
+</p>
+<div class="post-img">
+    <a href="{{ site.url }}/blog/images/posts/nova_pasta.png" rel="prettyPhoto" title="">
+        {% img img-responsive thumbnail http://qgis.pt/blog/images/posts/nova_pasta.png 500 '' 'Criação de nova pasta' %}
+    </a>
+</div>
+
+<p>Dentro desta pasta, iria em seguida colocar o seu novo ficheiro. Neste exemplo foi colocado um novo ficheiro chamado <i>traducao.html</i>. Depois de ter terminado a edição do seu ficheiro (ou vários ficheiros)
+   poderá verificar o estado do seu repositório da seguinte forma:
+</p>
+
+{% codeblock lang:bash %}
+git status
+{% endcodeblock %}
+
+<p>Este comando deverá devolver um <i>output</i> semelhante ao seguinte:</p>
+{% codeblock lang:bash %}
+# On branch master
+# Untracked files:
+#   (use "git add <file>..." to include in what will be committed)
+#
+#	exemplos/traducao.html
+# nothing added to commit but untracked files present (use "git add" to track)
+{% endcodeblock %}
+
+<p>Ao analisar este <i>output</i> rapidamente se apercebe que existe um ficheiro que ainda não foi adicionado ao seu <i>Git</i> (repare na secção <i>Untracked files</i>). Para adicionar este ficheiro
+   ao seu <i>Git</i> deverá então efectuar o seguinte:
+</p>
+
+{% codeblock lang:bash %}
+git add exemplos/traducao.html
+{% endcodeblock %}
+
+<p>Volte a emitir o comando <i>git status</i> e irá reparar, que desta vez, o <i>Git</i> já sabe que existe um novo ficheiro para ser adicionado.</p>
+
+{% codeblock lang:bash %}
+# On branch master
+# Changes to be committed:
+#   (use "git reset HEAD <file>..." to unstage)
+#
+#	new file:   exemplos/traducao.html
+#
+{% endcodeblock %}
+
+<p>Na terminologia própria do <i>Git</i> diz-se que o ficheiro foi adicionado à <i>staging area</i>. No entanto este ficheiro ainda não foi realmente submetido e gravado no <i>Git</i> para se começar 
+   gravar todas as alterações nele efectuadas. Para o fazer deverá executar o seguinte comando:
+</p>
+{% codeblock lang:bash %}
+git commit -m 'Ficheiro traducao adicionado à lista de exemplos'
+{% endcodeblock %}
+
+<p>Depois de emitir este comando deverá visualizar uma mensagem semelhante à seguinte:</p>
+
+{% codeblock lang:bash %}
+# 1 file changed, 109 insertions(+)
+# create mode 100644 exemplos/traducao.html
+{% endcodeblock %}
+
+<p>Repare que o <i>Git</i> sabe que ocorreram alterações num único ficheiro e que foram adicionadas 109 novas linhas. Neste momento, todas as suas alterações foram gravadas no seu <i>Git</i> local. Quer
+   isto dizer que se visitar o seu <i>Github</i> estas alterações ainda não estarão lá presentes. Para que possa carregar as suas alterações para o seu <i>fork</i> na <i>web</i> deverá então emitir o seguinte
+   comando e introduzir o seu nome de utilizador e palavra-passe quando solicitado:
+</p>
+
+{% codeblock lang:bash %}
+git push origin master 
+{% endcodeblock %}
+
+<p>Se tudo correr bem, não verá qualquer mensagem de erro e as suas alterações deverão ter sido propagadas para o seu <i>Github</i>. Confirme que tal aconteceu visitando-o <i>online</i>.</p>
+<div class="post-img">
+    <a href="{{ site.url }}/blog/images/posts/push.png" rel="prettyPhoto" title="">
+        {% img img-responsive thumbnail http://qgis.pt/blog/images/posts/push.png 500 '' 'Confirmação que alterações foram propagadas para o Github' %}
+    </a>
+</div>
+
+<p>Neste momento as suas alterações já estão na <i>web</i> mas apenas no seu <i>fork</i>. O passo em falta é colocar essas alterações no repositório do grupo de utilizadores. Para o fazer deverá efectuar
+   um <i>Pull request</i> através do <i>Github</i>. No seu <i>Github</i> navegue até ao <i>fork</i> e carregue no botão <i><b>Pull Request</b></i> que se encontra no topo direito da secção que mostra a 
+   lista dos ficheiros e pastas disponíveis.
+</p>
+
+<div class="post-img">
+    <a href="{{ site.url }}/blog/images/posts/pull.png" rel="prettyPhoto" title="">
+        {% img img-responsive thumbnail http://qgis.pt/blog/images/posts/pull.png 500 '' 'Início do Pull Request' %}
+    </a>
+</div>
+
+<p>Deverá então surgir uma nova página mostrando todas as suas alterações. Confirme que tudo está correcto e carregue no botão <i>Create Pull Request</i>.</p>
+
+<div class="post-img">
+    <a href="{{ site.url }}/blog/images/posts/pull_1.png" rel="prettyPhoto" title="">
+        {% img img-responsive thumbnail http://qgis.pt/blog/images/posts/pull_1.png 500 '' 'Validação e criação do Pull Request' %}
+    </a>
+</div>
+
+<p>Finalmente, introduza um título para o seu <i>Pull Request</i> e, se desejar, introduza também algum comentário adicional. Carregue no botão <i><b>Send Pull Request</b></i>.</p>
+<div class="post-img">
+    <a href="{{ site.url }}/blog/images/posts/pull_2.png" rel="prettyPhoto" title="">
+        {% img img-responsive thumbnail http://qgis.pt/blog/images/posts/pull_2.png 500 '' 'Enviar Pull Request' %}
+    </a>
+</div>
+
+<p>Neste momento um email será enviado automaticamente para os gestores do <i>Github</i> do grupo de utilizadores a informar que existe uma nova contribuição. Assim que possível, estes irão incluir
+   as suas alterações no repositório central para que fiquem disponíveis para todos.
+</p>
+
+<p>Como nota final, uma vez que já efectuou a configuração do <i>fork</i> no seu <i>Github</i> e já ficou com uma cópia local deste repositório no seu computador, da próxima vez que quiser efectuar uma
+   alteração a um ficheiro já existente ou criar uma nova pasta/ficheiro não tem que repetir todos os passos previamente mencionados. Apenas terá que seguir as instruções anteriores a partir do primeiro comando
+   <i><b>git status</b></i>. Não se esqueça que, da mesma forma que fez as suas alterações, poderão existir outros utilizadores a criar novos conteúdos e a alterar conteúdos já existentes. Para que o seu 
+   repositório local (isto é, o repositório <i>Git</i> que está na sua máquina) esteja sempre actualizado é boa prática que sempre que decida começar uma nova contribuição efectue primeiramente o seguinte 
+   comando:
+</p>
+
+{% codeblock lang:bash %}
+git fetch upstream
+{% endcodeblock %}
+
+<p>Desta forma irá garantir que está em total sincronia com o repositório oficial do grupo de utilizadores.</p>
+
+<p>Esperamos que este tutorial vos ajude e clarifique os procedimentos que deverão adoptar para contribuirem para a nossa comunidade. Qualquer dúvida que tenham não hesitem em contactar-nos na <i>mailing list</i>, 
+   ou através da interface de comentários disponibilizada em baixo.
+</p>
+
+<br />
+{% gravatar hfpmartins@gmail.com %}
