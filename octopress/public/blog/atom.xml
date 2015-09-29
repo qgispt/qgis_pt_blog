@@ -4,7 +4,7 @@
   <title><![CDATA[QGIS-PT]]></title>
   <link href="http://qgis.pt/atom.xml" rel="self"/>
   <link href="http://qgis.pt/"/>
-  <updated>2015-09-29T12:02:30+01:00</updated>
+  <updated>2015-09-29T15:40:07+01:00</updated>
   <id>http://qgis.pt/</id>
   <author>
     <name><![CDATA[Grupo de Utilizadores QGIS PT]]></name>
@@ -12,6 +12,27 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[QGIS: Ajuda, Suporte, Desenvolvimento]]></title>
+    <link href="http://qgis.pt/2015/09/29/qgis-ajuda-suporte-desenvolvimento/"/>
+    <updated>2015-09-29T15:02:58+01:00</updated>
+    <id>http://qgis.pt/2015/09/29/qgis-ajuda-suporte-desenvolvimento</id>
+    <content type="html"><![CDATA[Quais os meios/modalidades que os utilizadores QGIS (finais, entidades, empresas) têm a disposição para obter suporte/assistência? Ou ainda como podem criar novas funcionalidades ou resolver bugs? A seguinte apresentação foi feita no <a href="http://osgeopt.pt/sasig2015/">SASIG 2015</a>, o congresso sobre SIG livres da comunidade Portuguesa, com o objectivo de esclarecer as duvidas sobre este assuntos aos muitos utilizadores QGIS presentes no congresso.
+
+<!-- more -->
+
+<br />
+<br />
+
+<p align="center">
+<iframe frameborder="0" src="http://www.slideshare.net/slideshow/embed_code/key/RoLWXQr3MmT04" width="425" height="355" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px; margin-bottom:5px; max-width: 100%;" allowfullscreen> </iframe> <div style="margin-bottom:5px"> <strong> <a href="//www.slideshare.net/GiovanniManghi/qgis-ajuda-suporte-desenvolvimento" title="QGIS: ajuda, suporte, desenvolvimento" target="_blank">QGIS: ajuda, suporte, desenvolvimento</a> </strong> from <strong><a href="//www.slideshare.net/GiovanniManghi" target="_blank">Giovanni Manghi</a></strong> </div>
+</p>
+
+
+<br />
+<img class="gravatar img-circle" src="http://www.gravatar.com/avatar/d87344818a5e1792a1eb6cdd85725f74></img>]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Imprimir E Descarregar Mapas Bing E Google]]></title>

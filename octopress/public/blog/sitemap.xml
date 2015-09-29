@@ -55,8 +55,12 @@
         <lastmod>2015-09-29T11:46:33+01:00</lastmod>
     </url>
     <url>
+        <loc>http://qgis.pt/2015/09/29/qgis-ajuda-suporte-desenvolvimento/</loc>
+        <lastmod>2015-09-29T15:40:03+01:00</lastmod>
+    </url>
+    <url>
         <loc>http://qgis.pt/</loc>
-        <lastmod>2015-09-29T12:02:17+01:00</lastmod>
+        <lastmod>2015-09-29T15:40:03+01:00</lastmod>
     </url>
     <url>
         <loc>http://qgis.pt/robots.txt</loc>
@@ -64,6 +68,6 @@
     </url>
     <url>
         <loc>http://qgis.pt/archives/</loc>
-        <lastmod>2015-09-29T12:02:17+01:00</lastmod>
+        <lastmod>2015-09-29T15:40:03+01:00</lastmod>
     </url>
 </urlset>
