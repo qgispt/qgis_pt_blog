@@ -1,0 +1,33 @@
+<div class="highlight"><pre><span class="ni">&amp;lt;</span>GDAL_WMS&gt;<span class="nt">&lt;/p&gt;</span>
+
+<span class="c">&lt;!-- Data is subject to term of use detailed at http://code.google.com/intl/nl/apis/maps/terms.html and</span>
+<span class="c">     http://www.google.com/intl/en_ALL/help/terms_maps.html --&gt;</span>
+
+
+<span class="nt">&lt;pre&gt;&lt;code&gt;</span><span class="ni">&amp;lt;</span>Service name=&quot;TMS&quot;<span class="ni">&amp;gt;</span>
+    <span class="ni">&amp;lt;</span>!-- <span class="ni">&amp;lt;</span>ServerUrl<span class="ni">&amp;gt;</span>http://mt.google.com/vt/lyrs=m<span class="ni">&amp;amp;</span>amp;x=${x}<span class="ni">&amp;amp;</span>amp;y=${y}<span class="ni">&amp;amp;</span>amp;z=${z}<span class="ni">&amp;lt;</span>/ServerUrl<span class="ni">&amp;gt;</span>--<span class="ni">&amp;gt;</span> <span class="ni">&amp;lt;</span>!-- Map --<span class="ni">&amp;gt;</span>
+    <span class="ni">&amp;lt;</span>ServerUrl<span class="ni">&amp;gt;</span>http://mt.google.com/vt/lyrs=s<span class="ni">&amp;amp;</span>amp;x=${x}<span class="ni">&amp;amp;</span>amp;y=${y}<span class="ni">&amp;amp;</span>amp;z=${z}<span class="ni">&amp;lt;</span>/ServerUrl<span class="ni">&amp;gt;</span> <span class="ni">&amp;lt;</span>!-- Satellite --<span class="ni">&amp;gt;</span>
+    <span class="ni">&amp;lt;</span>!-- <span class="ni">&amp;lt;</span>ServerUrl<span class="ni">&amp;gt;</span>http://mt.google.com/vt/lyrs=y<span class="ni">&amp;amp;</span>amp;x=${x}<span class="ni">&amp;amp;</span>amp;y=${y}<span class="ni">&amp;amp;</span>amp;z=${z}<span class="ni">&amp;lt;</span>/ServerUrl<span class="ni">&amp;gt;</span> --<span class="ni">&amp;gt;</span> <span class="ni">&amp;lt;</span>!-- Hybrid --<span class="ni">&amp;gt;</span>
+    <span class="ni">&amp;lt;</span>!-- <span class="ni">&amp;lt;</span>ServerUrl<span class="ni">&amp;gt;</span>http://mt.google.com/vt/lyrs=t<span class="ni">&amp;amp;</span>amp;x=${x}<span class="ni">&amp;amp;</span>amp;y=${y}<span class="ni">&amp;amp;</span>amp;z=${z}<span class="ni">&amp;lt;</span>/ServerUrl<span class="ni">&amp;gt;</span> --<span class="ni">&amp;gt;</span> <span class="ni">&amp;lt;</span>!-- Terrain --<span class="ni">&amp;gt;</span>
+    <span class="ni">&amp;lt;</span>!-- <span class="ni">&amp;lt;</span>ServerUrl<span class="ni">&amp;gt;</span>http://mt.google.com/vt/lyrs=p<span class="ni">&amp;amp;</span>amp;x=${x}<span class="ni">&amp;amp;</span>amp;y=${y}<span class="ni">&amp;amp;</span>amp;z=${z}<span class="ni">&amp;lt;</span>/ServerUrl<span class="ni">&amp;gt;</span> --<span class="ni">&amp;gt;</span> <span class="ni">&amp;lt;</span>!-- Terrain, Streets and Water  --<span class="ni">&amp;gt;</span>
+<span class="ni">&amp;lt;</span>/Service<span class="ni">&amp;gt;</span>
+<span class="ni">&amp;lt;</span>DataWindow<span class="ni">&amp;gt;</span>
+    <span class="ni">&amp;lt;</span>UpperLeftX<span class="ni">&amp;gt;</span>-20037508.34<span class="ni">&amp;lt;</span>/UpperLeftX<span class="ni">&amp;gt;</span>
+    <span class="ni">&amp;lt;</span>UpperLeftY<span class="ni">&amp;gt;</span>20037508.34<span class="ni">&amp;lt;</span>/UpperLeftY<span class="ni">&amp;gt;</span>
+    <span class="ni">&amp;lt;</span>LowerRightX<span class="ni">&amp;gt;</span>20037508.34<span class="ni">&amp;lt;</span>/LowerRightX<span class="ni">&amp;gt;</span>
+    <span class="ni">&amp;lt;</span>LowerRightY<span class="ni">&amp;gt;</span>-20037508.34<span class="ni">&amp;lt;</span>/LowerRightY<span class="ni">&amp;gt;</span>
+    <span class="ni">&amp;lt;</span>TileLevel<span class="ni">&amp;gt;</span>20<span class="ni">&amp;lt;</span>/TileLevel<span class="ni">&amp;gt;</span>
+    <span class="ni">&amp;lt;</span>TileCountX<span class="ni">&amp;gt;</span>1<span class="ni">&amp;lt;</span>/TileCountX<span class="ni">&amp;gt;</span>
+    <span class="ni">&amp;lt;</span>TileCountY<span class="ni">&amp;gt;</span>1<span class="ni">&amp;lt;</span>/TileCountY<span class="ni">&amp;gt;</span>
+    <span class="ni">&amp;lt;</span>YOrigin<span class="ni">&amp;gt;</span>top<span class="ni">&amp;lt;</span>/YOrigin<span class="ni">&amp;gt;</span>
+<span class="ni">&amp;lt;</span>/DataWindow<span class="ni">&amp;gt;</span>
+<span class="ni">&amp;lt;</span>Projection<span class="ni">&amp;gt;</span>EPSG:3857<span class="ni">&amp;lt;</span>/Projection<span class="ni">&amp;gt;</span>
+<span class="ni">&amp;lt;</span>BlockSizeX<span class="ni">&amp;gt;</span>256<span class="ni">&amp;lt;</span>/BlockSizeX<span class="ni">&amp;gt;</span>
+<span class="ni">&amp;lt;</span>BlockSizeY<span class="ni">&amp;gt;</span>256<span class="ni">&amp;lt;</span>/BlockSizeY<span class="ni">&amp;gt;</span>
+<span class="ni">&amp;lt;</span>BandsCount<span class="ni">&amp;gt;</span>3<span class="ni">&amp;lt;</span>/BandsCount<span class="ni">&amp;gt;</span>
+<span class="ni">&amp;lt;</span>MaxConnections<span class="ni">&amp;gt;</span>5<span class="ni">&amp;lt;</span>/MaxConnections<span class="ni">&amp;gt;</span>
+<span class="ni">&amp;lt;</span>Cache /<span class="ni">&amp;gt;</span>
+<span class="nt">&lt;/code&gt;&lt;/pre&gt;</span>
+
+<span class="nt">&lt;p&gt;</span><span class="ni">&amp;lt;</span>/GDAL_WMS&gt;
+</pre></div>

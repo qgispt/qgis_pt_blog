@@ -1,0 +1,112 @@
+---
+layout: post
+title: "Imprimir e descarregar mapas Bing e Google"
+date: 2015-09-28 18:30:07 +0100
+comments: true
+categories: [QGIS, GDAL, WMS, Bing, Google]
+author: Giovanni Manghi (NaturalGIS)
+---
+<h4>O problema</h4>
+
+<p>O <i>plugin</i> <b><a href="http://plugins.qgis.org/plugins/openlayers_plugin/"> OpenLayers</a></b> do QGIS permite acrescentar nos projectos camadas de fontes tais como Bing e Google: as camadas acrescentadas desta forma são obviamente muito úteis mas este <i>datasources</i> possuem algumas desvantagens:</p>
+
+<!-- more -->
+
+<ul>
+<li>nos <i>layouts</i> de impressão, uma vez que os mesmos forem exportados para PDF/imagem (ou impressos em papel) há um desvio entre as imagens e as <i>features</i> raster/vectoriais presentes no projecto</li>
+
+<li>este camadas não podem ser usadas como input para operações de geoprocessamento ou analise</li>
+
+<li>não se pode definir a transparência geral assim como nenhuma outra propriedade das camadas (visibilidade baseada em escala, transparência de pixeis com valor especifico, etc.)</li>
+</ul>
+
+<!-- Imagem -->
+<div class="post-img">
+    <a href="{{ site.url }}/blog/images/posts/desvio.jpg" rel="prettyPhoto" title="">
+        {% img img-responsive thumbnail http://qgis.pt/blog/images/posts/desvio.jpg 500 '' 'Desvio provocado pelo plugin OpenLayers' %}
+    </a>
+</div>
+
+<h4>A solucão</h4> 
+
+<ul>
+<li><b>Não usar o plugin OpenLayers</b></li>
+
+<li>Gravar os seguintes ficheiros xml (carregar no link com o botão direito do rato "gravar link como"). A seguir acrescentar este ficheiros/camadas no QGIS como se fossem <i>rasters</i>:</li>
+<ul>
+<li><a href="http://www.gdal.org/frmt_wms_virtualearth.xml">http://www.gdal.org/frmt_wms_virtualearth.xml</a></li>
+
+<li><a href="http://www.gdal.org/frmt_wms_googlemaps_tms.xml">http://www.gdal.org/frmt_wms_googlemaps_tms.xml</a></li>
+</ul>
+</ul>
+
+<p>O primeiro link é o <i>datasource</i> para as imagens Bing Maps/Virtual Earth e pode ser usado directamente. O segundo link é o <i>datasource</i> para camadas Google. Este ficheiro deverá ser editado com um editor de texto para: 1) mudar o CRS de 900913 para 3857, 2) escolher a camada Google que se pretende visualizar. Por exemplo o ficheiro deverá ser editado da seguinte forma para visualizar as imagens de satélite/aéreas:
+</p>
+
+{% codeblock lang:xml %}
+<GDAL_WMS>
+
+<!-- Data is subject to term of use detailed at http://code.google.com/intl/nl/apis/maps/terms.html and
+     http://www.google.com/intl/en_ALL/help/terms_maps.html -->
+
+    <Service name="TMS">
+        <!-- <ServerUrl>http://mt.google.com/vt/lyrs=m&amp;x=${x}&amp;y=${y}&amp;z=${z}</ServerUrl>--> <!-- Map -->
+        <ServerUrl>http://mt.google.com/vt/lyrs=s&amp;x=${x}&amp;y=${y}&amp;z=${z}</ServerUrl> <!-- Satellite -->
+        <!-- <ServerUrl>http://mt.google.com/vt/lyrs=y&amp;x=${x}&amp;y=${y}&amp;z=${z}</ServerUrl> --> <!-- Hybrid -->
+        <!-- <ServerUrl>http://mt.google.com/vt/lyrs=t&amp;x=${x}&amp;y=${y}&amp;z=${z}</ServerUrl> --> <!-- Terrain -->
+        <!-- <ServerUrl>http://mt.google.com/vt/lyrs=p&amp;x=${x}&amp;y=${y}&amp;z=${z}</ServerUrl> --> <!-- Terrain, Streets and Water  -->
+    </Service>
+    <DataWindow>
+        <UpperLeftX>-20037508.34</UpperLeftX>
+        <UpperLeftY>20037508.34</UpperLeftY>
+        <LowerRightX>20037508.34</LowerRightX>
+        <LowerRightY>-20037508.34</LowerRightY>
+        <TileLevel>20</TileLevel>
+        <TileCountX>1</TileCountX>
+        <TileCountY>1</TileCountY>
+        <YOrigin>top</YOrigin>
+    </DataWindow>
+    <Projection>EPSG:3857</Projection>
+    <BlockSizeX>256</BlockSizeX>
+    <BlockSizeY>256</BlockSizeY>
+    <BandsCount>3</BandsCount>
+    <MaxConnections>5</MaxConnections>
+    <Cache />
+</GDAL_WMS>
+{% endcodeblock %}
+
+<p>As camadas acrescentadas desta forma são <i><b>rasters</b></i> WMS, sendo portanto possível: visualizar a escalas arbitrarias, reprojectar, mudar transparência, configurar a visibilidade baseada em escalas, etc.</p>
+
+<p>O mais importante é que estas camadas <b>não irão criar problemas de desvios quando usadas no <i>print composer</i> do QGIS.</b></p>
+
+<!-- Imagem -->
+<div class="post-img">
+    <a href="{{ site.url }}/blog/images/posts/certo.jpg" rel="prettyPhoto" title="">
+        {% img img-responsive thumbnail http://qgis.pt/blog/images/posts/certo.jpg 500 '' 'Problema resolvido usando os datasource WMS da biblioteca GDAL' %}
+    </a>
+</div>
+
+<h4>Notas:</h4>
+
+<ul>
+<li>o sistema de coordenadas deste camadas é o com código <b>EPSG 3857</b>, ou seja <i>Google Mercator</i></li>
+
+<li>a resolução deste camadas é respectivamente: Google Satellite: <b>15cm</b> , Bing Aerial: <b>30cm</b></li>
+
+<li>o QGIS permite fazer a operação <i>save as</i> ("gravar como") também para camadas <i>rasters</i>. Isso significa que é possível gravar localmente (sob forma de ficheiros GeoTIFF) mapas com imagens Google/Bing (gravar localmente  desta forma áreas grandes com resolução elevada irá significar tempos de processamento muito compridos).</li>
+
+<li>ler com <b>atenção</b> as condições de uso deste provedores de dados. O autor e o grupo QGIS-PT não se responsabilizam para o uso impróprio deste mapas</li>
+
+<li>para mais informações: <a href="http://www.gdal.org/frmt_wms.html">http://www.gdal.org/frmt_wms.html</a></li>
+
+</ul>
+
+<!-- Imagem -->
+<div class="post-img">
+    <a href="{{ site.url }}/blog/images/posts/raster_save_as.png" rel="prettyPhoto" title="">
+        {% img img-responsive thumbnail http://qgis.pt/blog/images/posts/raster_save_as.png 500 '' 'Operação save as rasters no QGIS' %}
+    </a>
+</div>
+
+<br />
+{% gravatar giovanni.manghi@gmail.com %}

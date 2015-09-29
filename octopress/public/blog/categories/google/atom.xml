@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Google | QGIS-PT]]></title>
+  <link href="http://qgis.pt/categories/google/atom.xml" rel="self"/>
+  <link href="http://qgis.pt/"/>
+  <updated>2015-09-29T12:02:30+01:00</updated>
+  <id>http://qgis.pt/</id>
+  <author>
+    <name><![CDATA[Grupo de Utilizadores QGIS PT]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Imprimir E Descarregar Mapas Bing E Google]]></title>
+    <link href="http://qgis.pt/2015/09/28/imprimir-e-descarregar-mapas-bing-e-google/"/>
+    <updated>2015-09-28T18:30:07+01:00</updated>
+    <id>http://qgis.pt/2015/09/28/imprimir-e-descarregar-mapas-bing-e-google</id>
+    <content type="html"><![CDATA[<h4>O problema</h4>
+
+
+
+
+<p>O <i>plugin</i> <b><a href="http://plugins.qgis.org/plugins/openlayers_plugin/"> OpenLayers</a></b> do QGIS permite acrescentar nos projectos camadas de fontes tais como Bing e Google: as camadas acrescentadas desta forma são obviamente muito úteis mas este <i>datasources</i> possuem algumas desvantagens:</p>
+
+
+
+
+<!-- more -->
+
+
+
+
+<ul>
+<li>nos <i>layouts</i> de impressão, uma vez que os mesmos forem exportados para PDF/imagem (ou impressos em papel) há um desvio entre as imagens e as <i>features</i> raster/vectoriais presentes no projecto</li>
+
+<li>este camadas não podem ser usadas como input para operações de geoprocessamento ou analise</li>
+
+<li>não se pode definir a transparência geral assim como nenhuma outra propriedade das camadas (visibilidade baseada em escala, transparência de pixeis com valor especifico, etc.)</li>
+</ul>
+
+
+
+
+<!-- Imagem -->
+
+
+<div class="post-img">
+    <a href="http://qgis.pt/blog/images/posts/desvio.jpg" rel="prettyPhoto" title="">
+        <img class="img-responsive thumbnail" src="http://qgis.pt/blog/images/posts/desvio.jpg" width="500"  alt="Desvio provocado pelo plugin OpenLayers">
+    </a>
+</div>
+
+
+
+
+<h4>A solucão</h4>
+
+
+<p></p>
+
+<ul>
+<li><b>Não usar o plugin OpenLayers</b></li>
+
+<li>Gravar os seguintes ficheiros xml (carregar no link com o botão direito do rato "gravar link como"). A seguir acrescentar este ficheiros/camadas no QGIS como se fossem <i>rasters</i>:</li>
+<ul>
+<li><a href="http://www.gdal.org/frmt_wms_virtualearth.xml">http://www.gdal.org/frmt_wms_virtualearth.xml</a></li>
+
+<li><a href="http://www.gdal.org/frmt_wms_googlemaps_tms.xml">http://www.gdal.org/frmt_wms_googlemaps_tms.xml</a></li>
+</ul>
+</ul>
+
+
+
+
+<p>O primeiro link é o <i>datasource</i> para as imagens Bing Maps/Virtual Earth e pode ser usado directamente. O segundo link é o <i>datasource</i> para camadas Google. Este ficheiro deverá ser editado com um editor de texto para: 1) mudar o CRS de 900913 para 3857, 2) escolher a camada Google que se pretende visualizar. Por exemplo o ficheiro deverá ser editado da seguinte forma para visualizar as imagens de satélite/aéreas:
+</p>
+
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+</pre></td><td class='code'><pre><code class='xml'><span class='line'><span class="ni">&amp;lt;</span>GDAL_WMS&gt;<span class="nt">&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="c">&lt;!-- Data is subject to term of use detailed at http://code.google.com/intl/nl/apis/maps/terms.html and</span>
+</span><span class='line'><span class="c">     http://www.google.com/intl/en_ALL/help/terms_maps.html --&gt;</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="nt">&lt;pre&gt;&lt;code&gt;</span><span class="ni">&amp;lt;</span>Service name=&quot;TMS&quot;<span class="ni">&amp;gt;</span>
+</span><span class='line'>    <span class="ni">&amp;lt;</span>!-- <span class="ni">&amp;lt;</span>ServerUrl<span class="ni">&amp;gt;</span>http://mt.google.com/vt/lyrs=m<span class="ni">&amp;amp;</span>amp;x=${x}<span class="ni">&amp;amp;</span>amp;y=${y}<span class="ni">&amp;amp;</span>amp;z=${z}<span class="ni">&amp;lt;</span>/ServerUrl<span class="ni">&amp;gt;</span>--<span class="ni">&amp;gt;</span> <span class="ni">&amp;lt;</span>!-- Map --<span class="ni">&amp;gt;</span>
+</span><span class='line'>    <span class="ni">&amp;lt;</span>ServerUrl<span class="ni">&amp;gt;</span>http://mt.google.com/vt/lyrs=s<span class="ni">&amp;amp;</span>amp;x=${x}<span class="ni">&amp;amp;</span>amp;y=${y}<span class="ni">&amp;amp;</span>amp;z=${z}<span class="ni">&amp;lt;</span>/ServerUrl<span class="ni">&amp;gt;</span> <span class="ni">&amp;lt;</span>!-- Satellite --<span class="ni">&amp;gt;</span>
+</span><span class='line'>    <span class="ni">&amp;lt;</span>!-- <span class="ni">&amp;lt;</span>ServerUrl<span class="ni">&amp;gt;</span>http://mt.google.com/vt/lyrs=y<span class="ni">&amp;amp;</span>amp;x=${x}<span class="ni">&amp;amp;</span>amp;y=${y}<span class="ni">&amp;amp;</span>amp;z=${z}<span class="ni">&amp;lt;</span>/ServerUrl<span class="ni">&amp;gt;</span> --<span class="ni">&amp;gt;</span> <span class="ni">&amp;lt;</span>!-- Hybrid --<span class="ni">&amp;gt;</span>
+</span><span class='line'>    <span class="ni">&amp;lt;</span>!-- <span class="ni">&amp;lt;</span>ServerUrl<span class="ni">&amp;gt;</span>http://mt.google.com/vt/lyrs=t<span class="ni">&amp;amp;</span>amp;x=${x}<span class="ni">&amp;amp;</span>amp;y=${y}<span class="ni">&amp;amp;</span>amp;z=${z}<span class="ni">&amp;lt;</span>/ServerUrl<span class="ni">&amp;gt;</span> --<span class="ni">&amp;gt;</span> <span class="ni">&amp;lt;</span>!-- Terrain --<span class="ni">&amp;gt;</span>
+</span><span class='line'>    <span class="ni">&amp;lt;</span>!-- <span class="ni">&amp;lt;</span>ServerUrl<span class="ni">&amp;gt;</span>http://mt.google.com/vt/lyrs=p<span class="ni">&amp;amp;</span>amp;x=${x}<span class="ni">&amp;amp;</span>amp;y=${y}<span class="ni">&amp;amp;</span>amp;z=${z}<span class="ni">&amp;lt;</span>/ServerUrl<span class="ni">&amp;gt;</span> --<span class="ni">&amp;gt;</span> <span class="ni">&amp;lt;</span>!-- Terrain, Streets and Water  --<span class="ni">&amp;gt;</span>
+</span><span class='line'><span class="ni">&amp;lt;</span>/Service<span class="ni">&amp;gt;</span>
+</span><span class='line'><span class="ni">&amp;lt;</span>DataWindow<span class="ni">&amp;gt;</span>
+</span><span class='line'>    <span class="ni">&amp;lt;</span>UpperLeftX<span class="ni">&amp;gt;</span>-20037508.34<span class="ni">&amp;lt;</span>/UpperLeftX<span class="ni">&amp;gt;</span>
+</span><span class='line'>    <span class="ni">&amp;lt;</span>UpperLeftY<span class="ni">&amp;gt;</span>20037508.34<span class="ni">&amp;lt;</span>/UpperLeftY<span class="ni">&amp;gt;</span>
+</span><span class='line'>    <span class="ni">&amp;lt;</span>LowerRightX<span class="ni">&amp;gt;</span>20037508.34<span class="ni">&amp;lt;</span>/LowerRightX<span class="ni">&amp;gt;</span>
+</span><span class='line'>    <span class="ni">&amp;lt;</span>LowerRightY<span class="ni">&amp;gt;</span>-20037508.34<span class="ni">&amp;lt;</span>/LowerRightY<span class="ni">&amp;gt;</span>
+</span><span class='line'>    <span class="ni">&amp;lt;</span>TileLevel<span class="ni">&amp;gt;</span>20<span class="ni">&amp;lt;</span>/TileLevel<span class="ni">&amp;gt;</span>
+</span><span class='line'>    <span class="ni">&amp;lt;</span>TileCountX<span class="ni">&amp;gt;</span>1<span class="ni">&amp;lt;</span>/TileCountX<span class="ni">&amp;gt;</span>
+</span><span class='line'>    <span class="ni">&amp;lt;</span>TileCountY<span class="ni">&amp;gt;</span>1<span class="ni">&amp;lt;</span>/TileCountY<span class="ni">&amp;gt;</span>
+</span><span class='line'>    <span class="ni">&amp;lt;</span>YOrigin<span class="ni">&amp;gt;</span>top<span class="ni">&amp;lt;</span>/YOrigin<span class="ni">&amp;gt;</span>
+</span><span class='line'><span class="ni">&amp;lt;</span>/DataWindow<span class="ni">&amp;gt;</span>
+</span><span class='line'><span class="ni">&amp;lt;</span>Projection<span class="ni">&amp;gt;</span>EPSG:3857<span class="ni">&amp;lt;</span>/Projection<span class="ni">&amp;gt;</span>
+</span><span class='line'><span class="ni">&amp;lt;</span>BlockSizeX<span class="ni">&amp;gt;</span>256<span class="ni">&amp;lt;</span>/BlockSizeX<span class="ni">&amp;gt;</span>
+</span><span class='line'><span class="ni">&amp;lt;</span>BlockSizeY<span class="ni">&amp;gt;</span>256<span class="ni">&amp;lt;</span>/BlockSizeY<span class="ni">&amp;gt;</span>
+</span><span class='line'><span class="ni">&amp;lt;</span>BandsCount<span class="ni">&amp;gt;</span>3<span class="ni">&amp;lt;</span>/BandsCount<span class="ni">&amp;gt;</span>
+</span><span class='line'><span class="ni">&amp;lt;</span>MaxConnections<span class="ni">&amp;gt;</span>5<span class="ni">&amp;lt;</span>/MaxConnections<span class="ni">&amp;gt;</span>
+</span><span class='line'><span class="ni">&amp;lt;</span>Cache /<span class="ni">&amp;gt;</span>
+</span><span class='line'><span class="nt">&lt;/code&gt;&lt;/pre&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nt">&lt;p&gt;</span><span class="ni">&amp;lt;</span>/GDAL_WMS&gt;
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>As camadas acrescentadas desta forma são <i><b>rasters</b></i> WMS, sendo portanto possível: visualizar a escalas arbitrarias, reprojectar, mudar transparência, configurar a visibilidade baseada em escalas, etc.</p>
+
+
+
+
+<p>O mais importante é que estas camadas <b>não irão criar problemas de desvios quando usadas no <i>print composer</i> do QGIS.</b></p>
+
+
+
+
+<!-- Imagem -->
+
+
+<div class="post-img">
+    <a href="http://qgis.pt/blog/images/posts/certo.jpg" rel="prettyPhoto" title="">
+        <img class="img-responsive thumbnail" src="http://qgis.pt/blog/images/posts/certo.jpg" width="500"  alt="Problema resolvido usando os datasource WMS da biblioteca GDAL">
+    </a>
+</div>
+
+
+
+
+<h4>Notas:</h4>
+
+
+
+
+<ul>
+<li>o sistema de coordenadas deste camadas é o com código <b>EPSG 3857</b>, ou seja <i>Google Mercator</i></li>
+
+<li>a resolução deste camadas é respectivamente: Google Satellite: <b>15cm</b> , Bing Aerial: <b>30cm</b></li>
+
+<li>o QGIS permite fazer a operação <i>save as</i> ("gravar como") também para camadas <i>rasters</i>. Isso significa que é possível gravar localmente (sob forma de ficheiros GeoTIFF) mapas com imagens Google/Bing (gravar localmente  desta forma áreas grandes com resolução elevada irá significar tempos de processamento muito compridos).</li>
+
+<li>ler com <b>atenção</b> as condições de uso deste provedores de dados. O autor e o grupo QGIS-PT não se responsabilizam para o uso impróprio deste mapas</li>
+
+<li>para mais informações: <a href="http://www.gdal.org/frmt_wms.html">http://www.gdal.org/frmt_wms.html</a></li>
+
+</ul>
+
+
+
+
+<!-- Imagem -->
+
+
+<div class="post-img">
+    <a href="http://qgis.pt/blog/images/posts/raster_save_as.png" rel="prettyPhoto" title="">
+        <img class="img-responsive thumbnail" src="http://qgis.pt/blog/images/posts/raster_save_as.png" width="500"  alt="Operação save as rasters no QGIS">
+    </a>
+</div>
+
+
+
+
+<br />
+
+
+<p><img class="gravatar img-circle" src="http://www.gravatar.com/avatar/f2ec71dec4e3bebb8d932c130c09ff17></img></p>
+]]></content>
+  </entry>
+  
+</feed>
