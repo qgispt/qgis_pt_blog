@@ -20,7 +20,7 @@ crs=iface.mapCanvas().mapSettings().destinationCrs()
 print crs.authid() +' - '+ crs.description()
 {% endcodeblock %}
 
-<p>O código da função pode ser introduzido no separador "Editor de Funções" da calculadora de campos do QGIS (que permite atribuir um nome à função). Em alternativa copie o ficheiro <a href="{{ site.url }}/blog/images/dados/crs.py">crs.py</a> na pasta /.qgis2/python/expressions - reinicie o QGIS, e a nova função irá se encontrar num um novo grupo "CRS" da calculadora de campos.</p>
+<p>O código da função pode ser introduzido no separador "Editor de Funções" da calculadora de campos do QGIS (que permite atribuir um nome à função). Em alternativa copie o ficheiro <a href="{{ site.url }}/blog/images/dados/crs.py">crs.py</a> na pasta /.qgis2/python/expressions - reinicie o QGIS, e a nova função estará num novo grupo "CRS" da calculadora de campos.</p>
 
 
 <!-- Imagem do Editor de funções -->
@@ -68,7 +68,7 @@ def crslabel(value1,feature, parent):
 <p align="center"><iframe frameborder="0" src="https://drive.google.com/file/d/0B98hU-Ebn7VvckRzWTl2WjQ0R3c/preview" width="640" height="480"></iframe></p>
 
 <h4>Problemas encontrados</h4>
-<p>Se o projecto for configurado de forma usar um SRC personalizado e este não tiver um nome associado então na etiquetas serão mostrados os parametros PROJ4 do SRC. Além disso em vez de aparecer "ESPG:" irá aparece "USER:". A possível solução poderá passar por remover o <i>crs.auth.id()</i> da função e deixar apenas a descrição do sistema de coordenadas.</p>
+<p>Se o projecto for configurado de forma a usar um SRC personalizado e este não tiver um nome associado então na etiquetas serão mostrados os parametros PROJ4 do SRC. Além disso em vez de aparecer "ESPG:" irá aparece "USER:". A possível solução poderá passar por remover o <i>crs.auth.id()</i> da função e deixar apenas a descrição do sistema de coordenadas.</p>
 
 <h4>Notas Futuras</h4>
 <p>Pretendo enviar esta função para o projecto QGIS de forma a ser integrada no conjunto de expressões disponíveis por defeito. Gostava ainda de adicionar outras funções que permitam adicionar informações para além do CRS. Eventualmente este tipo de funcionalidade poderá se tornar um botão/painel dentro do compositor impressão.</p>
