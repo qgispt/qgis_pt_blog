@@ -1,0 +1,102 @@
+---
+title: "Instalar duas versões de QGIS em Linux"
+categories: [ qgis master, instalação, linux]
+author: Alexandre Neto
+---
+
+<p>Em altura de testes à versão em desenvolvimento do QGIS (versão master), dá jeito  ter também instalada a última versão estável do QGIS. Em windows isso não representa um problema, uma vez que se podem instalar várias versões do QGIS em paralelo (tanto via Osgeo4w como standalone). Em linux, o processo não é tão directo pelo facto da instalação se realizar por obtenção de diversos pacotes disponíveis nos repositórios, não sendo por isso possível instalar mais do que uma versão sem que se originem quebras de dependências. Assim, instalando a versão estável através dos repositórios, as alternativas para instalação da versão em desenvolvimento são:</p>
+<ul>
+	<li>Compilar o QGIS master do código fonte;</li>
+	<li>Instalar o QGIS master num docker;</li>
+	<li>Instalar o QGIS master numa máquina virtual;</li>
+</ul>
+<p>Neste artigo vou mostrar como compilar o código fonte em <strong>Ubuntu 14.04</strong>. Afinal não é tão difícil quanto parece. Meia dúzia de comandos e um pouco de paciência e vai-se lá. Usei como base as indicações do ficheiro <a href="https://github.com/qgis/QGIS/blob/master/INSTALL">INSTALL.TXT</a> disponível no código fonte com umas pequenas alterações.</p>
+
+<h4>Instalar todas as dependências necessárias</h4>
+
+<p>Num terminal correr o seguinte comando para instalar todas as dependências e ferramentas necessárias à compilação do QGIS. (adicionei o ccmake e o git ao comando original)</p>
+<pre>
+	sudo apt-get install bison cmake doxygen flex git graphviz grass-dev libexpat1-dev libfcgi-dev libgdal-dev libgeos-dev libgsl0-dev libopenscenegraph-dev libosgearth-dev libpq-dev libproj-dev libqscintilla2-dev libqt4-dev libqt4-opengl-dev libqtwebkit-dev libqwt5-qt4-dev libspatialindex-dev libspatialite-dev libsqlite3-dev lighttpd pkg-config poppler-utils pyqt4-dev-tools python-all python-all-dev python-qt4 python-qt4-dev python-sip python-sip-dev spawn-fcgi txt2tags xauth xfonts-100dpi xfonts-75dpi xfonts-base xfonts-scalable xvfb cmake-curses-gui
+</pre>
+<h4>Configurar o ccache</h4>
+<p>Este passo permite optimizar a compilação e tornar a compilação mais rápida nas próximas vezes que se fizer:</p>
+<pre>
+	cd /usr/local/bin
+	sudo ln -s /usr/bin/ccache gcc
+	sudo ln -s /usr/bin/ccache g++
+</pre>
+<h4> Obter o código fonte do Github</h4>
+<p>O código fonte pode ser colocado numa pasta à escolha de cada um. Seguindo a sugestão do ficheiro de instruções acabei por colocar tudo na minha pasta home/alexandre/dev/cpp.</p>
+<pre>
+	mkdir -p ${HOME}/dev/cpp
+	cd ${HOME}/dev/cpp
+</pre>
+<p>Já dentro da pasta home/alexandre/dev/cpp, podemos obter o código do qgis executando o seguinte comando git:</p>
+<pre>
+	git clone git://github.com/qgis/QGIS.git
+</pre>
+<p><strong>Nota:</strong> Se pretendesse fazer alterações ao código e experimentar se funcionava, então deveria fazer o clone do fork do qgis do meu próprio repositório, ou seja:</p>
+<pre>
+	git clone https://github.com/SrNetoChan/Quantum-GIS
+</pre>
+<h4>Preparar directorias de compilação e instalação</h4>
+<p>O código fonte tem de ser compilado e instalado em locais próprios para evitar conflitos com outras versões do QGIS. Por isso, há que criar uma pasta para efectuar a instalação:</p>
+<pre>
+	mkdir -p ${HOME}/apps
+</pre>
+<p>E outra onde será feita a compilação:</p>
+<pre>
+	cd QGIS
+	mkdir build-master
+	cd build-master
+</pre>
+<h4>Configuração</h4>
+<P>Já na pasta build-master damos início ao processo de compilação. O primeiro passo é a configuração, onde vamos dizer onde queremos instalar o QGIS master. Para isso executamos o seguinte comando (não esquecer os dois pontos):</P>
+<pre>
+	ccmake ..
+</pre>
+<p>Na configuração é necessário alterar o valor do CMAKE_INSTALL_PREFIX que define onde vai ser feita a instalação, no meu caso usei a pasta já criada 'home/alexandre/apps'. Para editar o valor há que mover o cursor até à linha em causa e carregar em [enter], depois de editar, volta-se a carregar em [enter]. Depois há que carregar em [c] para refazer a configuração e depois em 'g' para gerar a configuração.</P>
+
+<div class="post-img">
+    <a href="{{ site.url }}/blog/images/posts/screenshot-from-2014-10-08-233339.png" rel="prettyPhoto" title="">
+        {% img img-responsive thumbnail http://qgis.pt/blog/images/posts/screenshot-from-2014-10-08-233339.png '' 'Menu de configuração' %}
+    </a>
+</div>
+
+<h4> Compilação e instalação</h4>
+<p>Já com tudo configurado resta compilar o código e depois instalá-lo:</p>
+<pre>
+	make
+	sudo make install
+</pre>
+<p><strong>Nota:</strong> Estes dois passos podem demorar um bocadinho, principalmente na primeira vez que o código for compilado.</p>
+
+<p>Depois de instalado podemos correr o QGIS master a partir da pasta de instalação:</p>
+<pre>
+	cd ${HOME}/apps/bin/
+	export LD_LIBRARY_PATH=/home/alexandre/apps/lib
+	export QGIS_PREFIX_PATH=/home/alexandre/apps
+	${HOME}/apps/bin/qgis
+</pre>
+<p>Para se tornar mais cómodo, podemos colocar os últimos 3 comandos num ficheiro .sh e gravá-lo num local acessível (desktop ou home) para executarmos o qgis sempre que necessário.</p>
+
+<div class="post-img">
+    <a href="{{ site.url }}/blog/images/posts/screenshot-from-2014-10-09-003652.png" rel="prettyPhoto" title="">
+        {% img img-responsive thumbnail http://qgis.pt/blog/images/posts/screenshot-from-2014-10-09-003652.png '' 'Qgis master a arrancar' %}
+    </a>
+</div>
+
+<h4>Actualizar a versão master</h4>
+<h4>Como já foi referido num comentário, a versão em desenvolvimento está constantemente a ser alterada, por isso para testar se determinados bugs foram entretanto corrigidos há que a actualizar. Trata-se de um processo bastante simples. O primeiro passo é actualizar o código fonte:</h4>
+<pre>
+	cd ${HOME}/dev/cpp/qgis
+	git pull origin master
+</pre>
+<p>E depois é voltar a correr a compilação (que desta feita será mais rápida):</p>
+<pre>
+	cd build-master
+	ccmake ..
+	make
+	sudo make install
+</pre>
+{% gravatar senhor.neto@gmail.com %}
