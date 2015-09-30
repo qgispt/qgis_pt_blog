@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Desenvolvimento | QGIS-PT]]></title>
   <link href="http://qgis.pt/categories/desenvolvimento/atom.xml" rel="self"/>
   <link href="http://qgis.pt/"/>
-  <updated>2015-09-30T09:51:02+01:00</updated>
+  <updated>2015-09-30T10:15:18+01:00</updated>
   <id>http://qgis.pt/</id>
   <author>
     <name><![CDATA[Grupo de Utilizadores QGIS PT]]></name>
@@ -14,10 +14,10 @@
 
   
   <entry>
-    <title type="html"><![CDATA[QGIS: Instalar a Versão De Desenvolvimento E Ajudar No Testing]]></title>
-    <link href="http://qgis.pt/2015/09/29/qgis-instalar-a-versao-de-desenvolvimento-e-ajudar-no-testing/"/>
+    <title type="html"><![CDATA[QGIS: Instalar a Versão De Desenvolvimento E Ajudar Nos Testes]]></title>
+    <link href="http://qgis.pt/2015/09/29/qgis-instalar-a-versao-de-desenvolvimento-e-ajudar-nos-testes/"/>
     <updated>2015-09-29T19:06:55+01:00</updated>
-    <id>http://qgis.pt/2015/09/29/qgis-instalar-a-versao-de-desenvolvimento-e-ajudar-no-testing</id>
+    <id>http://qgis.pt/2015/09/29/qgis-instalar-a-versao-de-desenvolvimento-e-ajudar-nos-testes</id>
     <content type="html"><![CDATA[<p>QGIS é um software SIG Open Source que está a ter um sucesso extraordinário e que tem um modelo de desenvolvimento que é o do Open Source em geral, seguindo a regra típica neste casos: "<i>release early, release often</i>". Isso traduz-se em 3/4 versões novas do programa cada ano. O numero de versão acaba com um numero par no caso das versões estáveis (exemplo: 2.6, 2.8, 2.10, 2.12, etc.) mas existem também versões intermédias, com numero de versão que acaba com um numero díspar (exemplo: 2.7, 2.9, 2.11, 2.13, etc.), as chamadas versões de desenvolvimento ou "<i>master</i>" (ou as vezes "<i>nightly</i>"), ou seja as versões de QGIS que irão se tornar a sucessiva versão estável.</p>
 
 
@@ -94,7 +94,7 @@
 <br />
 
 
-<p><img class="gravatar img-circle" src="http://www.gravatar.com/avatar/610c1b16baa1716b54d2439dd1f4f502></img></p>
+<p><img class="gravatar img-circle" src="http://www.gravatar.com/avatar/cc9f74f790e189eff74273053768e611></img></p>
 ]]></content>
   </entry>
   
@@ -130,7 +130,7 @@
 <br />
 
 
-<p><img class="gravatar img-circle" src="http://www.gravatar.com/avatar/dd18aeb8d08b4b197c828aa774005b76></img></p>
+<p><img class="gravatar img-circle" src="http://www.gravatar.com/avatar/3d0c3ef94c880b9ff955706dcc9ada5d></img></p>
 ]]></content>
   </entry>
   
