@@ -4,7 +4,7 @@
   <title><![CDATA[QGIS-PT]]></title>
   <link href="http://qgis.pt/atom.xml" rel="self"/>
   <link href="http://qgis.pt/"/>
-  <updated>2015-09-29T15:43:27+01:00</updated>
+  <updated>2015-09-30T09:18:29+01:00</updated>
   <id>http://qgis.pt/</id>
   <author>
     <name><![CDATA[Grupo de Utilizadores QGIS PT]]></name>
@@ -12,6 +12,58 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[QGIS: Instalar a Versão De Desenvolvimento E Ajudar No Testing]]></title>
+    <link href="http://qgis.pt/2015/09/29/qgis-instalar-a-versao-de-desenvolvimento-e-ajudar-no-testing/"/>
+    <updated>2015-09-29T19:06:55+01:00</updated>
+    <id>http://qgis.pt/2015/09/29/qgis-instalar-a-versao-de-desenvolvimento-e-ajudar-no-testing</id>
+    <content type="html"><![CDATA[<p>QGIS é um software SIG Open Source que está a ter um sucesso extraordinário e que tem um modelo de desenvolvimento que é o do Open Source em geral, seguindo a regra típica neste casos: &#8221;<i>release early, release often</i>&#8221;. Isso traduz-se em 3/4 versões novas do programa cada ano. O numero de versão acaba com um numero par no caso das versões estáveis (exemplo: 2.6, 2.8, 2.10, 2.12, etc.) mas existem também versões intermédias, com numero de versão que acaba com um numero díspar (exemplo: 2.7, 2.9, 2.11, 2.13, etc.), as chamadas versões de desenvolvimento ou &#8221;<i>master</i>&#8221; (ou as vezes &#8221;<i>nightly</i>&#8221;), ou seja as versões de QGIS que irão se tornar a sucessiva versão estável.</p>
+
+<!-- more -->
+
+<p>Este versões de desenvolvimento são actualizadas diariamente, e podem ser instaladas sem grande problemas pois não causam nenhum conflito com as versões estáveis instaladas no mesmo computador.</p>
+
+<p>Instalar QGIS &#8221;<i>master</i>&#8221; é importante por varias razões:</p>
+
+<ul>
+<li>pode haver uma nova funcionalidade que pode ser muito útil no nosso trabalho</li>
+
+<li>pode ser que um bug conhecido já esteja resolvido</li>
+
+<li>usando esta versão de facto participamos na fase de testes das novas versões do QGIS: isso leva a ter versões de QGIS melhores para todos. É particularmente importante na fase chamada &#8221;<i>feature freeze</i>&#8221;, que inicia 1 mês antes da disponibilização da nova versão estável, uma fase onde não são acrescentadas novas funcionalidade e que é completamente dedicada à resolução de bugs.</li>
+</ul>
+
+
+<p>De seguida são descritos os passos para a instalação de QGIS &#8221;<i>master</i>&#8221; em ambiente Windows (quem queira instalar QGIS &#8221;<i>master</i>&#8221; em ambiente Linux ou OsX pode contactar o autor ou o grupo QGIS-PT nos comentários deste post):</p>
+
+<ul>
+<li>descarregar o instalador OSGEO4W (<a href="http://download.osgeo.org/osgeo4w/osgeo4w-setup-x86.exe">32 bit</a> ou <a href="http://download.osgeo.org/osgeo4w/osgeo4w-setup-x86_64.exe">64 bit</a>)</li>
+
+<li>correr o instalador, seguir a &#8220;advanced install&#8221;</li>
+
+<li>nos passos seguintes escolher todas as opções por defeito, até chegar a janela &#8220;Select Packages&#8221;</li>
+
+<li>na categoria &#8220;Desktop&#8221; seleccionar para instalação o package &#8220;qgis-dev&#8221;</li>
+
+<li>carregar em &#8220;next&#8221; e finalizar a instalação</li>
+</ul>
+
+<!-- Imagem -->
+<div class="post-img">
+    <a href="http://qgis.pt/blog/images/posts/osgeo4w_master2.png" rel="prettyPhoto" title="">
+        <img class="img-responsive thumbnail" src="http://qgis.pt/blog/images/posts/osgeo4w_master2.png" width="500"  alt="QGIS master pronto a usar">
+    </a>
+</div>
+
+<p>As mesmas operações poderão ser repetidas diariamente, pois todos os dias QGIS &#8221;<i>master</i>&#8221; é actualizado de forma incluir as novas funcionalidades e correcções de bugs feitas nas 24 horas anteriores.</p>
+
+<p>Se usando QGIS master irão encontrar problemas (em modo especial os que não ocorrem nas versões estáveis) sugere-se é que o utilizador relate o mesmo no <a href="http://hub.qgis.org/projects/quantum-gis/issues">QGIS bug tracker</a>.</p>
+
+
+<br />
+<img class="gravatar img-circle" src="http://www.gravatar.com/avatar/d87344818a5e1792a1eb6cdd85725f74></img>]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[QGIS: Ajuda, Suporte, Desenvolvimento]]></title>

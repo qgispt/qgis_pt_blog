@@ -1,0 +1,53 @@
+---
+layout: post
+title: "QGIS: instalar a versão de desenvolvimento e ajudar no testing"
+date: 2015-09-29 19:06:55 +0100
+comments: true
+categories: [QGIS, desenvolvimento]
+author: Giovanni Manghi (NaturalGIS)
+---
+<p>QGIS é um software SIG Open Source que está a ter um sucesso extraordinário e que tem um modelo de desenvolvimento que é o do Open Source em geral, seguindo a regra típica neste casos: "<i>release early, release often</i>". Isso traduz-se em 3/4 versões novas do programa cada ano. O numero de versão acaba com um numero par no caso das versões estáveis (exemplo: 2.6, 2.8, 2.10, 2.12, etc.) mas existem também versões intermédias, com numero de versão que acaba com um numero díspar (exemplo: 2.7, 2.9, 2.11, 2.13, etc.), as chamadas versões de desenvolvimento ou "<i>master</i>" (ou as vezes "<i>nightly</i>"), ou seja as versões de QGIS que irão se tornar a sucessiva versão estável.</p>
+
+<!-- more -->
+
+<p>Este versões de desenvolvimento são actualizadas diariamente, e podem ser instaladas sem grande problemas pois não causam nenhum conflito com as versões estáveis instaladas no mesmo computador.</p>
+
+<p>Instalar QGIS "<i>master</i>" é importante por varias razões:</p>
+
+<ul>
+<li>pode haver uma nova funcionalidade que pode ser muito útil no nosso trabalho</li>
+
+<li>pode ser que um bug conhecido já esteja resolvido</li>
+
+<li>usando esta versão de facto participamos na fase de testes das novas versões do QGIS: isso leva a ter versões de QGIS melhores para todos. É particularmente importante na fase chamada "<i>feature freeze</i>", que inicia 1 mês antes da disponibilização da nova versão estável, uma fase onde não são acrescentadas novas funcionalidade e que é completamente dedicada à resolução de bugs.</li>
+</ul>
+
+
+<p>De seguida são descritos os passos para a instalação de QGIS "<i>master</i>" em ambiente Windows (quem queira instalar QGIS "<i>master</i>" em ambiente Linux ou OsX pode contactar o autor ou o grupo QGIS-PT nos comentários deste post):</p>
+
+<ul>
+<li>descarregar o instalador OSGEO4W (<a href="http://download.osgeo.org/osgeo4w/osgeo4w-setup-x86.exe">32 bit</a> ou <a href="http://download.osgeo.org/osgeo4w/osgeo4w-setup-x86_64.exe">64 bit</a>)</li>
+
+<li>correr o instalador, seguir a "advanced install"</li>
+
+<li>nos passos seguintes escolher todas as opções por defeito, até chegar a janela "Select Packages"</li>
+
+<li>na categoria "Desktop" seleccionar para instalação o package "qgis-dev"</li>
+
+<li>carregar em "next" e finalizar a instalação</li>
+</ul>
+
+<!-- Imagem -->
+<div class="post-img">
+    <a href="{{ site.url }}/blog/images/posts/osgeo4w_master2.png" rel="prettyPhoto" title="">
+        {% img img-responsive thumbnail http://qgis.pt/blog/images/posts/osgeo4w_master2.png 500 '' 'QGIS master pronto a usar' %}
+    </a>
+</div>
+
+<p>As mesmas operações poderão ser repetidas diariamente, pois todos os dias QGIS "<i>master</i>" é actualizado de forma incluir as novas funcionalidades e correcções de bugs feitas nas 24 horas anteriores.</p>
+
+<p>Se usando QGIS master irão encontrar problemas (em modo especial os que não ocorrem nas versões estáveis) sugere-se é que o utilizador relate o mesmo no <a href="http://hub.qgis.org/projects/quantum-gis/issues">QGIS bug tracker</a>.</p>
+
+
+<br />
+{% gravatar giovanni.manghi@gmail.com %}

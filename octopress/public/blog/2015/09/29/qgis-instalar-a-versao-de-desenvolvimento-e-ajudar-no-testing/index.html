@@ -13,7 +13,7 @@
     <meta name="author" content="Grupo de Utilizadores QGIS PT">
 
     
-    <meta name="description" content="Mostrar Automáticamente O SRC Do Projecto Numa Etiqueta Do Compositor De Impressão 27 de Setembro, 2015 Este artigo mostra como podemos mostrar &hellip;">
+    <meta name="description" content="QGIS: Instalar a Versão De Desenvolvimento E Ajudar No Testing 29 de Setembro, 2015 QGIS é um software SIG Open Source que está a ter um sucesso &hellip;">
     
 
     <!-- http://t.co/dKP3o1e -->
@@ -22,7 +22,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     
-    <link rel="canonical" href="http://qgis.pt/2015/09/27/mostrar-dinamicamente-o-src-do-projecto-numa-etiqueta">
+    <link rel="canonical" href="http://qgis.pt/2015/09/29/qgis-instalar-a-versao-de-desenvolvimento-e-ajudar-no-testing">
     <!-- CUSTOM CSS -->
     <link href="http://fonts.googleapis.com/css?family=Roboto:400,300,100,100italic,300italic,400italic,700,700italic" rel="stylesheet" type='text/css'>
     <link href="http://qgis.pt/libs/bootstrap/css/bootstrap.css" rel="stylesheet">
@@ -93,7 +93,7 @@
   
   <header>
     
-      <h2 class="entry-title-static">Mostrar Automáticamente O SRC Do Projecto Numa Etiqueta Do Compositor De Impressão</h2>
+      <h2 class="entry-title-static">QGIS: Instalar a Versão De Desenvolvimento E Ajudar No Testing</h2>
     
     
       <p class="meta">
@@ -112,110 +112,57 @@
 
 
 
-<div class="blog-time" datetime="2015-09-27T08:43:18+01:00" pubdate data-updated="true">27 de Setembro, 2015</div>
+<div class="blog-time" datetime="2015-09-29T19:06:55+01:00" pubdate data-updated="true">29 de Setembro, 2015</div>
       </p>
     
   </header>
 
 
-<div class="entry-content"><p>Este artigo mostra como podemos mostrar automaticamente o sistema de coordenadas do projecto numa etiqueta da compositor de impressão do QGIS.</p>
-
-<h4>O problema</h4>
-<p>No QGIS por vezes precisamos de exportar mapas que mostrem o sistema de coordenadas do projecto.</p>
+<div class="entry-content"><p>QGIS é um software SIG Open Source que está a ter um sucesso extraordinário e que tem um modelo de desenvolvimento que é o do Open Source em geral, seguindo a regra típica neste casos: &#8221;<i>release early, release often</i>&#8221;. Isso traduz-se em 3/4 versões novas do programa cada ano. O numero de versão acaba com um numero par no caso das versões estáveis (exemplo: 2.6, 2.8, 2.10, 2.12, etc.) mas existem também versões intermédias, com numero de versão que acaba com um numero díspar (exemplo: 2.7, 2.9, 2.11, 2.13, etc.), as chamadas versões de desenvolvimento ou &#8221;<i>master</i>&#8221; (ou as vezes &#8221;<i>nightly</i>&#8221;), ou seja as versões de QGIS que irão se tornar a sucessiva versão estável.</p>
 
 <!-- more -->
 
-<p>Actualmente o QGIS não tem uma função que permita inserir no compositor de impressão o SRC do projecto. Nestas situações recorre-se à introdução manual do sistema de coordenadas numa etiqueta, mas este método por vezes não é prático, pois no caso de se usarem templates de impressão, esta etiqueta deverá ser alterada manualmente caso o SRC do projecto mude.</p>
+<p>Este versões de desenvolvimento são actualizadas diariamente, e podem ser instaladas sem grande problemas pois não causam nenhum conflito com as versões estáveis instaladas no mesmo computador.</p>
 
-<h4>A solução</h4>
-<p>Com o seguinte código é criada uma função que permite a actualização automática do SRC numa etiqueta do compositor de impressão. O código pode ser executado na consola python do QGIS ou pode ser gravado num ficheiro .py a seguir colocado na pasta &#8220;.qgis2&#8221; do QGIS.</p>
+<p>Instalar QGIS &#8221;<i>master</i>&#8221; é importante por varias razões:</p>
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="n">crs</span><span class="o">=</span><span class="n">iface</span><span class="o">.</span><span class="n">mapCanvas</span><span class="p">()</span><span class="o">.</span><span class="n">mapSettings</span><span class="p">()</span><span class="o">.</span><span class="n">destinationCrs</span><span class="p">()</span>
-</span><span class='line'><span class="k">print</span> <span class="n">crs</span><span class="o">.</span><span class="n">authid</span><span class="p">()</span> <span class="o">+</span><span class="s">&#39; - &#39;</span><span class="o">+</span> <span class="n">crs</span><span class="o">.</span><span class="n">description</span><span class="p">()</span>
-</span></code></pre></td></tr></table></div></figure>
+<ul>
+<li>pode haver uma nova funcionalidade que pode ser muito útil no nosso trabalho</li>
 
-<p>O código da função pode ser introduzido no separador &#8220;Editor de Funções&#8221; da calculadora de campos do QGIS (que permite atribuir um nome à função). Em alternativa copie o ficheiro <a href="http://qgis.pt/blog/images/dados/crs.py">crs.py</a> na pasta /.qgis2/python/expressions - reinicie o QGIS, e a nova função estará num novo grupo &#8220;CRS&#8221; da calculadora de campos.</p>
+<li>pode ser que um bug conhecido já esteja resolvido</li>
+
+<li>usando esta versão de facto participamos na fase de testes das novas versões do QGIS: isso leva a ter versões de QGIS melhores para todos. É particularmente importante na fase chamada &#8221;<i>feature freeze</i>&#8221;, que inicia 1 mês antes da disponibilização da nova versão estável, uma fase onde não são acrescentadas novas funcionalidade e que é completamente dedicada à resolução de bugs.</li>
+</ul>
 
 
-<!-- Imagem do Editor de funções -->
+<p>De seguida são descritos os passos para a instalação de QGIS &#8221;<i>master</i>&#8221; em ambiente Windows (quem queira instalar QGIS &#8221;<i>master</i>&#8221; em ambiente Linux ou OsX pode contactar o autor ou o grupo QGIS-PT nos comentários deste post):</p>
+
+<ul>
+<li>descarregar o instalador OSGEO4W (<a href="http://download.osgeo.org/osgeo4w/osgeo4w-setup-x86.exe">32 bit</a> ou <a href="http://download.osgeo.org/osgeo4w/osgeo4w-setup-x86_64.exe">64 bit</a>)</li>
+
+<li>correr o instalador, seguir a &#8220;advanced install&#8221;</li>
+
+<li>nos passos seguintes escolher todas as opções por defeito, até chegar a janela &#8220;Select Packages&#8221;</li>
+
+<li>na categoria &#8220;Desktop&#8221; seleccionar para instalação o package &#8220;qgis-dev&#8221;</li>
+
+<li>carregar em &#8220;next&#8221; e finalizar a instalação</li>
+</ul>
+
+<!-- Imagem -->
 <div class="post-img">
-    <a href="http://qgis.pt/blog/images/posts/crs_field_calculator.png" rel="prettyPhoto" title="">
-        <img class="img-responsive thumbnail" src="http://qgis.pt/blog/images/posts/crs_field_calculator.png" width="500"  alt="Editor de Funções">
+    <a href="http://qgis.pt/blog/images/posts/osgeo4w_master2.png" rel="prettyPhoto" title="">
+        <img class="img-responsive thumbnail" src="http://qgis.pt/blog/images/posts/osgeo4w_master2.png" width="500"  alt="QGIS master pronto a usar">
     </a>
 </div>
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="kn">from</span> <span class="nn">qgis.utils</span> <span class="kn">import</span> <span class="n">iface</span>
-</span><span class='line'><span class="kn">from</span> <span class="nn">qgis.core</span> <span class="kn">import</span> <span class="o">*</span>
-</span><span class='line'><span class="kn">from</span> <span class="nn">qgis.gui</span> <span class="kn">import</span> <span class="o">*</span>
-</span><span class='line'>
-</span><span class='line'><span class="nd">@qgsfunction</span><span class="p">(</span><span class="n">args</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">group</span><span class="o">=</span><span class="s">&#39;CRS&#39;</span><span class="p">)</span>
-</span><span class='line'><span class="k">def</span> <span class="nf">crslabel</span><span class="p">(</span><span class="n">value1</span><span class="p">,</span><span class="n">feature</span><span class="p">,</span> <span class="n">parent</span><span class="p">):</span>
-</span><span class='line'>    <span class="sd">&quot;&quot;&quot;</span>
-</span><span class='line'><span class="sd">    Returns the project CRS </span>
-</span><span class='line'><span class="sd">    </span>
-</span><span class='line'><span class="sd">    &lt;h4&gt;Syntax&lt;/h4&gt;</span>
-</span><span class='line'><span class="sd">    &lt;p&gt;crslabel(&lt;i&gt;value&lt;/i&gt;)&lt;/p&gt;</span>
-</span><span class='line'><span class="sd">    &lt;h4&gt;Arguments&lt;/h4&gt;</span>
-</span><span class='line'><span class="sd">    &lt;p&gt;&lt;i&gt;none&lt;/i&gt; &amp;rarr; 0&lt;/p&gt;</span>
-</span><span class='line'><span class="sd">    &lt;h4&gt;Example&lt;/h4&gt;</span>
-</span><span class='line'><span class="sd">    &lt;p&gt;&lt;!-- Show example of function.--&gt;</span>
-</span><span class='line'><span class="sd">    crslabel &amp;rarr; EPSG:4326 - WGS84&lt;/p&gt;</span>
-</span><span class='line'><span class="sd">    &lt;h4&gt;Note:&lt;/h4&gt;</span>
-</span><span class='line'><span class="sd">    &lt;p&gt;This function only produces the EPSG code and the description.</span>
-</span><span class='line'><span class="sd">    &lt;/p&gt;</span>
-</span><span class='line'><span class="sd">    &quot;&quot;&quot;</span>
-</span><span class='line'>    <span class="n">crs</span><span class="o">=</span><span class="n">iface</span><span class="o">.</span><span class="n">mapCanvas</span><span class="p">()</span><span class="o">.</span><span class="n">mapSettings</span><span class="p">()</span><span class="o">.</span><span class="n">destinationCrs</span><span class="p">()</span>
-</span><span class='line'>    <span class="k">return</span> <span class="n">crs</span><span class="o">.</span><span class="n">authid</span><span class="p">()</span> <span class="o">+</span><span class="s">&#39; - &#39;</span><span class="o">+</span> <span class="n">crs</span><span class="o">.</span><span class="n">description</span><span class="p">()</span>
-</span></code></pre></td></tr></table></div></figure>
-<p></p>
+<p>As mesmas operações poderão ser repetidas diariamente, pois todos os dias QGIS &#8221;<i>master</i>&#8221; é actualizado de forma incluir as novas funcionalidades e correcções de bugs feitas nas 24 horas anteriores.</p>
 
-<!-- Resultado no Compositor de mapas -->
-<div class="post-img">
-    <a href="http://qgis.pt/blog/images/posts/crs_composer_layout.png" rel="prettyPhoto" title="">
-        <img class="img-responsive thumbnail" src="http://qgis.pt/blog/images/posts/crs_composer_layout.png" width="500"  alt="Função aplicada no compositor de mapas">
-    </a>
-</div>
+<p>Se usando QGIS master irão encontrar problemas (em modo especial os que não ocorrem nas versões estáveis) sugere-se é que o utilizador relate o mesmo no <a href="http://hub.qgis.org/projects/quantum-gis/issues">QGIS bug tracker</a>.</p>
 
-<p>Veja aqui a função em acção:</p>
-<!-- Vídeo a mostrar a funcionalidade -->
-<p align="center"><iframe frameborder="0" src="https://drive.google.com/file/d/0B98hU-Ebn7VvckRzWTl2WjQ0R3c/preview" width="640" height="480"></iframe></p>
-
-<h4>Problemas encontrados</h4>
-<p>Se o projecto for configurado de forma a usar um SRC personalizado e este não tiver um nome associado então na etiquetas serão mostrados os parametros PROJ4 do SRC. Além disso em vez de aparecer &#8220;ESPG:&#8221; irá aparece &#8220;USER:&#8221;. A possível solução poderá passar por remover o <i>crs.auth.id()</i> da função e deixar apenas a descrição do sistema de coordenadas.</p>
-
-<h4>Notas Futuras</h4>
-<p>Pretendo enviar esta função para o projecto QGIS de forma a ser integrada no conjunto de expressões disponíveis por defeito. Gostava ainda de adicionar outras funções que permitam adicionar informações para além do CRS. Eventualmente este tipo de funcionalidade poderá se tornar um botão/painel dentro do compositor impressão.</p>
-
-<h4>Considerações Finais e Agradecimentos</h4>
-<p>Este código foi escrito durante o Encontro de Programadores QGIS realizado em <a href="https://qgis2015.wordpress.com/">Nødebo, Dinamarca</a>. O espírito de equipa e a capacidade de entreajuda são coisas fortes nesta comunidade. Quero agradecer ao Raymond Nijssen, Nyall Dawson e Matthias Khun pelas orientações e dicas que me deram durante o encontro de programadores.
-</p>
 
 <br />
-<img class="gravatar img-circle" src="http://www.gravatar.com/avatar/0edb9f3a1e5191476215ce32183d80a4></img></div>
+<img class="gravatar img-circle" src="http://www.gravatar.com/avatar/d87344818a5e1792a1eb6cdd85725f74></img></div>
 
 
   <div class="post-metadata">
@@ -223,14 +170,14 @@
       
   
 
-<span class="byline author vcard">Publicado pelo utilizador: <span class="fn">João Gaspar</span></span>
+<span class="byline author vcard">Publicado pelo utilizador: <span class="fn">Giovanni Manghi (NaturalGIS)</span></span>
 
       <br />
       
 
 <span class="categories">Categorias: 
   
-    <a class='category' href='/blog/categories/compositor-de-mapas/'>Compositor de Mapas</a>, <a class='category' href='/blog/categories/mapas/'>Mapas</a>, <a class='category' href='/blog/categories/src/'>SRC</a>
+    <a class='category' href='/blog/categories/qgis/'>QGIS</a>, <a class='category' href='/blog/categories/desenvolvimento/'>desenvolvimento</a>
   
 </span>
 
@@ -239,7 +186,7 @@
     
       <div class="sharing">
   
-  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://qgis.pt/2015/09/27/mostrar-dinamicamente-o-src-do-projecto-numa-etiqueta/" data-via="" data-counturl="http://qgis.pt/2015/09/27/mostrar-dinamicamente-o-src-do-projecto-numa-etiqueta/" >Tweet</a>
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://qgis.pt/2015/09/29/qgis-instalar-a-versao-de-desenvolvimento-e-ajudar-no-testing/" data-via="" data-counturl="http://qgis.pt/2015/09/29/qgis-instalar-a-versao-de-desenvolvimento-e-ajudar-no-testing/" >Tweet</a>
   
   
   <div class="g-plusone" data-size="medium"></div>
@@ -254,10 +201,8 @@
   </div>
   <ul class="pager">
     
-      <li class="previous"><a class="basic-alignment left" href="/blog/2015/05/06/plugin-reffunctions/" title="Previous Post: Plugin refFunctions">&laquo; Plugin refFunctions</a></li>
+      <li class="previous"><a class="basic-alignment left" href="/blog/2015/09/29/qgis-ajuda-suporte-desenvolvimento/" title="Previous Post: QGIS: ajuda, suporte, desenvolvimento">&laquo; QGIS: ajuda, suporte, desenvolvimento</a></li>
     
-    
-      <li class="next"><a class="basic-alignment right" href="/blog/2015/09/28/imprimir-e-descarregar-mapas-bing-e-google/" title="Next Post: Imprimir e descarregar mapas Bing e Google">Imprimir e descarregar mapas Bing e Google &raquo;</a></li>
     
   </ul>
  
@@ -363,8 +308,8 @@
                 }
             }];
         }
-        var disqus_identifier = 'http://qgis.pt/2015/09/27/mostrar-dinamicamente-o-src-do-projecto-numa-etiqueta/';
-        var disqus_url = 'http://qgis.pt/2015/09/27/mostrar-dinamicamente-o-src-do-projecto-numa-etiqueta/';
+        var disqus_identifier = 'http://qgis.pt/2015/09/29/qgis-instalar-a-versao-de-desenvolvimento-e-ajudar-no-testing/';
+        var disqus_url = 'http://qgis.pt/2015/09/29/qgis-instalar-a-versao-de-desenvolvimento-e-ajudar-no-testing/';
         var disqus_script = 'embed.js';
       
     (function () {
