@@ -1,0 +1,38 @@
+<div class="highlight"><pre><span class="kn">from</span> <span class="nn">PyQt4.QtGui</span> <span class="kn">import</span> <span class="n">QColor</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+
+<span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">iface</span> <span class="o">=</span> <span class="n">qgis</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">iface</span>
+<span class="n">mc</span> <span class="o">=</span> <span class="n">iface</span><span class="o">.</span><span class="n">mapCanvas</span><span class="p">()</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+
+<span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">layer</span> <span class="o">=</span> <span class="n">mc</span><span class="o">.</span><span class="n">currentLayer</span><span class="p">()</span>
+<span class="n">features</span> <span class="o">=</span> <span class="n">layer</span><span class="o">.</span><span class="n">getFeatures</span><span class="p">()</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+
+<span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">color_dict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+
+<span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="k">for</span> <span class="n">feature</span> <span class="ow">in</span> <span class="n">features</span><span class="p">:</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+
+<span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="n">cat</span> <span class="o">=</span> <span class="n">feature</span><span class="o">.</span><span class="n">attribute</span><span class="p">(</span><span class="s">&#39;designacao&#39;</span><span class="p">)</span>
+<span class="n">rgba_value</span> <span class="o">=</span> <span class="n">feature</span><span class="o">.</span><span class="n">attribute</span><span class="p">(</span><span class="s">&#39;rbga&#39;</span><span class="p">)</span>
+<span class="n">color_dict</span><span class="p">[</span><span class="n">cat</span><span class="p">]</span> <span class="o">=</span> <span class="n">rgba_value</span>
+<span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+
+<span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">renderer</span> <span class="o">=</span> <span class="n">layer</span><span class="o">.</span><span class="n">rendererV2</span><span class="p">()</span>
+<span class="n">categories</span> <span class="o">=</span> <span class="n">renderer</span><span class="o">.</span><span class="n">categories</span><span class="p">()</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+
+<span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="k">for</span> <span class="n">category</span> <span class="ow">in</span> <span class="n">categories</span><span class="p">:</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+
+<span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="n">value</span> <span class="o">=</span> <span class="n">category</span><span class="o">.</span><span class="n">value</span><span class="p">()</span>
+<span class="n">cat_id</span> <span class="o">=</span> <span class="n">renderer</span><span class="o">.</span><span class="n">categoryIndexForValue</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">cat_id</span>
+<span class="k">if</span> <span class="n">value</span> <span class="o">!=</span> <span class="s">u&#39;&#39;</span><span class="p">:</span>
+    <span class="n">rgba</span> <span class="o">=</span> <span class="n">color_dict</span><span class="p">[</span><span class="n">value</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;,&#39;</span><span class="p">)</span>
+    <span class="n">rgba</span> <span class="o">=</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">rgba</span> <span class="p">]</span>
+    <span class="n">color</span> <span class="o">=</span> <span class="n">QColor</span><span class="p">(</span><span class="n">rgba</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">rgba</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">rgba</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span><span class="n">rgba</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span>
+
+    <span class="n">symbol</span> <span class="o">=</span> <span class="n">category</span><span class="o">.</span><span class="n">symbol</span><span class="p">()</span>
+    <span class="n">symbol</span><span class="o">.</span><span class="n">setColor</span><span class="p">(</span><span class="n">color</span><span class="p">)</span>
+    <span class="n">renderer</span><span class="o">.</span><span class="n">updateCategorySymbol</span><span class="p">(</span><span class="n">cat_id</span><span class="p">,</span><span class="n">symbol</span><span class="p">)</span>
+<span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+
+<span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">mc</span><span class="o">.</span><span class="n">refresh</span><span class="p">()</span>
+<span class="n">qgis</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">iface</span><span class="o">.</span><span class="n">legendInterface</span><span class="p">()</span><span class="o">.</span><span class="n">refreshLayerSymbology</span><span class="p">(</span><span class="n">layer</span><span class="p">)</span>
+</pre></div>

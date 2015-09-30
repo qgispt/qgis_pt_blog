@@ -1,0 +1,176 @@
+---
+layout: post
+title: "Definição de simbologia através de campo RGBA"
+date: 2015-09-30 09:29:19 +0100
+categories: [Simbologia, RGBA, CLC2006]
+author: Manuela Sampayo
+---
+<p>	Este post aborda o processo de configuração de simbologia através do 
+	atributo RGBA, permite ultrapassar uma limitação do QGIS, que se 
+	encontra ainda por resolver (<a href="http://hub.qgis.org/issues/11491">http://hub.qgis.org/issues/11491</a>).
+	Resultou da necessidade de produzir a simbologia oficial para a carta 
+	de ocupação de solos Corine Land Cover (CLC) com base nos valores RGB.</p>
+
+<!-- more -->
+
+<h4>Objetivo inicial:</h4>
+
+<p>	Simbolizar a carta de ocupação de solos Corine Land Cover 2006 
+	(CLC2006), por classes utilizando o sistema de cores RGBA.</p>
+<p>	A preparação da informação consistiu:</p>
+<ol>
+	<li>
+		União da tabela de atributos da CLC2006 com a tabela da 
+		nomenclatura que possuía os valores RGB. (Fig. 1)
+		<div class="post-img">
+			<a href="{{ site.url }}/blog/images/posts/ms_fig1_unir_camadas.png" rel="prettyPhoto" title="">
+				{% img img-responsive thumbnail http://qgis.pt/blog/images/posts/ms_fig1_unir_camadas.png 500 '' 'Unir as camadas' %}
+			</a>
+        </div>
+    
+	</li>
+	<li>
+		Criação de novo campo denominado <strong>[rbga]</strong> do tipo 
+		texto com a concatenação dos campos R, G, B e a criação do parâmetro A 
+		(alfa) que corresponde ao grau de opacidade (Fig. 2).
+		<div class="post-img">
+			<a href="{{ site.url }}/blog/images/posts/ms_fig2_criar_campo_RGBA.png" rel="prettyPhoto" title="">
+				{% img img-responsive thumbnail http://qgis.pt/blog/images/posts/ms_fig2_criar_campo_RGBA.png 500 '' 'Unir as camadas' %}
+			</a>
+        </div>
+		<strong>Nota:</strong> Os valores do campo devem variar entre 
+		0 e 255 separados por vírgula, o valor da opacidade é 255 
+		para todas as classes (Fig. 3)
+		<div class="post-img">
+			<a href="{{ site.url }}/blog/images/posts/ms_fig3_tabela_de_atributos.png" rel="prettyPhoto" title="">
+				{% img img-responsive thumbnail http://qgis.pt/blog/images/posts/ms_fig3_tabela_de_atributos.png 500 '' 'Unir as camadas' %}
+			</a>
+        </div>
+	</li>
+	<li>
+Com a coluna rgba criada na tabela de atributos, procedeu-se à 
+	configuração do estilo.
+<div class="post-img">
+	<a href="{{ site.url }}/blog/images/posts/ms_fig5_configurar_estilo.png" rel="prettyPhoto" title="">
+	{% img img-responsive thumbnail http://qgis.pt/blog/images/posts/ms_fig5_configurar_estilo.png 500 '' 'Unir as camadas' %}
+	</a>
+</div>
+</li>	
+</ol>
+<h4>Problema</h4>
+
+<p>	O mapa aparece corretamente simbolizado, mas a legenda não reflete 
+	as categorias criadas, todas aparecem a negro, não permitindo uma 
+	interpretação correta da informação.</p>
+<div class="post-img">
+	<a href="{{ site.url }}/blog/images/posts/ms_fig6_estilos_a_preto.png" rel="prettyPhoto" title="">
+	{% img img-responsive thumbnail http://qgis.pt/blog/images/posts/ms_fig6_estilos_a_preto.png 500 '' 'Unir as camadas' %}
+	</a>
+</div>
+<p>	Identificou-se que se trata-se de uma limitação do QGIS, que se 
+	encontra ainda por resolver (<a href="http://hub.qgis.org/issues/11491">http://hub.qgis.org/issues/11491</a>)</p>
+
+<h4>Solução</h4>
+
+<p>	Criar um script python que faça a associação da cor à classe respetiva.</p>
+<p>	Com a ajuda do  Alexandre Neto do grupo de utilizadores do QGIS PT, 
+	que produziu o seguinte script, é possível ultrapassar com sucesso 
+	o problema. Script disponível <a href="{{ site.url }}/blog/images/dados/script_rgba.py">aqui</a>.</p>
+
+{% codeblock lang:python %}
+from PyQt4.QtGui import QColor
+
+iface = qgis.utils.iface
+mc = iface.mapCanvas()
+
+layer = mc.currentLayer()
+features = layer.getFeatures()
+
+color_dict = dict()
+
+for feature in features:
+    cat = feature.attribute('designacao')
+    rgba_value = feature.attribute('rbga')
+    color_dict[cat] = rgba_value
+
+renderer = layer.rendererV2()
+categories = renderer.categories()
+
+for category in categories:
+    value = category.value()
+    cat_id = renderer.categoryIndexForValue(value)
+    print cat_id
+    if value != u'':
+        rgba = color_dict[value].split(',')
+        rgba = [int(i) for i in rgba ]
+        color = QColor(rgba[0],rgba[1],rgba[2],rgba[3])
+        
+        symbol = category.symbol()
+        symbol.setColor(color)
+        renderer.updateCategorySymbol(cat_id,symbol)
+
+mc.refresh() 
+qgis.utils.iface.legendInterface().refreshLayerSymbology(layer)
+{% endcodeblock %}
+
+<p>Procedimentos de utilização do script:</p>
+<ol>
+	<li>Abrir a consola python (Módulos > Consola Python);</li>
+	<div class="post-img">
+		<a href="{{ site.url }}/blog/images/posts/ms_fig7_abrir_consola.png" rel="prettyPhoto" title="">
+		{% img img-responsive thumbnail http://qgis.pt/blog/images/posts/ms_fig7_abrir_consola.png 500 '' 'Abrir consola' %}
+		</a>
+	</div>
+	<li>Dentro da consola abrir o script;</li>
+	<div class="post-img">
+		<a href="{{ site.url }}/blog/images/posts/ms_fig8_carregar_script.png" rel="prettyPhoto" title="">
+		{% img img-responsive thumbnail http://qgis.pt/blog/images/posts/ms_fig8_carregar_script.png 500 '' 'Abrir script' %}
+		</a>
+	</div>
+	<li>Editar as linhas 12 e 13 e adaptar ao nome das colunas relativas 
+	ao campo das categorias e ao campo com os valores RBGA. Gravar.</li>
+	<div class="post-img">
+		<a href="{{ site.url }}/blog/images/posts/ms_fig9_editar campos_script.png" rel="prettyPhoto" title="">
+		{% img img-responsive thumbnail http://qgis.pt/blog/images/posts/ms_fig9_editar campos_script.png 500 '' 'Editar campos do script' %}
+		</a>
+	</div>
+	<li>Definir estilo categorizado utilizando o campo respetivo;</li>
+	<div class="post-img">
+		<a href="{{ site.url }}/blog/images/posts/ms_fig10_atribuir_estilo.png" rel="prettyPhoto" title="">
+		{% img img-responsive thumbnail http://qgis.pt/blog/images/posts/ms_fig10_atribuir_estilo.png 500 '' 'Definir estilo categorizado' %}
+		</a>
+	</div>
+	<li>Desativar a opção Substituir dados definidos;</li>
+	<div class="post-img">
+		<a href="{{ site.url }}/blog/images/posts/ms_fig11_desligar_data_defined_properties.png" rel="prettyPhoto" title="">
+		{% img img-responsive thumbnail http://qgis.pt/blog/images/posts/ms_fig11_desligar_data_defined_properties.png 500 '' 'Desligar o data-defined properties' %}
+		</a>
+	</div>
+	<li>Correr o script.</li>
+	<div class="post-img">
+		<a href="{{ site.url }}/blog/images/posts/ms_fig12_correr_script.png" rel="prettyPhoto" title="">
+		{% img img-responsive thumbnail http://qgis.pt/blog/images/posts/ms_fig12_correr_script.png 500 '' 'Correr o script' %}
+		</a>
+	</div>
+</ol>
+
+<h4>Resultado final</h4>
+<p>Mapa corretamente simbolizado com a respetiva legenda!</p>
+<div class="post-img">
+	<a href="{{ site.url }}/blog/images/posts/ms_fig13_resultado_final.png" rel="prettyPhoto" title="">
+	{% img img-responsive thumbnail http://qgis.pt/blog/images/posts/ms_fig13_resultado_final.png 500 '' 'Mapa corretamente simbolizado com a respetiva legenda' %}
+	</a>
+</div>
+
+<h4>Simbologia CLC2006 em .QML</h4>
+
+<p>Para aqueles que apenas necessitam da legenda da CLC2006, podem 
+descarregar <a href="{{ site.url }}/blog/images/dados/CLC2006_oficial.qml">aqui</a> a simbologia no formato qml.</p>
+<p>Espero que tenha sido útil, Bom trabalho !</p>
+<p>Manuela Sampayo</p>
+
+
+<h4>REFERÊNCIAS</h4>
+<a href="http://www.dgterritorio.pt/cartografia_e_geodesia/cartografia/cartografia_tematica/cartas_de_ocupacao_do_solo/corine_land_cover/" target="_blank">http://www.dgterritorio.pt/cartografia_e_geodesia/cartografia/cartografia_tematica/cartas_de_ocupacao_do_solo/corine_land_cover/</a></p>
+
+{% gravatar manuelasampayo@gmail.com %}
