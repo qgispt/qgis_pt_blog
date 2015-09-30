@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Desenvolvimento | QGIS-PT]]></title>
   <link href="http://qgis.pt/categories/desenvolvimento/atom.xml" rel="self"/>
   <link href="http://qgis.pt/"/>
-  <updated>2015-09-30T10:15:18+01:00</updated>
+  <updated>2015-09-30T10:48:45+01:00</updated>
   <id>http://qgis.pt/</id>
   <author>
     <name><![CDATA[Grupo de Utilizadores QGIS PT]]></name>
@@ -18,7 +18,7 @@
     <link href="http://qgis.pt/2015/09/29/qgis-instalar-a-versao-de-desenvolvimento-e-ajudar-nos-testes/"/>
     <updated>2015-09-29T19:06:55+01:00</updated>
     <id>http://qgis.pt/2015/09/29/qgis-instalar-a-versao-de-desenvolvimento-e-ajudar-nos-testes</id>
-    <content type="html"><![CDATA[<p>QGIS é um software SIG Open Source que está a ter um sucesso extraordinário e que tem um modelo de desenvolvimento que é o do Open Source em geral, seguindo a regra típica neste casos: "<i>release early, release often</i>". Isso traduz-se em 3/4 versões novas do programa cada ano. O numero de versão acaba com um numero par no caso das versões estáveis (exemplo: 2.6, 2.8, 2.10, 2.12, etc.) mas existem também versões intermédias, com numero de versão que acaba com um numero díspar (exemplo: 2.7, 2.9, 2.11, 2.13, etc.), as chamadas versões de desenvolvimento ou "<i>master</i>" (ou as vezes "<i>nightly</i>"), ou seja as versões de QGIS que irão se tornar a sucessiva versão estável.</p>
+    <content type="html"><![CDATA[<p>QGIS é um software SIG Open Source que está a ter um sucesso extraordinário e que tem um modelo de desenvolvimento que é o do Open Source em geral, seguindo a regra típica neste casos: "<i>release early, release often</i>". Isso traduz-se em 3/4 versões novas do programa cada ano. O número de versão acaba com um número par no caso das versões estáveis (exemplo: 2.6, 2.8, 2.10, 2.12, etc.) mas existem também versões intermédias, com número de versão que acaba com um número impar (exemplo: 2.7, 2.9, 2.11, 2.13, etc.), as chamadas versões de desenvolvimento ou "<i>master</i>" (ou às vezes "<i>nightly</i>"), ou seja as versões de QGIS que se irão tornar a próxima versão estável.</p>
 
 
 
@@ -28,7 +28,7 @@
 
 
 
-<p>Este versões de desenvolvimento são actualizadas diariamente, e podem ser instaladas sem grande problemas pois não causam nenhum conflito com as versões estáveis instaladas no mesmo computador.</p>
+<p>Estas versões de desenvolvimento são actualizadas diariamente, e podem ser instaladas sem grande problemas pois não causam nenhum conflito com as versões estáveis instaladas no mesmo computador.</p>
 
 
 
@@ -43,7 +43,7 @@
 
 <li>pode ser que um bug conhecido já esteja resolvido</li>
 
-<li>usando esta versão de facto participamos na fase de testes das novas versões do QGIS: isso leva a ter versões de QGIS melhores para todos. É particularmente importante na fase chamada "<i>feature freeze</i>", que inicia 1 mês antes da disponibilização da nova versão estável, uma fase onde não são acrescentadas novas funcionalidade e que é completamente dedicada à resolução de bugs.</li>
+<li>usando esta versão participamos de facto na fase de testes das novas versões do QGIS: isso leva a ter versões de QGIS melhores para todos. É particularmente importante na fase chamada "<i>feature freeze</i>", que inicia 1 mês antes da disponibilização da nova versão estável, uma fase onde não são acrescentadas novas funcionalidade e que é completamente dedicada à resolução de bugs.</li>
 </ul>
 
 
@@ -59,7 +59,7 @@
 
 <li>correr o instalador, seguir a "advanced install"</li>
 
-<li>nos passos seguintes escolher todas as opções por defeito, até chegar a janela "Select Packages"</li>
+<li>nos passos seguintes escolher todas as opções por omissão, até chegar a janela "Select Packages"</li>
 
 <li>na categoria "Desktop" seleccionar para instalação o package "qgis-dev"</li>
 
@@ -94,7 +94,7 @@
 <br />
 
 
-<p><img class="gravatar img-circle" src="http://www.gravatar.com/avatar/cc9f74f790e189eff74273053768e611></img></p>
+<p><img class="gravatar img-circle" src="http://www.gravatar.com/avatar/4d5706594b0b44dee1cb5c5056deb9f5></img></p>
 ]]></content>
   </entry>
   
@@ -130,7 +130,7 @@
 <br />
 
 
-<p><img class="gravatar img-circle" src="http://www.gravatar.com/avatar/3d0c3ef94c880b9ff955706dcc9ada5d></img></p>
+<p><img class="gravatar img-circle" src="http://www.gravatar.com/avatar/3f7d4d7f9e5e6fbaed3123b6ebcfd262></img></p>
 ]]></content>
   </entry>
   
