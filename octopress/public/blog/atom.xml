@@ -4,7 +4,7 @@
   <title><![CDATA[QGIS-PT]]></title>
   <link href="http://qgis.pt/atom.xml" rel="self"/>
   <link href="http://qgis.pt/"/>
-  <updated>2015-10-01T07:59:07+01:00</updated>
+  <updated>2015-10-01T12:53:44+01:00</updated>
   <id>http://qgis.pt/</id>
   <author>
     <name><![CDATA[Grupo de Utilizadores QGIS PT]]></name>
@@ -349,8 +349,7 @@ descarregar <a href="http://qgis.pt/blog/images/dados/CLC2006_oficial.qml">aqui<
 <li>usando esta versão participamos de facto na fase de testes das novas versões do QGIS: isso leva a ter versões de QGIS melhores para todos. É particularmente importante na fase chamada &#8221;<i>feature freeze</i>&#8221;, que inicia 1 mês antes da disponibilização da nova versão estável, uma fase onde não são acrescentadas novas funcionalidade e que é completamente dedicada à resolução de bugs.</li>
 </ul>
 
-
-<p>De seguida são descritos os passos para a instalação de QGIS &#8221;<i>master</i>&#8221; em ambiente Windows (quem queira instalar QGIS &#8221;<i>master</i>&#8221; em ambiente Linux ou OsX pode contactar o autor ou o grupo QGIS-PT nos comentários deste post):</p>
+<p>De seguida são descritos os passos para a instalação de QGIS &#8221;<i>master</i>&#8221; em ambiente Windows (quem queira instalar QGIS &#8221;<i>master</i>&#8221; em ambiente Linux pode seguir o <a href="http://qgis.pt/blog/2015/10/01/instalar-duas-versoes-de-qgis-em-linux/">tutorial do Alexandre Neto</a> o usar os <a href="http://qgis.org/en/site/forusers/alldownloads.html#linux">repositórios</a> disponíveis para diferentes distribuições):</p>
 
 <ul>
 <li>descarregar o instalador OSGEO4W (<a href="http://download.osgeo.org/osgeo4w/osgeo4w-setup-x86.exe">32 bit</a> ou <a href="http://download.osgeo.org/osgeo4w/osgeo4w-setup-x86_64.exe">64 bit</a>)</li>

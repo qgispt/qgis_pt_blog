@@ -4,7 +4,7 @@
   <title><![CDATA[Category: QGIS Master | QGIS-PT]]></title>
   <link href="http://qgis.pt/categories/qgis-master/atom.xml" rel="self"/>
   <link href="http://qgis.pt/"/>
-  <updated>2015-10-01T07:59:07+01:00</updated>
+  <updated>2015-10-01T12:53:44+01:00</updated>
   <id>http://qgis.pt/</id>
   <author>
     <name><![CDATA[Grupo de Utilizadores QGIS PT]]></name>
@@ -203,7 +203,92 @@
 </pre>
 
 
-<p><img class="gravatar img-circle" src="http://www.gravatar.com/avatar/a5336c2ed27e73b42e6c130060d47c83></img></p>
+<p><img class="gravatar img-circle" src="http://www.gravatar.com/avatar/8241b0fe9fcb303e9d971f9fa96f6ca2></img></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[QGIS: Instalar a Versão De Desenvolvimento E Ajudar Nos Testes]]></title>
+    <link href="http://qgis.pt/2015/09/29/qgis-instalar-a-versao-de-desenvolvimento-e-ajudar-nos-testes/"/>
+    <updated>2015-09-29T19:06:55+01:00</updated>
+    <id>http://qgis.pt/2015/09/29/qgis-instalar-a-versao-de-desenvolvimento-e-ajudar-nos-testes</id>
+    <content type="html"><![CDATA[<p>QGIS é um software SIG Open Source que está a ter um sucesso extraordinário e que tem um modelo de desenvolvimento que é o do Open Source em geral, seguindo a regra típica neste casos: "<i>release early, release often</i>". Isso traduz-se em 3/4 versões novas do programa cada ano. O número de versão acaba com um número par no caso das versões estáveis (exemplo: 2.6, 2.8, 2.10, 2.12, etc.) mas existem também versões intermédias, com número de versão que acaba com um número impar (exemplo: 2.7, 2.9, 2.11, 2.13, etc.), as chamadas versões de desenvolvimento ou "<i>master</i>" (ou às vezes "<i>nightly</i>"), ou seja as versões de QGIS que se irão tornar a próxima versão estável.</p>
+
+
+
+
+<!-- more -->
+
+
+
+
+<p>Estas versões de desenvolvimento são actualizadas diariamente, e podem ser instaladas sem grande problemas pois não causam nenhum conflito com as versões estáveis instaladas no mesmo computador.</p>
+
+
+
+
+<p>Instalar QGIS "<i>master</i>" é importante por varias razões:</p>
+
+
+
+
+<ul>
+<li>pode haver uma nova funcionalidade que pode ser muito útil no nosso trabalho</li>
+
+<li>pode ser que um bug conhecido já esteja resolvido</li>
+
+<li>usando esta versão participamos de facto na fase de testes das novas versões do QGIS: isso leva a ter versões de QGIS melhores para todos. É particularmente importante na fase chamada "<i>feature freeze</i>", que inicia 1 mês antes da disponibilização da nova versão estável, uma fase onde não são acrescentadas novas funcionalidade e que é completamente dedicada à resolução de bugs.</li>
+</ul>
+
+
+
+
+<p>De seguida são descritos os passos para a instalação de QGIS "<i>master</i>" em ambiente Windows (quem queira instalar QGIS "<i>master</i>" em ambiente Linux pode seguir o <a href="http://qgis.pt/blog/2015/10/01/instalar-duas-versoes-de-qgis-em-linux/">tutorial do Alexandre Neto</a> o usar os <a href="http://qgis.org/en/site/forusers/alldownloads.html#linux">repositórios</a> disponíveis para diferentes distribuições):</p>
+
+
+
+
+<ul>
+<li>descarregar o instalador OSGEO4W (<a href="http://download.osgeo.org/osgeo4w/osgeo4w-setup-x86.exe">32 bit</a> ou <a href="http://download.osgeo.org/osgeo4w/osgeo4w-setup-x86_64.exe">64 bit</a>)</li>
+
+<li>correr o instalador, seguir a "advanced install"</li>
+
+<li>nos passos seguintes escolher todas as opções por omissão, até chegar a janela "Select Packages"</li>
+
+<li>na categoria "Desktop" seleccionar para instalação o package "qgis-dev"</li>
+
+<li>carregar em "next" e finalizar a instalação</li>
+</ul>
+
+
+
+
+<!-- Imagem -->
+
+
+<div class="post-img">
+    <a href="http://qgis.pt/blog/images/posts/osgeo4w_master2.png" rel="prettyPhoto" title="">
+        <img class="img-responsive thumbnail" src="http://qgis.pt/blog/images/posts/osgeo4w_master2.png" width="500"  alt="QGIS master pronto a usar">
+    </a>
+</div>
+
+
+
+
+<p>As mesmas operações poderão ser repetidas diariamente, pois todos os dias QGIS "<i>master</i>" é actualizado de forma incluir as novas funcionalidades e correcções de bugs feitas nas 24 horas anteriores.</p>
+
+
+
+
+<p>Se usando QGIS master irão encontrar problemas (em modo especial os que não ocorrem nas versões estáveis) sugere-se é que o utilizador relate o mesmo no <a href="http://hub.qgis.org/projects/quantum-gis/issues">QGIS bug tracker</a>.</p>
+
+
+
+
+<br />
+
+
+<p><img class="gravatar img-circle" src="http://www.gravatar.com/avatar/9acba63d41368794d847f382683cc5a8></img></p>
 ]]></content>
   </entry>
   
