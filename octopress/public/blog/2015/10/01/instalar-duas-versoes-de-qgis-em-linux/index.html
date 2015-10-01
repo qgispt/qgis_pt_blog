@@ -1,0 +1,418 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <link rel="shortcut icon" type="image/png" href="http://qgis.pt/images/favicon.png">
+    <title>QGIS-PT</title>
+    <meta name="author" content="Grupo de Utilizadores QGIS PT">
+
+    
+    <meta name="description" content="Instalar Duas Versões De QGIS Em Linux 01 de Outubro, 2015 Em altura de testes à versão em desenvolvimento do QGIS (versão master), dá jeito  ter &hellip;">
+    
+
+    <!-- http://t.co/dKP3o1e -->
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    
+    <link rel="canonical" href="http://qgis.pt/2015/10/01/instalar-duas-versoes-de-qgis-em-linux">
+    <!-- CUSTOM CSS -->
+    <link href="http://fonts.googleapis.com/css?family=Roboto:400,300,100,100italic,300italic,400italic,700,700italic" rel="stylesheet" type='text/css'>
+    <link href="http://qgis.pt/libs/bootstrap/css/bootstrap.css" rel="stylesheet">
+    <link rel="stylesheet" href="http://qgis.pt/libs/prettyPhoto/css/prettyPhoto.css" type="text/css" media="screen" charset="utf-8" />
+    <link href="http://qgis.pt/styles/style.css" rel="stylesheet">
+    <link href="http://qgis.pt/styles/blog.css" rel="stylesheet">
+    <!--<link href="http://localhost/styles/style.css" rel="stylesheet">-->
+    
+    <link href="/blog/atom.xml" rel="alternate" title="QGIS-PT" type="application/atom+xml">
+    
+</head>
+
+<body   >
+  <!-- Fixed navbar -->
+<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="http://qgis.pt"></a>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-left">
+                <li><a href="http://qgis.org/pt_PT/site/forusers/download.html" target="_blank">Download</a></li>
+                <li><a href="http://qgis.org/pt_PT/docs/index.html" target="_blank">Documentação</a></li>
+                <li><a href="http://qgis.pt/participar.html">Como participar</a></li>
+                <!-- <li><a href="http://qgis.pt/eventos.html">Eventos</a></li> -->
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">QGIS PT <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="http://qgis.pt/traducao.html">Tradução</a></li>
+                        <li><a href="http://qgis.pt/plugins.html">Módulos para QGIS</a></li>
+                        <li><a href="http://qgis.pt/pdm2qgis.html">Norma PDM2QGIS</a></li>
+                        <!--<li><a href="">Casos de estudo</a></li>
+                        <li><a href="">Estilos e simbologia</a></li>
+                        <li><a href="">Modelos de processamento</a></li>-->
+                    </ul>
+                </li>
+                <li class="active"><a href="/blog">Blog</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right" data-subscription="rss">
+                <li>
+                    <a class="rss" title="Subscrever via RSS" rel="subscribe-rss" href="/blog/atom.xml" target="_blank"></a>
+                </li>
+                
+            </ul>
+            
+            <form class="navbar-form navbar-right search-box" role="search" action="https://www.google.com/search" method="get">
+                <div class="form-group">
+                    <input type="hidden" name="q" value="site:qgis.pt/blog" />
+                    <input type="text" class="form-control search-glow" name="q" results="0" placeholder="Pesquisar">
+                </div>
+            </form>
+            
+        </div>
+    </div>
+</div>
+
+
+  <div id="main" class="container">
+    <div id="content" class="row">
+      <div class="col-sm-9">
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h2 class="entry-title-static">Instalar Duas Versões De QGIS Em Linux</h2>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+<div class="blog-time" datetime="2015-10-01T07:43:11+01:00" pubdate data-updated="true">01 de Outubro, 2015</div>
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>Em altura de testes à versão em desenvolvimento do QGIS (versão master), dá jeito  ter também instalada a última versão estável do QGIS. Em windows isso não representa um problema, uma vez que se podem instalar várias versões do QGIS em paralelo (tanto via Osgeo4w como standalone). Em linux, o processo não é tão directo pelo facto da instalação se realizar por obtenção de diversos pacotes disponíveis nos repositórios, não sendo por isso possível instalar mais do que uma versão sem que se originem quebras de dependências. Assim, instalando a versão estável através dos repositórios, as alternativas para instalação da versão em desenvolvimento são:</p>
+<ul>
+	<li>Compilar o QGIS master do código fonte;</li>
+	<li>Instalar o QGIS master num docker;</li>
+	<li>Instalar o QGIS master numa máquina virtual;</li>
+</ul>
+<p>Neste artigo vou mostrar como compilar o código fonte em <strong>Ubuntu 14.04</strong>. Afinal não é tão difícil quanto parece. Meia dúzia de comandos e um pouco de paciência e vai-se lá. Usei como base as indicações do ficheiro <a href="https://github.com/qgis/QGIS/blob/master/INSTALL">INSTALL.TXT</a> disponível no código fonte com umas pequenas alterações.</p>
+
+<!-- more -->
+
+<h4>Instalar todas as dependências necessárias</h4>
+
+<p>Num terminal correr o seguinte comando para instalar todas as dependências e ferramentas necessárias à compilação do QGIS. (adicionei o ccmake e o git ao comando original)</p>
+<pre>
+	sudo apt-get install bison cmake doxygen flex git graphviz grass-dev libexpat1-dev libfcgi-dev libgdal-dev libgeos-dev libgsl0-dev libopenscenegraph-dev libosgearth-dev libpq-dev libproj-dev libqscintilla2-dev libqt4-dev libqt4-opengl-dev libqtwebkit-dev libqwt5-qt4-dev libspatialindex-dev libspatialite-dev libsqlite3-dev lighttpd pkg-config poppler-utils pyqt4-dev-tools python-all python-all-dev python-qt4 python-qt4-dev python-sip python-sip-dev spawn-fcgi txt2tags xauth xfonts-100dpi xfonts-75dpi xfonts-base xfonts-scalable xvfb cmake-curses-gui
+</pre>
+<h4>Configurar o ccache</h4>
+<p>Este passo permite optimizar a compilação e tornar a compilação mais rápida nas próximas vezes que se fizer:</p>
+<pre>
+	cd /usr/local/bin
+	sudo ln -s /usr/bin/ccache gcc
+	sudo ln -s /usr/bin/ccache g++
+</pre>
+<h4> Obter o código fonte do Github</h4>
+<p>O código fonte pode ser colocado numa pasta à escolha de cada um. Seguindo a sugestão do ficheiro de instruções acabei por colocar tudo na minha pasta home/alexandre/dev/cpp.</p>
+<pre>
+	mkdir -p ${HOME}/dev/cpp
+	cd ${HOME}/dev/cpp
+</pre>
+<p>Já dentro da pasta home/alexandre/dev/cpp, podemos obter o código do qgis executando o seguinte comando git:</p>
+<pre>
+	git clone git://github.com/qgis/QGIS.git
+</pre>
+<p><strong>Nota:</strong> Se pretendesse fazer alterações ao código e experimentar se funcionava, então deveria fazer o clone do fork do qgis do meu próprio repositório, ou seja:</p>
+<pre>
+	git clone https://github.com/SrNetoChan/Quantum-GIS
+</pre>
+<h4>Preparar directorias de compilação e instalação</h4>
+<p>O código fonte tem de ser compilado e instalado em locais próprios para evitar conflitos com outras versões do QGIS. Por isso, há que criar uma pasta para efectuar a instalação:</p>
+<pre>
+	mkdir -p ${HOME}/apps
+</pre>
+<p>E outra onde será feita a compilação:</p>
+<pre>
+	cd QGIS
+	mkdir build-master
+	cd build-master
+</pre>
+<h4>Configuração</h4>
+<P>Já na pasta build-master damos início ao processo de compilação. O primeiro passo é a configuração, onde vamos dizer onde queremos instalar o QGIS master. Para isso executamos o seguinte comando (não esquecer os dois pontos):</P>
+<pre>
+	ccmake ..
+</pre>
+<p>Na configuração é necessário alterar o valor do CMAKE_INSTALL_PREFIX que define onde vai ser feita a instalação, no meu caso usei a pasta já criada &#8216;home/alexandre/apps&#8217;. Para editar o valor há que mover o cursor até à linha em causa e carregar em [enter], depois de editar, volta-se a carregar em [enter]. Depois há que carregar em [c] para refazer a configuração e depois em &#8216;g&#8217; para gerar a configuração.</P>
+
+<div class="post-img">
+    <a href="http://qgis.pt/blog/images/posts/screenshot-from-2014-10-08-233339.png" rel="prettyPhoto" title="">
+        <img class="img-responsive thumbnail" src="http://qgis.pt/blog/images/posts/screenshot-from-2014-10-08-233339.png"  alt="Menu de configuração">
+    </a>
+</div>
+
+<h4> Compilação e instalação</h4>
+<p>Já com tudo configurado resta compilar o código e depois instalá-lo:</p>
+<pre>
+	make
+	sudo make install
+</pre>
+<p><strong>Nota:</strong> Estes dois passos podem demorar um bocadinho, principalmente na primeira vez que o código for compilado.</p>
+
+<p>Depois de instalado podemos correr o QGIS master a partir da pasta de instalação:</p>
+<pre>
+	cd ${HOME}/apps/bin/
+	export LD_LIBRARY_PATH=/home/alexandre/apps/lib
+	export QGIS_PREFIX_PATH=/home/alexandre/apps
+	${HOME}/apps/bin/qgis
+</pre>
+<p>Para se tornar mais cómodo, podemos colocar os últimos 3 comandos num ficheiro .sh e gravá-lo num local acessível (desktop ou home) para executarmos o qgis sempre que necessário.</p>
+
+<div class="post-img">
+    <a href="http://qgis.pt/blog/images/posts/screenshot-from-2014-10-09-003652.png" rel="prettyPhoto" title="">
+        <img class="img-responsive thumbnail" src="http://qgis.pt/blog/images/posts/screenshot-from-2014-10-09-003652.png"  alt="Qgis master a arrancar">
+    </a>
+</div>
+
+<h4>Actualizar a versão master</h4>
+<h4>Como já foi referido num comentário, a versão em desenvolvimento está constantemente a ser alterada, por isso para testar se determinados bugs foram entretanto corrigidos há que a actualizar. Trata-se de um processo bastante simples. O primeiro passo é actualizar o código fonte:</h4>
+<pre>
+	cd ${HOME}/dev/cpp/qgis
+	git pull origin master
+</pre>
+<p>E depois é voltar a correr a compilação (que desta feita será mais rápida):</p>
+<pre>
+	cd build-master
+	ccmake ..
+	make
+	sudo make install
+</pre>
+<img class="gravatar img-circle" src="http://www.gravatar.com/avatar/bcce6e29a8bf37a2008f957238d69feb></img></div>
+
+
+  <div class="post-metadata">
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Publicado pelo utilizador: <span class="fn">Alexandre Neto</span></span>
+
+      <br />
+      
+
+<span class="categories">Categorias: 
+  
+    <a class='category' href='/blog/categories/linux/'>Linux</a>, <a class='category' href='/blog/categories/qgis-master/'>QGIS master</a>, <a class='category' href='/blog/categories/instalacao/'>instalação</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://qgis.pt/2015/10/01/instalar-duas-versoes-de-qgis-em-linux/" data-via="" data-counturl="http://qgis.pt/2015/10/01/instalar-duas-versoes-de-qgis-em-linux/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+  
+  <div class="fb-like" data-send="true" data-width="450" data-layout="button_count" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <hr>
+  </div>
+  <ul class="pager">
+    
+      <li class="previous"><a class="basic-alignment left" href="/blog/2015/09/30/definicao-de-simbologia-atraves-de-campo-rgba/" title="Previous Post: Definição de simbologia através de campo RGBA">&laquo; Definição de simbologia através de campo RGBA</a></li>
+    
+    
+  </ul>
+ 
+</article>
+
+  <section class="disqus">
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="col-sm-3">
+  
+    <section>
+    <a href="/blog/archives" class="btn btn-success btn-lg" style="width: 100%; margin-top: 18px;">Arquivo</a>
+</section>
+<section class="well blog-section">
+  <h1>PUBLICAÇÕES RECENTES</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2015/10/01/instalar-duas-versoes-de-qgis-em-linux/">Instalar Duas Versões De QGIS Em Linux</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/09/30/definicao-de-simbologia-atraves-de-campo-rgba/">Definição De Simbologia Através De Campo RGBA</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/09/29/qgis-instalar-a-versao-de-desenvolvimento-e-ajudar-nos-testes/">QGIS: Instalar a Versão De Desenvolvimento E Ajudar Nos Testes</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/09/29/qgis-ajuda-suporte-desenvolvimento/">QGIS: Ajuda, Suporte, Desenvolvimento</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/09/28/imprimir-e-descarregar-mapas-bing-e-google/">Imprimir E Descarregar Mapas Bing E Google</a>
+      </li>
+    
+  </ul>
+</section>
+<section class="well blog-section">
+  <h1>CATEGORIAS</h1>
+    <span id="tag-cloud"><a class='tag' href='/blog/categories/accoes'>Acções</a> <a class='tag' href='/blog/categories/bing'>Bing</a> <a class='tag' href='/blog/categories/clc2006'>CLC2006</a> <a class='tag' href='/blog/categories/colaboracao'>Colaboração</a> <a class='tag' href='/blog/categories/compositor-de-mapas'>Compositor de Mapas</a> <a class='tag' href='/blog/categories/comunidade'>Comunidade</a> <a class='tag' href='/blog/categories/desenvolvimento'>desenvolvimento</a> <a class='tag' href='/blog/categories/desktop'>Desktop</a> <a class='tag' href='/blog/categories/estatistica'>Estatística</a> <a class='tag' href='/blog/categories/eventos'>Eventos</a> <a class='tag' href='/blog/categories/gdal'>GDAL</a> <a class='tag' href='/blog/categories/github'>Github</a> <a class='tag' href='/blog/categories/google'>Google</a> <a class='tag' href='/blog/categories/grelhas-ntv2'>Grelhas NTv2</a> <a class='tag' href='/blog/categories/hackfest'>Hackfest</a> <a class='tag' href='/blog/categories/instalacao'>instalação</a> <a class='tag' href='/blog/categories/instalacao'>Instalação</a> <a class='tag' href='/blog/categories/intersect'>Intersect</a> <a class='tag' href='/blog/categories/lecos'>LecoS</a> <a class='tag' href='/blog/categories/linux'>Linux</a> <a class='tag' href='/blog/categories/mapas'>Mapas</a> <a class='tag' href='/blog/categories/osgeo4w'>OSGeo4W</a> <a class='tag' href='/blog/categories/paisagem'>Paisagem</a> <a class='tag' href='/blog/categories/plugin'>Plugin</a> <a class='tag' href='/blog/categories/plugins'>Plugins</a> <a class='tag' href='/blog/categories/processamento'>Processamento</a> <a class='tag' href='/blog/categories/python'>Python</a> <a class='tag' href='/blog/categories/qgis'>QGIS</a> <a class='tag' href='/blog/categories/qgis-master'>QGIS master</a> <a class='tag' href='/blog/categories/qgis-pt'>QGIS-PT</a> <a class='tag' href='/blog/categories/r'>R</a> <a class='tag' href='/blog/categories/rgba'>RGBA</a> <a class='tag' href='/blog/categories/simbologia'>Simbologia</a> <a class='tag' href='/blog/categories/spatial-operators'>Spatial operators</a> <a class='tag' href='/blog/categories/src'>SRC</a> <a class='tag' href='/blog/categories/suporte'>suporte</a> <a class='tag' href='/blog/categories/traducao'>Tradução</a> <a class='tag' href='/blog/categories/transformacao-de-coordenadas'>Transformação de Coordenadas</a> <a class='tag' href='/blog/categories/transifex'>Transifex</a> <a class='tag' href='/blog/categories/wms'>WMS</a> </span>
+</section>
+
+
+  
+</aside>
+
+
+      <div class="col-md-12 powered">Blog desenvolvido com <a href="http://octopress.org/" target="_blank">Octopress</a></div>
+
+
+    </div>
+  </div>
+  <footer><div class="container">
+    <div class="row">
+        <div class="copyright">
+            <b>Grupo de Utilizadores QGIS PT, 2014-2015</b>
+            <br>
+            <p>Se não for mencionado o contrário, todos os conteúdos licenciados sobre licença <a href="http://creativecommons.org/licenses/by-sa/3.0/" target="_blank">Creative Commons Atribuição-Compartilha Igual 3.0 (CC BY-SA)</a></p>
+        </div>
+        <div class="social">
+            <a class="footer-btn facebook" href="https://www.facebook.com/QGISPT" target="_blank"></a>
+            <a class="footer-btn google-plus" href="https://plus.google.com/102851374948205667454/posts" target="_blank"></a>
+            <a class="footer-btn twitter" href="https://twitter.com/QGISPT" target="_blank"></a>
+            <a class="footer-btn github" href="https://github.com/qgispt" target="_blank"></a>
+            <a class="footer-btn mailing-list" href="http://osgeo-org.1560.x6.nabble.com/QGIS-pt-f5128248.html" target="_blank"></a>
+        </div>
+    </div>
+    <div class="row hosting">
+        <div class="copyright">
+            <b>Alojamento do site e dos serviços:</b>
+            <br>
+            <p><a href="http://www.naturalgis.pt" target="_blank"><b>NaturalGIS</b></a> - Sistemas de Informação Geográfica</p>
+        </div>
+        <div class="naturalgis-btn">
+            <a class="footer-naturalgis naturalgisfooter" href="http://www.naturalgis.pt/" target="_blank"></a>
+        </div>
+    </div>
+</div>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'qgispt';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_config = function(){
+            console.log(this.callbacks);
+            this.callbacks.onReady =[function(){
+                var footer = $('footer');
+                footer.css('position', 'inherit');
+                var innerHeight = $(window).height();
+                if (footer.position().top < innerHeight - 106){
+                    footer.css('position', 'fixed');
+                    footer.css('width', '100%');
+                }
+            }];
+        }
+        var disqus_identifier = 'http://qgis.pt/2015/10/01/instalar-duas-versoes-de-qgis-em-linux/';
+        var disqus_url = 'http://qgis.pt/2015/10/01/instalar-duas-versoes-de-qgis-em-linux/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+<!-- Core JavaScript -->
+<script src="http://qgis.pt/libs/jquery.min.js"></script>
+<script src="http://qgis.pt/libs/bootstrap/js/bootstrap.min.js"></script>
+<script src="http://qgis.pt/libs/prettyPhoto/js/jquery.prettyPhoto.js" type="text/javascript" charset="utf-8"></script>
+<script src="http://qgis.pt/utils.js"></script>
+<script src="http://qgis.pt/analytics.js"></script>
+
+
+</body>
+</html>
