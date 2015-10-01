@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Simbologia | QGIS-PT]]></title>
   <link href="http://qgis.pt/categories/simbologia/atom.xml" rel="self"/>
   <link href="http://qgis.pt/"/>
-  <updated>2015-10-01T07:47:22+01:00</updated>
+  <updated>2015-10-01T07:59:07+01:00</updated>
   <id>http://qgis.pt/</id>
   <author>
     <name><![CDATA[Grupo de Utilizadores QGIS PT]]></name>
@@ -280,7 +280,10 @@ descarregar <a href="http://qgis.pt/blog/images/dados/CLC2006_oficial.qml">aqui<
 
 <p><a href="http://www.dgterritorio.pt/cartografia_e_geodesia/cartografia/cartografia_tematica/cartas_de_ocupacao_do_solo/corine_land_cover/" target="_blank"><a href="http://www.dgterritorio.pt/cartografia_e_geodesia/cartografia/cartografia_tematica/cartas_de_ocupacao_do_solo/corine_land_cover/">http://www.dgterritorio.pt/cartografia_e_geodesia/cartografia/cartografia_tematica/cartas_de_ocupacao_do_solo/corine_land_cover/</a></a></p></p>
 
-<p><img class="gravatar img-circle" src="http://www.gravatar.com/avatar/b5bb794d0cec06aa86dc9530a5f5016a></img></p>
+<div class="post-img">
+    <img class="img-responsive thumbnail" src="http://qgis.pt/blog/images/posts/ms.png"  alt="Manuela Sampayo">
+</div>
+
 ]]></content>
   </entry>
   

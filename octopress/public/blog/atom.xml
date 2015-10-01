@@ -4,7 +4,7 @@
   <title><![CDATA[QGIS-PT]]></title>
   <link href="http://qgis.pt/atom.xml" rel="self"/>
   <link href="http://qgis.pt/"/>
-  <updated>2015-10-01T07:47:22+01:00</updated>
+  <updated>2015-10-01T07:59:07+01:00</updated>
   <id>http://qgis.pt/</id>
   <author>
     <name><![CDATA[Grupo de Utilizadores QGIS PT]]></name>
@@ -323,7 +323,9 @@ descarregar <a href="http://qgis.pt/blog/images/dados/CLC2006_oficial.qml">aqui<
 <h4>REFERÊNCIAS</h4>
 <a href="http://www.dgterritorio.pt/cartografia_e_geodesia/cartografia/cartografia_tematica/cartas_de_ocupacao_do_solo/corine_land_cover/" target="_blank">http://www.dgterritorio.pt/cartografia_e_geodesia/cartografia/cartografia_tematica/cartas_de_ocupacao_do_solo/corine_land_cover/</a></p>
 
-<img class="gravatar img-circle" src="http://www.gravatar.com/avatar/3da44532c962339df11c596678ac2107></img>]]></content>
+<div class="post-img">
+	<img class="img-responsive thumbnail" src="http://qgis.pt/blog/images/posts/ms.png"  alt="Manuela Sampayo">
+</div>]]></content>
   </entry>
   
   <entry>
