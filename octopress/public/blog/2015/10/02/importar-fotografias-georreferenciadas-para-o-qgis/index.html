@@ -1,0 +1,579 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <link rel="shortcut icon" type="image/png" href="http://qgis.pt/images/favicon.png">
+    <title>QGIS-PT</title>
+    <meta name="author" content="Grupo de Utilizadores QGIS PT">
+
+    
+    <meta name="description" content="Importar Fotografias Georreferenciadas Para O QGIS 02 de Outubro, 2015 Um Plugin que para mim é indispensável no QGIS é o photo2shape [0], &hellip;">
+    
+
+    <!-- http://t.co/dKP3o1e -->
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    
+    <link rel="canonical" href="http://qgis.pt/2015/10/02/importar-fotografias-georreferenciadas-para-o-qgis">
+    <!-- CUSTOM CSS -->
+    <link href="http://fonts.googleapis.com/css?family=Roboto:400,300,100,100italic,300italic,400italic,700,700italic" rel="stylesheet" type='text/css'>
+    <link href="http://qgis.pt/libs/bootstrap/css/bootstrap.css" rel="stylesheet">
+    <link rel="stylesheet" href="http://qgis.pt/libs/prettyPhoto/css/prettyPhoto.css" type="text/css" media="screen" charset="utf-8" />
+    <link href="http://qgis.pt/styles/style.css" rel="stylesheet">
+    <link href="http://qgis.pt/styles/blog.css" rel="stylesheet">
+    <!--<link href="http://localhost/styles/style.css" rel="stylesheet">-->
+    
+    <link href="/blog/atom.xml" rel="alternate" title="QGIS-PT" type="application/atom+xml">
+    
+</head>
+
+<body   >
+  <!-- Fixed navbar -->
+<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="http://qgis.pt"></a>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-left">
+                <li><a href="http://qgis.org/pt_PT/site/forusers/download.html" target="_blank">Download</a></li>
+                <li><a href="http://qgis.org/pt_PT/docs/index.html" target="_blank">Documentação</a></li>
+                <li><a href="http://qgis.pt/participar.html">Como participar</a></li>
+                <!-- <li><a href="http://qgis.pt/eventos.html">Eventos</a></li> -->
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">QGIS PT <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="http://qgis.pt/traducao.html">Tradução</a></li>
+                        <li><a href="http://qgis.pt/plugins.html">Módulos para QGIS</a></li>
+                        <li><a href="http://qgis.pt/pdm2qgis.html">Norma PDM2QGIS</a></li>
+                        <!--<li><a href="">Casos de estudo</a></li>
+                        <li><a href="">Estilos e simbologia</a></li>
+                        <li><a href="">Modelos de processamento</a></li>-->
+                    </ul>
+                </li>
+                <li class="active"><a href="/blog">Blog</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right" data-subscription="rss">
+                <li>
+                    <a class="rss" title="Subscrever via RSS" rel="subscribe-rss" href="/blog/atom.xml" target="_blank"></a>
+                </li>
+                
+            </ul>
+            
+            <form class="navbar-form navbar-right search-box" role="search" action="https://www.google.com/search" method="get">
+                <div class="form-group">
+                    <input type="hidden" name="q" value="site:qgis.pt/blog" />
+                    <input type="text" class="form-control search-glow" name="q" results="0" placeholder="Pesquisar">
+                </div>
+            </form>
+            
+        </div>
+    </div>
+</div>
+
+
+  <div id="main" class="container">
+    <div id="content" class="row">
+      <div class="col-sm-9">
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h2 class="entry-title-static">Importar Fotografias Georreferenciadas Para O QGIS</h2>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+<div class="blog-time" datetime="2015-10-02T21:25:47+01:00" pubdate data-updated="true">02 de Outubro, 2015</div>
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>Um Plugin que para mim é indispensável no QGIS é o photo2shape <a href="https://plugins.qgis.org/plugins/photo2shape/" target="_blank">[0]</a>, desenvolvido pelo Alexander Bruy <a href="http://wiki.osgeo.org/wiki/User:Alexbruy" target="_blank">[1]</a>.</p>
+
+<p>Basicamente, este plugin cria uma shapefile de pontos com a localização de fotografias obtidas com máquinas fotográficas que possuem a tecnologia Geotagging.</p>
+
+<p>Esta tecnologia está presente na esmagadora maioria dos smartphones atuais e, através dela, é possível adicionar um conjunto relativamente vasto de metadados às fotografias e vídeos, recorrendo à especificação Exchangeable image file format (Exif). De entre esses metadados, encontramos as coordenadas latitude / longitude (datum WGS84 - EPSG:4326), o que vai permitir, através do photo2shape, identificar o local onde a fotografia foi tirada.</p>
+
+<!-- more -->
+
+<p>A precisão da posição vai depender de muitas variáveis, nomeadamente a qualidade do recetor GNSS instalado no equipamento, as diversas interferências que afetam o sinal no seu trajeto desde as constelações de satélites em órbita (do americano GPS ou do russo GLONASS, penso que ainda não existem smartphones que consigam obter sinal de outras constelações, como o europeu Galileo ou o chinês BeiDou) até ao equipamento recetor, o tempo de recolha, a configuração dos satélites no horizonte, etc. Apesar das muitas fontes de erro, hoje em dia consegue-se uma precisão bastante aceitável com um simples smartphone de poucas dezenas/centenas de euros.</p>
+
+<p>Vamos então à instalação do photo2shape. Tal como a maioria dos plugins do QGIS, a sua instalação é feita a partir do menu Módulos > Gerir e Instalar Módulos. No gestor de módulos, fazemos a pesquisa por &#8220;photo2shape&#8221; e verificamos que o plugin possui uma dependência que tem de ser satisfeita, caso contrário não irá funcionar: &#8220;Requires exifread >= 2.0.0&#8221;</p>
+
+<!-- Imagem do Gestor de Módulos -->
+<div class="post-img">
+    <a href="http://qgis.pt/blog/images/posts/p2s_1_dependencia_exifread.jpg" rel="prettyPhoto" title="">
+        <img class="img-responsive thumbnail" src="http://qgis.pt/blog/images/posts/p2s_1_dependencia_exifread.jpg" width="500"  alt="Gestor de Módulos">
+    </a>
+</div>
+
+<p>O ExifRead <a href="https://pypi.python.org/pypi/ExifRead/2.1.2" target="_blank">[2]</a> é um módulo Python muito simples, que permite extrair a informação dos metadados Exif de imagens tiff e jpeg. Infelizmente o ExifRead não é distribuído por omissão no instalador OSGeo4W, usado para instalar o QGIS em Windows (e para criar o instalador &#8220;standalone&#8221;), nem nos repositórios de software das distribuições Linux mais comuns (Ubuntu ou Debian), pelo que vamos ter de o acrescentar manualmente.</p>
+
+<p>Para isso, o método mais simples é fazer a instalação através do PyPI (Python Package Index), que não é mais do que um repositório de software para a linguagem de programação Python. Vamos instalar o PyPI e o módulo ExifRead.</p>
+
+
+<h3>Instalação em Linux</h3>
+
+<ol>
+	<li>Começa por se descarregar o ficheiro get-pip.py:<br /><a href="https://raw.githubusercontent.com/pypa/pip/master/contrib/get-pip.py" target="_blank">https://raw.githubusercontent.com/pypa/pip/master/contrib/get-pip.py</a></li>
+	<li>Abrimos o terminal/consola, na pasta onde guardámos o ficheiro get-pip.py e executamos:
+		<pre>
+			sudo python get-pip.py
+		</pre>
+		Note que tivemos de usar o super user porque para executar esta instalação é necessário possuir privilégios de administração. 
+	</li>
+	<li>Uma vez instalado o PyPI, instalamos o módulo ExifRead, executando no terminal (também com privilégios de administração):
+		<pre>
+			sudo pip install exifread
+		</pre>
+	</li>
+	<li>Para verificar se a instalação foi bem sucedida, executamos:
+		<pre>
+			EXIF.py -v
+		</pre>
+		e a resposta deverá ser algo do tipo:
+		<pre>
+			Version 2.1.2 on Python2
+		</pre>
+	</li>
+	<li>Se o ExifRead já estiver instalado e quisermos atualizá-lo para a versão mais recente:
+		<pre>
+			sudo pip install --upgrade exifread
+		</pre>
+	</li>
+</ol>
+
+<h3>Instalação em Windows para QGIS instalado via OSGeo4W</h3>
+
+<ol>
+	<li>Começa por se descarregar o ficheiro get-pip.py:<br /><a href="https://raw.githubusercontent.com/pypa/pip/master/contrib/get-pip.py" target="_blank">https://raw.githubusercontent.com/pypa/pip/master/contrib/get-pip.py</a></li>
+	<li>Abrimos a linha de comandos do OSGeo4W, localizada (na instalação por defeito) em C:\OSGeo4W64\OSGeo4W.bat ou C:\OSGeo4W\OSGeo4W.bat &#8220;como administrador&#8221; (botão direito do rato > &#8220;Executar como administrador&#8221;)</li>
+	<li>Na linha de comandos navegamos para a pasta onde se guardou o ficheiro get-pip.py. Por exemplo, se ele ficou na pasta d:\downloads:
+		<pre>
+			d:
+			cd downloads
+		</pre>
+	</li>
+	<li>Executamos o comando de instalação:
+		<pre>
+			python.exe get-pip.py
+		</pre>
+	</li>
+	<li>Uma vez instalado o PyPI, instalamos o módulo ExifRead, executando:
+		<pre>
+			pip install exifread
+		</pre>
+	</li>
+	<li>Para verificar se a instalação foi bem sucedida, executamos:
+		<pre>
+			EXIF.py -v
+		</pre>
+		e a resposta deverá ser algo do tipo:
+		<pre>
+			Version 2.1.2 on Python2
+		</pre>
+	</li>
+	<li>Se o ExifRead já estiver instalado e quisermos atualizá-lo para a versão mais recente:
+		<pre>
+			sudo pip install --upgrade exifread
+		</pre>
+	</li>
+</ol>
+
+<p>A partir deste momento temos tudo preparado para instalar o plugin photo2shape mas, antes disso, vamos constatar a simplicidade e as potencialidades do módulo ExifRead para fazer a leitura dos metadados de uma fotografia. Podem usar <a href="https://cld.pt/dl/download/1354d7a6-ae3d-430c-bb04-2fa2003165ad/IMG_20140217_105805.jpg" target="_blank">a fotografia seguinte como exemplo</a>, tirada com um smartphone Nexus 4:</p>
+
+<div class="post-img">
+    <a href="https://cld.pt/dl/download/1354d7a6-ae3d-430c-bb04-2fa2003165ad/IMG_20140217_105805.jpg" rel="prettyPhoto" title="">
+        <img class="img-responsive thumbnail" src="https://cld.pt/dl/download/1354d7a6-ae3d-430c-bb04-2fa2003165ad/IMG_20140217_105805.jpg"  alt="Nexus 4">
+    </a>
+</div>
+
+<p>O comando é muito simples:</p>
+	<pre>
+		EXIF.py IMG_20140217_105805.jpg
+	</pre>
+<p>Vejam o resultado:</p>
+	<pre>
+		Opening: IMG_20140217_105805.jpg
+		File has JPEG thumbnail
+		EXIF ColorSpace (Short): sRGB
+		EXIF ComponentsConfiguration (Undefined): YCbCr
+		EXIF DateTimeDigitized (ASCII): 2014:02:17 10:58:05
+		EXIF DateTimeOriginal (ASCII): 2014:02:17 10:58:05
+		EXIF ExifImageLength (Long): 2448
+		EXIF ExifImageWidth (Long): 3264
+		EXIF ExifVersion (Undefined): 0220
+		EXIF ExposureTime (Ratio): 1/438
+		EXIF FNumber (Ratio): 53/20
+		EXIF FlashPixVersion (Undefined): 0100
+		EXIF FocalLength (Ratio): 23/5
+		EXIF ISOSpeedRatings (Short): 100
+		EXIF InteroperabilityOffset (Long): 360
+		GPS GPSAltitude (Ratio): 775799/1000
+		GPS GPSAltitudeRef (Byte): 0
+		GPS GPSDate (ASCII): 2014:02:17
+		GPS GPSImgDirection (Ratio): 171
+		GPS GPSImgDirectionRef (ASCII): M
+		GPS GPSLatitude (Ratio): [40, 37, 19531/625]
+		GPS GPSLatitudeRef (ASCII): N
+		GPS GPSLongitude (Ratio): [7, 4, 50781/2500]
+		GPS GPSLongitudeRef (ASCII): W
+		GPS GPSProcessingMethod (ASCII): ASCII
+		GPS GPSTimeStamp (Ratio): [10, 58, 10]
+		Image ExifOffset (Long): 134
+		Image GPSInfo (Long): 390
+		Image Make (ASCII): LGE
+		Image Model (ASCII): Nexus 4
+		Image ResolutionUnit (Short): Pixels/Inch
+		Image XResolution (Ratio): 72
+		Image YCbCrPositioning (Short): Centered
+		Image YResolution (Ratio): 72
+		Interoperability InteroperabilityIndex (ASCII): R98
+		Interoperability InteroperabilityVersion (Undefined): [48, 49, 48, 48]
+		Thumbnail Compression (Short): JPEG (old-style)
+		Thumbnail JPEGInterchangeFormat (Long): 733
+		Thumbnail JPEGInterchangeFormatLength (Long): 56878
+		Thumbnail ResolutionUnit (Short): Pixels/Inch
+		Thumbnail XResolution (Ratio): 72
+		Thumbnail YResolution (Ratio): 72
+	</pre>
+
+<p>É então parte desta informação que vai ser usada pelo photo2shape para georreferenciar as fotografias.</p>
+
+<p>Voltamos ao menu Módulos > Gerir e Instalar Módulos, pesquisamos por “photo2shape” e fazemos a instalação.</p>
+
+<p>Após a instalação, o plugin fica disponível no menu &#8220;Vector&#8221; e na Barra de Ferramentas &#8220;Vector Toolbar&#8221;.</p>
+
+<!-- Logotipo do photo2shape -->
+<div class="post-img">
+    <a href="http://qgis.pt/blog/images/posts/p2s_logo.png" rel="prettyPhoto" title="">
+        <img class="img-responsive thumbnail" src="http://qgis.pt/blog/images/posts/p2s_logo.png"  alt="Logo do photo2shape">
+    </a>
+</div>
+
+<p>Abrimos o plugin</p>
+
+<!-- Interface do photo2shape -->
+<div class="post-img">
+    <a href="http://qgis.pt/blog/images/posts/p2s_2_interface.jpg" rel="prettyPhoto" title="">
+        <img class="img-responsive thumbnail" src="http://qgis.pt/blog/images/posts/p2s_2_interface.jpg" width="500"  alt="Interface do photo2shape">
+    </a>
+</div>
+
+<p>e verificamos como a sua interface é simples.</p>
+
+<p>Basta selecionar a pasta onde se encontram as fotografias e escolher o caminho para a shapefile de saída.</p>
+
+<!-- Interface do photo2shape preenchida -->
+<div class="post-img">
+    <a href="http://qgis.pt/blog/images/posts/p2s_3_interface_preenchida.jpg" rel="prettyPhoto" title="">
+        <img class="img-responsive thumbnail" src="http://qgis.pt/blog/images/posts/p2s_3_interface_preenchida.jpg" width="500"  alt="Interface do photo2shape preenchida">
+    </a>
+</div>
+
+<p>O resultado é apresentado no QGIS:</p>
+
+<!-- Shapefile criada pelo photo2shape -->
+<div class="post-img">
+    <a href="http://qgis.pt/blog/images/posts/p2s_4_shapefile_qgis.jpg" rel="prettyPhoto" title="">
+        <img class="img-responsive thumbnail" src="http://qgis.pt/blog/images/posts/p2s_4_shapefile_qgis.jpg" width="500"  alt="Shapefile criada pelo photo2shape">
+    </a>
+</div>
+
+<p>Podemos agora aproveitar algumas das potencialidades do QGIS para tornar a informação mais completa e dinâmica. Atendendo a que dispomos do azimute das fotografias na tabela de atributos, podemos usar essa informação para orientar a simbologia das fotos, utilizando uma seta. Para o efeito, selecionamos o estilo Marcador simples, escolhemos a seta como símbolo, e na propriedade Ângulo usamos o campo &#8220;azimuth&#8221; para controlar a direção da seta. Por vezes é necessário acertar a direção, adicionando ou subtraindo algum valor ao campo azimute. No meu caso usei a expressão &#8220;azimuth&#8221; + 90, uma vez que as fotos foram tiradas com o smartphone na horizontal.</p>
+
+<!-- Rotação do símbolo -->
+<div class="post-img">
+    <a href="http://qgis.pt/blog/images/posts/p2s_5_rotacao_simbolo.jpg" rel="prettyPhoto" title="">
+        <img class="img-responsive thumbnail" src="http://qgis.pt/blog/images/posts/p2s_5_rotacao_simbolo.jpg" width="500"  alt="Rotação do símbolo">
+    </a>
+</div>
+
+<p>O resultado permite ter uma noção clara acerca da área abrangida por cada fotografia.</p>
+
+<!-- Orientação das fotos -->
+<div class="post-img">
+    <a href="http://qgis.pt/blog/images/posts/p2s_6_orientacao_fotos.jpg" rel="prettyPhoto" title="">
+        <img class="img-responsive thumbnail" src="http://qgis.pt/blog/images/posts/p2s_6_orientacao_fotos.jpg" width="500"  alt="Orientação das fotos">
+    </a>
+</div>
+
+<p>Podemos também configurar uma Ação para abrir a fotografia automaticamente quando se clica no símbolo da seta. Para isso, nas Propriedades da camada > Acções, configuramos a ação conforme a imagem seguinte, utilizando o campo &#8220;filepath&#8221; da tabela de atributos, que contém o caminho para a pasta onde as imagens se encontram guardadas. </p>
+
+<!-- Configuração da ação -->
+<div class="post-img">
+    <a href="http://qgis.pt/blog/images/posts/p2s_7_config_acao_abrir.jpg" rel="prettyPhoto" title="">
+        <img class="img-responsive thumbnail" src="http://qgis.pt/blog/images/posts/p2s_7_config_acao_abrir.jpg" width="500"  alt="Configuração da ação">
+    </a>
+</div>
+
+<p>Depois é só executar a ação para abrir as fotografias correspondentes a cada elemento da shapefile:</p>
+
+<!-- Execução da ação -->
+<div class="post-img">
+    <a href="http://qgis.pt/blog/images/posts/p2s_8_execucao_acao_abrir.jpg" rel="prettyPhoto" title="">
+        <img class="img-responsive thumbnail" src="http://qgis.pt/blog/images/posts/p2s_8_execucao_acao_abrir.jpg" width="500"  alt="Execução da ação">
+    </a>
+</div>
+
+<p>Não se esqueçam que, se alterarem as fotografias de pasta, têm de atualizar a ação. Nessa situação é preferível usar o campo &#8220;filename&#8221; em vez do &#8220;filepath&#8221; para configurar a ação:</p>
+
+<pre>
+	[%'caminho_para_a_pasta_que_contém_as_fotos' || "filename" %]
+</pre>
+
+<p>Uma última nota para quem está a configurar ações em ambiente Windows, pois o caminho para as imagens tem de ter a dupla barra invertida. Por exemplo, se as fotografias estivessem na pasta d:\downloads, a expressão da ação seria:</p>
+
+<pre>
+	[%'d:\\Downloads\\' || "filename" %]
+</pre>
+
+<p>Para terminar, podemos fazer a transformação do sistema de referência da shapefile originada pelo photo2shape, que está em WGS84, para PT-TM06/ETRS89. Para o efeito, é suficiente selecionar a camada na tabela de conteúdos, com o botão direito do rato fazer &#8220;Guardar como…&#8221; e, na janela seguinte, definir o caminho para a pasta onde se pretende guardar a nova shapefile e seleccionar o SRC EPSG:3763 - ETRS89 / Portugal TM06.</p>
+
+<!-- Transformação de coordenadas -->
+<div class="post-img">
+    <a href="http://qgis.pt/blog/images/posts/p2s_9_wgs84_to_etrs89.jpg" rel="prettyPhoto" title="">
+        <img class="img-responsive thumbnail" src="http://qgis.pt/blog/images/posts/p2s_9_wgs84_to_etrs89.jpg" width="500"  alt="Transformação de coordenadas">
+    </a>
+</div>
+
+<p>Neste caso, não precisamos de nos preocupar com os parâmetros de transformação de datum porque, para este nível de precisão, podemos considerar o WGS84 igual ao ETRS89 <a href="http://qgis.pt/blog/2014/07/13/transformacao-de-coordenadas-e-utilizacao-das-grelhas-ntv2-no-qgis/" target="_blank">[3]</a>.</p>
+
+<h3>Referências</h3>
+<p>[0] <a href="https://plugins.qgis.org/plugins/photo2shape/" target="_blank">https://plugins.qgis.org/plugins/photo2shape/</a></p>
+<p>[1] <a href="http://wiki.osgeo.org/wiki/User:Alexbruy" target="_blank">http://wiki.osgeo.org/wiki/User:Alexbruy</a></p>
+<p>[2] <a href="https://pypi.python.org/pypi/ExifRead/2.1.2" target="_blank">https://pypi.python.org/pypi/ExifRead/2.1.2</a></p>
+<p>[3] <a href="http://qgis.pt/blog/2014/07/13/transformacao-de-coordenadas-e-utilizacao-das-grelhas-ntv2-no-qgis/" target="_blank">Transformação De Coordenadas E Utilização Das Grelhas NTv2 No QGIS</a></p>
+
+<br />
+<img class="gravatar img-circle" src="http://www.gravatar.com/avatar/8248cd896ad16c4ef53d0558d8e62a18></img></div>
+
+
+  <div class="post-metadata">
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Publicado pelo utilizador: <span class="fn">Pedro Venâncio</span></span>
+
+      <br />
+      
+
+<span class="categories">Categorias: 
+  
+    <a class='category' href='/blog/categories/acoes/'>ações</a>, <a class='category' href='/blog/categories/exifread/'>exifread</a>, <a class='category' href='/blog/categories/fotografia/'>fotografia</a>, <a class='category' href='/blog/categories/geotagging/'>geotagging</a>, <a class='category' href='/blog/categories/photo2shape/'>photo2shape</a>, <a class='category' href='/blog/categories/pypi/'>pypi</a>, <a class='category' href='/blog/categories/simbologia/'>simbologia</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://qgis.pt/2015/10/02/importar-fotografias-georreferenciadas-para-o-qgis/" data-via="" data-counturl="http://qgis.pt/2015/10/02/importar-fotografias-georreferenciadas-para-o-qgis/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+  
+  <div class="fb-like" data-send="true" data-width="450" data-layout="button_count" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <hr>
+  </div>
+  <ul class="pager">
+    
+      <li class="previous"><a class="basic-alignment left" href="/blog/2015/10/01/instalar-duas-versoes-de-qgis-em-linux/" title="Previous Post: Instalar duas versões de QGIS em Linux">&laquo; Instalar duas versões de QGIS em Linux</a></li>
+    
+    
+  </ul>
+ 
+</article>
+
+  <section class="disqus">
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="col-sm-3">
+  
+    <section>
+    <a href="/blog/archives" class="btn btn-success btn-lg" style="width: 100%; margin-top: 18px;">Arquivo</a>
+</section>
+<section class="well blog-section">
+  <h1>PUBLICAÇÕES RECENTES</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2015/10/02/importar-fotografias-georreferenciadas-para-o-qgis/">Importar Fotografias Georreferenciadas Para O QGIS</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/10/01/instalar-duas-versoes-de-qgis-em-linux/">Instalar Duas Versões De QGIS Em Linux</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/09/30/definicao-de-simbologia-atraves-de-campo-rgba/">Definição De Simbologia Através De Campo RGBA</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/09/29/qgis-instalar-a-versao-de-desenvolvimento-e-ajudar-nos-testes/">QGIS: Instalar a Versão De Desenvolvimento E Ajudar Nos Testes</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/09/29/qgis-ajuda-suporte-desenvolvimento/">QGIS: Ajuda, Suporte, Desenvolvimento</a>
+      </li>
+    
+  </ul>
+</section>
+<section class="well blog-section">
+  <h1>CATEGORIAS</h1>
+    <span id="tag-cloud"><a class='tag' href='/blog/categories/accoes'>Acções</a> <a class='tag' href='/blog/categories/acoes'>ações</a> <a class='tag' href='/blog/categories/bing'>Bing</a> <a class='tag' href='/blog/categories/clc2006'>CLC2006</a> <a class='tag' href='/blog/categories/colaboracao'>Colaboração</a> <a class='tag' href='/blog/categories/compositor-de-mapas'>Compositor de Mapas</a> <a class='tag' href='/blog/categories/comunidade'>Comunidade</a> <a class='tag' href='/blog/categories/desenvolvimento'>desenvolvimento</a> <a class='tag' href='/blog/categories/desktop'>Desktop</a> <a class='tag' href='/blog/categories/estatistica'>Estatística</a> <a class='tag' href='/blog/categories/eventos'>Eventos</a> <a class='tag' href='/blog/categories/exifread'>exifread</a> <a class='tag' href='/blog/categories/fotografia'>fotografia</a> <a class='tag' href='/blog/categories/gdal'>GDAL</a> <a class='tag' href='/blog/categories/geotagging'>geotagging</a> <a class='tag' href='/blog/categories/github'>Github</a> <a class='tag' href='/blog/categories/google'>Google</a> <a class='tag' href='/blog/categories/grelhas-ntv2'>Grelhas NTv2</a> <a class='tag' href='/blog/categories/hackfest'>Hackfest</a> <a class='tag' href='/blog/categories/instalacao'>instalação</a> <a class='tag' href='/blog/categories/instalacao'>Instalação</a> <a class='tag' href='/blog/categories/intersect'>Intersect</a> <a class='tag' href='/blog/categories/lecos'>LecoS</a> <a class='tag' href='/blog/categories/linux'>Linux</a> <a class='tag' href='/blog/categories/mapas'>Mapas</a> <a class='tag' href='/blog/categories/osgeo4w'>OSGeo4W</a> <a class='tag' href='/blog/categories/paisagem'>Paisagem</a> <a class='tag' href='/blog/categories/photo2shape'>photo2shape</a> <a class='tag' href='/blog/categories/plugin'>Plugin</a> <a class='tag' href='/blog/categories/plugins'>Plugins</a> <a class='tag' href='/blog/categories/processamento'>Processamento</a> <a class='tag' href='/blog/categories/pypi'>pypi</a> <a class='tag' href='/blog/categories/python'>Python</a> <a class='tag' href='/blog/categories/qgis'>QGIS</a> <a class='tag' href='/blog/categories/qgis-master'>QGIS master</a> <a class='tag' href='/blog/categories/qgis-pt'>QGIS-PT</a> <a class='tag' href='/blog/categories/r'>R</a> <a class='tag' href='/blog/categories/rgba'>RGBA</a> <a class='tag' href='/blog/categories/simbologia'>simbologia</a> <a class='tag' href='/blog/categories/simbologia'>Simbologia</a> <a class='tag' href='/blog/categories/spatial-operators'>Spatial operators</a> <a class='tag' href='/blog/categories/src'>SRC</a> <a class='tag' href='/blog/categories/suporte'>suporte</a> <a class='tag' href='/blog/categories/traducao'>Tradução</a> <a class='tag' href='/blog/categories/transformacao-de-coordenadas'>Transformação de Coordenadas</a> <a class='tag' href='/blog/categories/transifex'>Transifex</a> <a class='tag' href='/blog/categories/windows'>Windows</a> <a class='tag' href='/blog/categories/wms'>WMS</a> </span>
+</section>
+
+
+  
+</aside>
+
+
+      <div class="col-md-12 powered">Blog desenvolvido com <a href="http://octopress.org/" target="_blank">Octopress</a></div>
+
+
+    </div>
+  </div>
+  <footer><div class="container">
+    <div class="row">
+        <div class="copyright">
+            <b>Grupo de Utilizadores QGIS PT, 2014-2015</b>
+            <br>
+            <p>Se não for mencionado o contrário, todos os conteúdos licenciados sobre licença <a href="http://creativecommons.org/licenses/by-sa/3.0/" target="_blank">Creative Commons Atribuição-Compartilha Igual 3.0 (CC BY-SA)</a></p>
+        </div>
+        <div class="social">
+            <a class="footer-btn facebook" href="https://www.facebook.com/QGISPT" target="_blank"></a>
+            <a class="footer-btn google-plus" href="https://plus.google.com/102851374948205667454/posts" target="_blank"></a>
+            <a class="footer-btn twitter" href="https://twitter.com/QGISPT" target="_blank"></a>
+            <a class="footer-btn github" href="https://github.com/qgispt" target="_blank"></a>
+            <a class="footer-btn mailing-list" href="http://osgeo-org.1560.x6.nabble.com/QGIS-pt-f5128248.html" target="_blank"></a>
+        </div>
+    </div>
+    <div class="row hosting">
+        <div class="copyright">
+            <b>Alojamento do site e dos serviços:</b>
+            <br>
+            <p><a href="http://www.naturalgis.pt" target="_blank"><b>NaturalGIS</b></a> - Sistemas de Informação Geográfica</p>
+        </div>
+        <div class="naturalgis-btn">
+            <a class="footer-naturalgis naturalgisfooter" href="http://www.naturalgis.pt/" target="_blank"></a>
+        </div>
+    </div>
+</div>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'qgispt';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_config = function(){
+            console.log(this.callbacks);
+            this.callbacks.onReady =[function(){
+                var footer = $('footer');
+                footer.css('position', 'inherit');
+                var innerHeight = $(window).height();
+                if (footer.position().top < innerHeight - 106){
+                    footer.css('position', 'fixed');
+                    footer.css('width', '100%');
+                }
+            }];
+        }
+        var disqus_identifier = 'http://qgis.pt/2015/10/02/importar-fotografias-georreferenciadas-para-o-qgis/';
+        var disqus_url = 'http://qgis.pt/2015/10/02/importar-fotografias-georreferenciadas-para-o-qgis/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+<!-- Core JavaScript -->
+<script src="http://qgis.pt/libs/jquery.min.js"></script>
+<script src="http://qgis.pt/libs/bootstrap/js/bootstrap.min.js"></script>
+<script src="http://qgis.pt/libs/prettyPhoto/js/jquery.prettyPhoto.js" type="text/javascript" charset="utf-8"></script>
+<script src="http://qgis.pt/utils.js"></script>
+<script src="http://qgis.pt/analytics.js"></script>
+
+
+</body>
+</html>

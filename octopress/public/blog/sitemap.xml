@@ -73,8 +73,12 @@
         <lastmod>2015-10-01T12:11:23+01:00</lastmod>
     </url>
     <url>
+        <loc>http://qgis.pt/2015/10/02/importar-fotografias-georreferenciadas-para-o-qgis/</loc>
+        <lastmod>2015-10-02T21:38:15+01:00</lastmod>
+    </url>
+    <url>
         <loc>http://qgis.pt/</loc>
-        <lastmod>2015-10-01T12:53:32+01:00</lastmod>
+        <lastmod>2015-10-02T21:38:15+01:00</lastmod>
     </url>
     <url>
         <loc>http://qgis.pt/robots.txt</loc>
@@ -82,6 +86,6 @@
     </url>
     <url>
         <loc>http://qgis.pt/archives/</loc>
-        <lastmod>2015-10-01T12:53:32+01:00</lastmod>
+        <lastmod>2015-10-02T21:38:15+01:00</lastmod>
     </url>
 </urlset>
