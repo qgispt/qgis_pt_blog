@@ -77,8 +77,14 @@
         <lastmod>2015-10-02T21:38:15+01:00</lastmod>
     </url>
     <url>
+        <loc>
+            http://qgis.pt/2015/11/24/introducao-aos-sistemas-de-informacao-geografica-com-qgis/
+        </loc>
+        <lastmod>2015-11-24T08:45:56+00:00</lastmod>
+    </url>
+    <url>
         <loc>http://qgis.pt/</loc>
-        <lastmod>2015-10-02T21:38:15+01:00</lastmod>
+        <lastmod>2015-11-24T08:45:56+00:00</lastmod>
     </url>
     <url>
         <loc>http://qgis.pt/robots.txt</loc>
@@ -86,6 +92,6 @@
     </url>
     <url>
         <loc>http://qgis.pt/archives/</loc>
-        <lastmod>2015-10-02T21:38:15+01:00</lastmod>
+        <lastmod>2015-11-24T08:45:56+00:00</lastmod>
     </url>
 </urlset>
