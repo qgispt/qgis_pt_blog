@@ -4,7 +4,7 @@
   <title><![CDATA[Category: QGIS | QGIS-PT]]></title>
   <link href="http://qgis.pt/categories/qgis/atom.xml" rel="self"/>
   <link href="http://qgis.pt/"/>
-  <updated>2015-11-24T08:46:23+00:00</updated>
+  <updated>2015-11-24T09:08:07+00:00</updated>
   <id>http://qgis.pt/</id>
   <author>
     <name><![CDATA[Grupo de Utilizadores QGIS PT]]></name>
@@ -115,20 +115,20 @@
 <br />
 
 
-<div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+<div id="carousel-example-generic2" class="carousel slide" data-ride="carousel">
   <!-- Indicators -->
   <ol class="carousel-indicators">
-    <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
-    <li data-target="#carousel-example-generic" data-slide-to="1"></li>
-    <li data-target="#carousel-example-generic" data-slide-to="2"></li>
-    <li data-target="#carousel-example-generic" data-slide-to="3"></li>
-    <li data-target="#carousel-example-generic" data-slide-to="4"></li>
-    <li data-target="#carousel-example-generic" data-slide-to="5"></li>
-    <li data-target="#carousel-example-generic" data-slide-to="6"></li>
-    <li data-target="#carousel-example-generic" data-slide-to="7"></li>
-    <li data-target="#carousel-example-generic" data-slide-to="8"></li>
-    <li data-target="#carousel-example-generic" data-slide-to="9"></li>
-    <li data-target="#carousel-example-generic" data-slide-to="10"></li>
+    <li data-target="#carousel-example-generic2" data-slide-to="0" class="active"></li>
+    <li data-target="#carousel-example-generic2" data-slide-to="1"></li>
+    <li data-target="#carousel-example-generic2" data-slide-to="2"></li>
+    <li data-target="#carousel-example-generic2" data-slide-to="3"></li>
+    <li data-target="#carousel-example-generic2" data-slide-to="4"></li>
+    <li data-target="#carousel-example-generic2" data-slide-to="5"></li>
+    <li data-target="#carousel-example-generic2" data-slide-to="6"></li>
+    <li data-target="#carousel-example-generic2" data-slide-to="7"></li>
+    <li data-target="#carousel-example-generic2" data-slide-to="8"></li>
+    <li data-target="#carousel-example-generic2" data-slide-to="9"></li>
+    <li data-target="#carousel-example-generic2" data-slide-to="10"></li>
   </ol>
 
   <!-- Wrapper for slides -->
@@ -216,7 +216,7 @@
 <br />
 
 
-<p><img class="gravatar img-circle" src="http://www.gravatar.com/avatar/1e34fb5f890f3b418393c5dea51bd7ca></img></p>
+<p><img class="gravatar img-circle" src="http://www.gravatar.com/avatar/433cef37f03ba63b8941d63e5e4a33fa></img></p>
 ]]></content>
   </entry>
   
@@ -252,7 +252,7 @@
 <br />
 
 
-<p><img class="gravatar img-circle" src="http://www.gravatar.com/avatar/b1a45734f1c664ee7d607b2161cf4cfc></img></p>
+<p><img class="gravatar img-circle" src="http://www.gravatar.com/avatar/3d3c4e078ad6daa286a78c4dc38574bc></img></p>
 ]]></content>
   </entry>
   
@@ -446,7 +446,7 @@
 <br />
 
 
-<p><img class="gravatar img-circle" src="http://www.gravatar.com/avatar/36f2d7b848f19cecce9b2ba305e801ec></img></p>
+<p><img class="gravatar img-circle" src="http://www.gravatar.com/avatar/dda083bcc477fe4b0a463db63dfbb7f7></img></p>
 ]]></content>
   </entry>
   

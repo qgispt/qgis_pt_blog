@@ -4,7 +4,7 @@
   <title><![CDATA[QGIS-PT]]></title>
   <link href="http://qgis.pt/atom.xml" rel="self"/>
   <link href="http://qgis.pt/"/>
-  <updated>2015-11-24T08:46:23+00:00</updated>
+  <updated>2015-11-24T09:08:07+00:00</updated>
   <id>http://qgis.pt/</id>
   <author>
     <name><![CDATA[Grupo de Utilizadores QGIS PT]]></name>
@@ -79,20 +79,20 @@
 <p>Entretanto, foi solicitado aos participantes que respondessem a um pequeno inquérito, sendo os resultados apresentados de seguida.</p>
 
 <br />
-<div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+<div id="carousel-example-generic2" class="carousel slide" data-ride="carousel">
   <!-- Indicators -->
   <ol class="carousel-indicators">
-    <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
-    <li data-target="#carousel-example-generic" data-slide-to="1"></li>
-    <li data-target="#carousel-example-generic" data-slide-to="2"></li>
-    <li data-target="#carousel-example-generic" data-slide-to="3"></li>
-    <li data-target="#carousel-example-generic" data-slide-to="4"></li>
-    <li data-target="#carousel-example-generic" data-slide-to="5"></li>
-    <li data-target="#carousel-example-generic" data-slide-to="6"></li>
-    <li data-target="#carousel-example-generic" data-slide-to="7"></li>
-    <li data-target="#carousel-example-generic" data-slide-to="8"></li>
-    <li data-target="#carousel-example-generic" data-slide-to="9"></li>
-    <li data-target="#carousel-example-generic" data-slide-to="10"></li>
+    <li data-target="#carousel-example-generic2" data-slide-to="0" class="active"></li>
+    <li data-target="#carousel-example-generic2" data-slide-to="1"></li>
+    <li data-target="#carousel-example-generic2" data-slide-to="2"></li>
+    <li data-target="#carousel-example-generic2" data-slide-to="3"></li>
+    <li data-target="#carousel-example-generic2" data-slide-to="4"></li>
+    <li data-target="#carousel-example-generic2" data-slide-to="5"></li>
+    <li data-target="#carousel-example-generic2" data-slide-to="6"></li>
+    <li data-target="#carousel-example-generic2" data-slide-to="7"></li>
+    <li data-target="#carousel-example-generic2" data-slide-to="8"></li>
+    <li data-target="#carousel-example-generic2" data-slide-to="9"></li>
+    <li data-target="#carousel-example-generic2" data-slide-to="10"></li>
   </ol>
 
   <!-- Wrapper for slides -->
