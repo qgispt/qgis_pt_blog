@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Aster Gdem | QGIS-PT]]></title>
+  <link href="http://qgis.pt/categories/aster-gdem/atom.xml" rel="self"/>
+  <link href="http://qgis.pt/"/>
+  <updated>2016-02-14T21:20:03+00:00</updated>
+  <id>http://qgis.pt/</id>
+  <author>
+    <name><![CDATA[Grupo de Utilizadores QGIS PT]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Análise Fisiográfica: Relevo - Hipsometria - Declive - Exposição De Encostas]]></title>
+    <link href="http://qgis.pt/2016/02/14/analise-fisiografica-relevo-hipsometria-declive-exposicao-de-encostas/"/>
+    <updated>2016-02-14T21:13:13+00:00</updated>
+    <id>http://qgis.pt/2016/02/14/analise-fisiografica-relevo-hipsometria-declive-exposicao-de-encostas</id>
+    <content type="html"><![CDATA[<p>O presente tutorial QGIS apresenta um conjunto alargado de procedimentos para análise fisiográfica.</p>
+
+
+
+
+<p>São levadas a cabo duas abordagens distintas:</p>
+
+
+
+
+<ul>
+    <li>Escala média - a região do Algarve será utilizada como <i>case study</i>;</li>
+    <li>Escala semi-detalhada - o concelho de Lagoa será utilizado como <i>case study</i>.</li>
+</ul>
+
+
+
+
+<!-- more -->
+
+
+
+
+<p>Na análise fisiográfica à escala média utilizam-se três modelos digitais do terreno (MDT) que estão disponíveis na Internet (ASTER GDEM, EU-DEM e SRTM). O <i>case study</i> aqui apresentado pode, por isso, ser replicado com muita facilidade, quer para outras regiões de Portugal, quer para outros países.</p>
+
+
+
+
+<p>Para este <i>case study</i> foi, adicionalmente, feita uma avaliação da qualidade dos MDT através da comparação com a Carta Militar de Portugal à escala 1:25.000, com o intuito de escolher um dos três modelos e, depois, utilizar o melhor para uma caracterização da hipsometria, dos declives e da exposição de encostas na região.</p>
+
+
+
+
+<p>Na análise fisiográfica à escala semi-detalhada, os modelos digitais do terreno são construídos a partir de cartografia topográfica digital, recorrendo a um procedimento de triangulação (TIN) e a uma interpolação. É, consequentemente, mais difícil replicar o <i>case study</i> aqui apresentado, porque é indispensável ter acesso a essa fonte de informação, o que nem sempre é simples ou possível.</p>
+
+
+
+
+<p>É, igualmente, feita uma análise comparativa entre o DTM obtido a partir de cartografia topográfica digital, o DTM obtido por detecção remota e a Carta Militar de Portugal.</p>
+
+
+
+
+<br />
+
+
+
+
+<p align="center">
+<iframe src="https://www.slideshare.net/slideshow/embed_code/key/2aXFqJFwutyOSA" width="425" height="355" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px; margin-bottom:5px; max-width: 100%;" allowfullscreen> </iframe> <div style="margin-bottom:5px"> <strong> <a href="https://www.slideshare.net/nlourei/tutorial-qgis-sobre-anlise-fisiogrfica" title="Tutorial QGIS sobre Análise Fisiográfica" target="_blank">Tutorial QGIS sobre Análise Fisiográfica</a> </strong> from <strong><a href="//www.slideshare.net/nlourei" target="_blank">Nuno de Santos Loureiro</a></strong> </div>
+</p>
+
+
+
+
+<br />
+
+
+<p><img class="gravatar img-circle" src="http://www.gravatar.com/avatar/ef24f8dcacc04bb827dd096a29fa1fe4></img></p>
+]]></content>
+  </entry>
+  
+</feed>

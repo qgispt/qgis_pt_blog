@@ -4,7 +4,7 @@
   <title><![CDATA[QGIS-PT]]></title>
   <link href="http://qgis.pt/atom.xml" rel="self"/>
   <link href="http://qgis.pt/"/>
-  <updated>2015-11-27T12:41:18+00:00</updated>
+  <updated>2016-02-14T21:20:03+00:00</updated>
   <id>http://qgis.pt/</id>
   <author>
     <name><![CDATA[Grupo de Utilizadores QGIS PT]]></name>
@@ -12,6 +12,140 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Visualizar Dados Dos Censos 2011 Com O QGIS]]></title>
+    <link href="http://qgis.pt/2016/02/14/visualizar-dados-dos-censos-2011-com-o-qgis/"/>
+    <updated>2016-02-14T21:16:37+00:00</updated>
+    <id>http://qgis.pt/2016/02/14/visualizar-dados-dos-censos-2011-com-o-qgis</id>
+    <content type="html"><![CDATA[<style>
+img {
+    max-width:100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+    }
+</style>
+
+<p>A Base Geográfica de Referenciação da Informação (BGRI), que outrora foi paga, está há já algum tempo disponível a todos até ao nível da subsecção estatística e com um total de 122 variáveis dos censos 2011 (organizados por população residente, população presente, famílias, alojamento e edifícios). A <a href="http://mapas.ine.pt/download/index2011.phtml">página</a> para download, permite descarregar os dados totais para Portugal, ou por regiões e concelhos.</p>
+
+<!-- more -->
+
+<a href="http://sigsemgrilhetas.files.wordpress.com/2013/05/screenshot-from-2013-05-03-194654.png"><img class="aligncenter size-large wp-image-157" src="http://sigsemgrilhetas.files.wordpress.com/2013/05/screenshot-from-2013-05-03-194654.png?w=584" alt="Screenshot from 2013-05-03 19:46:54" width="584" height="450" /></a>
+
+<p>O zip descarregado contém diversos ficheiros, nomeadamente um shapefile (shp, shx e dbf) com os poligonos das subsecções estatísticas e um ficheiro de texto (csv) contendo os valores das variáveis dos censos 2011 (assim como  uma nota explicativa das mesmas).</p>
+
+<p>A página de ajuda refere que é possível abrir estes dados recorrendo a software open source, como o <a href="http://qgis.org/">QGIS</a> ou <a href="http://www.gvsig.org/web/">gvSIG</a>, mas não exemplifica como fazê-lo. A tarefa, embora não seja difícil, obriga a uns quanto passos. Vamos ver quais são.</p>
+
+<h2>Abrir os ficheiros no QGIS</h2>
+
+<h3>Dados geográficos (SHP)</h3>
+<p>Os dados geográficos, ao nível da subsecção estatística, estão guardados no ficheiro <em>ESRI Shapefile</em> (*.shp) que abrimos usando o botão <em><strong>Adicionar camada vectorial <img class="alignnone  wp-image-1346" src="https://sigsemgrilhetas.files.wordpress.com/2013/05/add_vector.png" alt="add_vector" width="21" height="21" />  (</strong></em>ou através do menu <em><strong>camada &gt; adicionar camada &gt; Adicionar camada vectorial&#8230;</strong></em>). Usando o botão <em><strong>pesquisar</strong></em> indique a localização do ficheiro com a extensão &#8220;*.shp&#8221; (lembre-se que terá de ter opção &#8220;Todos os Ficheiros&#8221; ou &#8220;ESRI Shapefile&#8221; para que o ficheiros esteja visível). Para evitar problemas com acentos e cedilhas deve escolher uma <em><strong>codificação</strong></em> que suporte os nossos caracteres especiais, nomeadamente o &#8220;ISO-8859-1&#8221; ou &#8220;latin1&#8221;, que, como podem ver neste <a href="https://pt.wikipedia.org/wiki/ISO_8859-1">link</a>, é essencialmente a mesma coisa).</p>
+
+<img src="https://sigsemgrilhetas.files.wordpress.com/2013/05/screenshot-from-2016-02-13-144846.png" alt="Screenshot from 2016-02-13 14:48:46" width="521" height="251" />
+
+<p>Depois de aberto o ficheiro, há que definir o sistema de coordenadas de referência correcto para a camada, que, tal como podemos ver pelos <a  href="http://mapas.ine.pt/download/metadados/bgri11.html">metadados</a>, para portugal continental é o ETRS89/PT-TM06 (EPSG:3763). Isso é feito clicando com botão direito sobre a camada e escolhendo a opção <em><strong>Definir SRC da camada</strong></em>. A forma mais fácil de encontrar o sistema desejado é introduzir o seu código EPSG no campo do filtro.</p>
+
+<img src="https://sigsemgrilhetas.files.wordpress.com/2013/05/screenshot-from-2016-02-13-144928.png" alt="Screenshot from 2016-02-13 14:49:28" width="534" height="591" />
+
+<h3>Dados alfanuméricos (CSV)</h3>
+
+<p>Os dados alfanuméricos dos censos 2011 são guardados num ficheiro CSV (<em>Comma Separated Values</em>), que não é mais que ficheiros simples de texto em que os valores são separados por vírgulas, ponto-e-vírgulas, ou espaços, e podem ser delimitados, por exemplo, por aspas, e que podem ter ou não uma linha de cabeçalho com os nomes dos campos.</p>
+
+<p>Como se pode ver no excerto abaixo, no nosso caso os valores são  separados por ponto e vírgula, e contêm uma linha de cabeçalho com os nomes dos campos.</p>
+
+<pre>ANO;GEO_COD;GEO_COD_DSG;NIVEL;NIVEL_DSG;N_EDIFICIOS_CLASSICOS;N_EDIFICIOS_CLASSICOS_1OU2;...
+2011;'PT;PT;1;Total Nacional;3544389;3219791;...
+2011;'1;Continente;2;NUT1;3353610;3035969;...
+2011;'17;Lisboa;3;NUT2;448957;322603;...
+2011;'171;Grande Lisboa;4;NUT3;277387;184975;...
+...</pre>
+
+<p>Por omissão, o QGIS (através do <a href="http://www.gdal.org/ogr/">OGR</a>) lê todos os campos do CSV como sendo do tipo texto (string). No entanto, se quisermos definir explicitamente o tipo de dados de cada campo, podemos usar uma técnica que aprendi com o <a href="http://www.linkedin.com/in/hfpmartins">Hugo Martins</a>. Na mesma pasta, cria-se um ficheiro de texto com o mesmo nome que o csv, mas com a extensão .csvt, e, numa só linha, separado por virgulas e dentro de aspas, especificamos cada um dos tipos de dados dos campos (<em>integer</em>, <em>real</em>, <em>string</em>, <em>date</em> (YYYY-MM-DD), <em>time</em> (HH:MM:SS+nn) e <em>datetime</em> (YYYY-MM-DD HH:MM:SS+nn)).</p>
+
+<p>Para facilitar, criei um ficheiro csvt com as características necessárias que podem descarregá-lo <a href="https://dl.dropboxusercontent.com/u/5088211/BGRI2011_PT.csvt">aqui</a>. (Nota: o nome do ficheiro terá de ser alterado consoante o nível a que descarregaram a informação, e.g., BGRI2011_PT.csvt &#8211;&gt; BGRI2011_1105.csvt.</a></p>
+
+<p>Depois de preparado o CSVT e de o colocarmos na mesma pasta que o CSV, podemos abrir o CSV no QGIS. Para isso usamos o botão <strong>Adicionar camada de texto delimitado <img class="alignnone  wp-image-1429" src="https://sigsemgrilhetas.files.wordpress.com/2013/05/icon_texto_delimitado.png" alt="icon_texto_delimitado" width="20" height="20" /> </strong>(ou através do menu <strong>camada &gt; adicionar camada &gt; Adicionar camada de texto delimitado&#8230;</strong></em>). Começamos por indicar a localização do ficheiro usando o botão <em><strong>Procurar&#8230;</strong></em>. Mais uma vez, devemos garantir que usamos uma codificação compatível, a ISO-8859-1. Em formato de ficheiro escolhemos <em><strong>Delimitadores personalizados</strong></em> e, como já tínhamos visto anteriormente, seleccionamos a opção <em><strong>Ponto e vírgula. </strong></em>Seleccionamos a caixa <em><strong>Primeiro registo tem nome dos campos </strong></em>e escolhemos<em><strong> Sem geometria </strong></em>em Definição de geometria.</p>
+
+<p>No final da caixa de diálogo podemos ver uma amostra de como ficará o nosso ficheiro dentro do QGIS. Se repararem no campo <em>GEO_COD</em> todos os valores têm antes um apóstrofe (&#8216;) - penso que colocado propositadamente para obrigar os valores a serem considerados texto em programas como o Excel ou o Calc - de que nos vamos ter de livrar. Para isso, voltamos às opções de <em><strong>Delimitadores personalizados</strong></em> e na opção <em><strong>Escape</strong></em> colocamos um apóstrofe (&#8216;) que será ignorado em <strong><span style="text-decoration: underline;">todos os campos e respectivos valores</span></strong> (felizmente, no nosso caso não existem apóstrofes noutros campos, caso contrário teríamos de editar o ficheiro num editor de texto para os salvaguardar) . A caixa de diálogo com todas as opções necessárias deve parecer-se com a imagem abaixo.</p>
+
+<img src="https://sigsemgrilhetas.files.wordpress.com/2013/05/screenshot-from-2016-02-14-010426.png" alt="Screenshot from 2016-02-14 01:04:26" width="962" height="571" />
+
+<h2>Unir as tabelas de atributos</h2>
+
+<p>Agora que temos as duas camadas no QGIS, já só falta relacionar a componente geográfica à alfanumérica. Uma vez que têm ambas um campo em comum isto pode ser feito através de uma união (virtual). Para isso, temos de abrir as propriedades da camada &#8220;geométrica&#8221; (botão direito do rato sobre a camada, <em><strong>Propriedades</strong></em>)  e, no separador <strong><em>Uniões</em></strong>, adicionar uma nova união clicando no botão <img class="alignnone  wp-image-1514" src="https://sigsemgrilhetas.files.wordpress.com/2013/05/mactionsignplus.png" alt="mActionSignPlus" width="17" height="17" />. No menu seguinte, é necessário definir a <em><strong>Camada a unir</strong></em> a tabela resultante do CSV, o <em><strong>Campo a unir</strong></em> como &#8220;GEO_COD&#8221; e o <em><strong>Campo alvo</strong></em> como &#8220;BGRI11&#8221; (contém o código da subsecção estatística). Podemos ainda definir quais os campos do CSV queremos unir, e que prefixo lhe dar. Para tornar a visualização dos dados mais rápida, aconselha-se a seleccionar a opção de memorizar a camada unida em memória virtual.</p>
+
+<img src="https://sigsemgrilhetas.files.wordpress.com/2013/05/screenshot-from-2016-02-14-152402.png" alt="Screenshot from 2016-02-14 15:24:02" width="505" height="423" />
+
+<p>Finalizado o processo, a camada com os dados geográficos tem agora novos campos originários do CSV, tantos quantos os escolhidos,  e precedidos de um prefixo. No meu caso apenas adicionei um campo N_INDIVIDUOS_RESIDENT e usei o prefixo BGRI11_, como se pode constatar na imagem abaixo.</p>
+
+<img src="https://sigsemgrilhetas.files.wordpress.com/2013/05/screenshot-from-2016-02-14-152628.png" alt="Screenshot from 2016-02-14 15:26:28" width="690" height="383" />
+
+<p> Assim, torna-se possível usar os dados dos Censos 2011 para efectuar análise espacial, ou simplesmente para criar mapas. </p>
+
+<img src="https://sigsemgrilhetas.files.wordpress.com/2013/05/censos2011_porto.jpeg" alt="censos2011_porto" width="566" height="566" />
+
+<p><strong>Nota:</strong> Neste exemplo trabalhou-se ao nível da subsecção estatística, mas poderia usar-se outro nível de informação desde que combinasse os campos e se dissolvesse os polígonos de antemão.</p>
+
+<img class="gravatar img-circle" src="http://www.gravatar.com/avatar/bcce6e29a8bf37a2008f957238d69feb></img>]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Análise Fisiográfica: Relevo - Hipsometria - Declive - Exposição De Encostas]]></title>
+    <link href="http://qgis.pt/2016/02/14/analise-fisiografica-relevo-hipsometria-declive-exposicao-de-encostas/"/>
+    <updated>2016-02-14T21:13:13+00:00</updated>
+    <id>http://qgis.pt/2016/02/14/analise-fisiografica-relevo-hipsometria-declive-exposicao-de-encostas</id>
+    <content type="html"><![CDATA[<p>O presente tutorial QGIS apresenta um conjunto alargado de procedimentos para análise fisiográfica.</p>
+
+<p>São levadas a cabo duas abordagens distintas:</p>
+
+<ul>
+    <li>Escala média - a região do Algarve será utilizada como <i>case study</i>;</li>
+    <li>Escala semi-detalhada - o concelho de Lagoa será utilizado como <i>case study</i>.</li>
+</ul>
+
+<!-- more -->
+
+<p>Na análise fisiográfica à escala média utilizam-se três modelos digitais do terreno (MDT) que estão disponíveis na Internet (ASTER GDEM, EU-DEM e SRTM). O <i>case study</i> aqui apresentado pode, por isso, ser replicado com muita facilidade, quer para outras regiões de Portugal, quer para outros países.</p>
+
+<p>Para este <i>case study</i> foi, adicionalmente, feita uma avaliação da qualidade dos MDT através da comparação com a Carta Militar de Portugal à escala 1:25.000, com o intuito de escolher um dos três modelos e, depois, utilizar o melhor para uma caracterização da hipsometria, dos declives e da exposição de encostas na região.</p>
+
+<p>Na análise fisiográfica à escala semi-detalhada, os modelos digitais do terreno são construídos a partir de cartografia topográfica digital, recorrendo a um procedimento de triangulação (TIN) e a uma interpolação. É, consequentemente, mais difícil replicar o <i>case study</i> aqui apresentado, porque é indispensável ter acesso a essa fonte de informação, o que nem sempre é simples ou possível.</p>
+
+<p>É, igualmente, feita uma análise comparativa entre o DTM obtido a partir de cartografia topográfica digital, o DTM obtido por detecção remota e a Carta Militar de Portugal.</p>
+
+<br />
+
+<p align="center">
+<iframe src="https://www.slideshare.net/slideshow/embed_code/key/2aXFqJFwutyOSA" width="425" height="355" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px; margin-bottom:5px; max-width: 100%;" allowfullscreen> </iframe> <div style="margin-bottom:5px"> <strong> <a href="https://www.slideshare.net/nlourei/tutorial-qgis-sobre-anlise-fisiogrfica" title="Tutorial QGIS sobre Análise Fisiográfica" target="_blank">Tutorial QGIS sobre Análise Fisiográfica</a> </strong> from <strong><a href="//www.slideshare.net/nlourei" target="_blank">Nuno de Santos Loureiro</a></strong> </div>
+</p>
+
+<br />
+<img class="gravatar img-circle" src="http://www.gravatar.com/avatar/250855cc7650a361d33fba560b47a4a9></img>]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Preparação De Mapas Com Quadrículas Quilométricas UTM WGS84 Para a Apresentação Em Atlas De Distribuição]]></title>
+    <link href="http://qgis.pt/2015/12/28/preparacao-de-mapas-com-quadriculas-quilometricas-utm-wgs84-para-a-apresentacao-em-atlas-de-distribuicao/"/>
+    <updated>2015-12-28T12:06:53+00:00</updated>
+    <id>http://qgis.pt/2015/12/28/preparacao-de-mapas-com-quadriculas-quilometricas-utm-wgs84-para-a-apresentacao-em-atlas-de-distribuicao</id>
+    <content type="html"><![CDATA[<p>O tutorial <strong>Preparação de mapas com quadrículas quilométricas UTM WGS84 para a apresentação em atlas de distribuição</strong> apresenta um conjunto de procedimentos executados em QGIS, quer para a criação da própria grelha UTM WGS84, quer para a execução dos mapas com dados específicos relativos a uma situação concreta.</p>
+
+<!-- more -->
+
+<p>Adicionalmente, é apresentada uma funcionalidade que permite atribuir a cada registo pontual a indicação da quadrícula UTM WGS84 em que se insere.</p>
+
+<p>Por fim, é apresentada a possibilidade de inserir nos mapas um tema adicional, como forma de enriquecer a informação a representar e comunicar.</p>
+
+<br />
+
+<p align="center">
+<iframe src="https://www.slideshare.net/slideshow/embed_code/key/FkCRdwFDMOxPB0" width="427" height="356" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px; margin-bottom:5px; max-width: 100%;" allowfullscreen> </iframe> <div style="margin-bottom:5px"> <strong> <a href="https://www.slideshare.net/nlourei/qgis-tutorial-sobre-preparao-de-mapas-com-quadrcula-utm-wgs84" title="QGIS - tutorial sobre preparação de mapas com quadrícula UTM WGS84" target="_blank">QGIS - tutorial sobre preparação de mapas com quadrícula UTM WGS84</a> </strong> from <strong><a href="http://www.slideshare.net/nlourei" target="_blank">Nuno de Santos Loureiro</a></strong> </div>
+</p>
+
+<br />
+<img class="gravatar img-circle" src="http://www.gravatar.com/avatar/250855cc7650a361d33fba560b47a4a9></img>]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Introdução Aos Sistemas De Informação Geográfica Com QGIS]]></title>
@@ -2850,118 +2984,6 @@ utilização de <i>ssh</i> poderá usar o endereço apropriado e configurar o se
 
 <br />
 <img class="gravatar img-circle" src="http://www.gravatar.com/avatar/5ac74272f140db2ce94bdc51869e3168></img>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Tradução De Conteúdos QGIS Com Transifex]]></title>
-    <link href="http://qgis.pt/2014/04/20/traducao-de-conteudos-qgis-com-transifex/"/>
-    <updated>2014-04-20T22:01:46+01:00</updated>
-    <id>http://qgis.pt/2014/04/20/traducao-de-conteudos-qgis-com-transifex</id>
-    <content type="html"><![CDATA[<p>Este tutorial pretende demonstrar como é fácil contribuir para o projecto QGIS através da tradução do <a href="http://qgis.org/pt_PT/site/" target="_blank">website</a> e da 
-   <a href="http://www.qgis.org/pt_PT/docs/index.html" target="_blank">documentação</a>. <!-- more -->O transifex é uma plataforma usada por vários projectos <i>open source</i> e comerciais para traduzir
-   os seus conteúdos e desta forma chegar a mais público. Esta plataforma torna possível traduzir através da internet sem que tenha de instalar qualquer tipo de software.<p>
-
-<h4>Registar-se</h4>
-<p>Para iniciar, deverá registar-se no Transifex. Para tal, efectue o seu registo em <a href="https://www.transifex.com/signin/?next=/" target="_blank">https://www.transifex.com/signin/?next=/</a>.</p>
-
-<div class="post-img">
-    <a href="http://qgis.pt/blog/images/posts/login.png" rel="prettyPhoto" title="">
-        <img class="img-responsive thumbnail" src="http://qgis.pt/blog/images/posts/login.png" width="500"  alt="Entrada do site Transifex">
-    </a>
-</div>
-
-<p>Nesta página tem duas formas de registo:</p>
-<ul>
-    <li><b>Registar-se gratuitamente</b>, onde o utilzador pode inserir os seus dados manualmente (neste caso irá receber um email de verificação na sua conta)</li>
-    <li><b>Autenticação Social</b>, onde o utilizador pode recorrer à informação de redes sociais para autenticar o seu registo (Facebook, Twitter, google e Linkedin)<l/i>
-</ul>
-
-<h4>Integrar os projectos QGIS</h4>
-<p>Após o registo, clique na parte superior do site na opção <i>Explorar</i> e escreva na caixa QGIS, que a pesquisa mostrará dois resultados relevantes. Um referente ao <i>QGIS Website</i> e 
-   outro ao <i>QGIS Documentation</i></p>
-   
-<div class="post-img">
-    <a href="http://qgis.pt/blog/images/posts/explorar.png" rel="prettyPhoto" title="">
-        <img class="img-responsive thumbnail" src="http://qgis.pt/blog/images/posts/explorar.png" width="500"  alt="Resultado da pesquisa pela palavra QGIS">
-    </a>
-</div>
-
-<p>Tratam-se de dois projectos de tradução “independentes”. O <i>QGIS Website</i> serve para traduzir o site oficial do QGIS (<a href="www.qgis.org" target="_blank">www.qgis.org</a>) e,  por outro lado,
-   o <i>QGIS Documentation</i> para traduzir toda a documentação do QGIS (manual do utilizador, manual de formação, livro de receita PyQgis, etc&#8230;). Daqui para a frente iremos mostrar um exemplo de 
-   tradução para o <i>QGIS Documentation</i>. Os procedimentos são em tudo iguais para o <i>QGIS Website</i>. Ao entrar no projecto <i>QGIS Documentation</i> será exibida uma página com todos os idiomas
-   com tradução iniciada. Clique na linha que diz <i>Portuguese (Portugal)</i>.</p>
-
-<div class="post-img">
-    <a href="http://qgis.pt/blog/images/posts/Idioma.png" rel="prettyPhoto" title="">
-        <img class="img-responsive thumbnail" src="http://qgis.pt/blog/images/posts/Idioma.png" width="500"  alt="Selecção do Idioma Português (Portugal)">
-    </a>
-</div>
-
-<p>Todos os idiomas têm gestores que são responsáveis pela autorização de novos tradutores, para isso, deverá clicar primeiro no botão <i>Integrar Equipa</i> para solicitar a sua integração. O botão 
-   <i>Discussões</i> serve para, depois de estar integrado na equipa, falar com os membros e tirar dúvidas sobre termos ou dúvidas relativos à tradução.</p>
-
-<div class="post-img">
-    <a href="http://qgis.pt/blog/images/posts/Integrar_equipa.png" rel="prettyPhoto" title="">
-        <img class="img-responsive thumbnail" src="http://qgis.pt/blog/images/posts/Integrar_equipa.png" width="500"  alt="Selecção do botão Integrar equipa">
-    </a>
-</div>
-
-
-<p>Após autorização dos gestores, poderá clicar num dos documentos (recursos) e começar a tradução. Antes de ir directamente para a tradução do recurso, aparecerá uma janela com várias opções, 
-   basta clicar no <i>Traduzir Agora</i> para começar a traduzir. A figura seguinte mostra um exemplo de um recurso aberto pronto a ser traduzido. A parte superior mostra o texto original e a parte 
-   inferior mostra a caixa onde colocará a sua tradução.</p>
-   
-<div class="post-img">
-    <a href="http://qgis.pt/blog/images/posts/Recurso.png" rel="prettyPhoto" title="">
-        <img class="img-responsive thumbnail" src="http://qgis.pt/blog/images/posts/Recurso.png" width="500"  alt="Recurso a ser traduzido">
-    </a>
-</div>
-
-<p>Na lista de textos à esquerda, irão ocorrer três situações, um visto verde, dois vistos verdes ou então um círculo. Quando o item tem um visto verde, significa que esse item já foi traduzido,
-   se tiver dois vistos verdes significa que o item foi traduzido e revisto por um coordenador, e finalmente o círculo significa que o item ainda não foi traduzido.</p>
-
-<p>Para facilitar a rapidez do processo da tradução o Transifex disponibiliza um motor de pesquisa de termos que podem facilitar a tradução da sua cadeia de texto e atalhos de teclado para uma rápida
-   navegação.</p>
-
-<p>Tem também ainda os seguintes separadores na parte inferior da cadeia de texto que podem ajudá-lo na tradução:</p>
-
-<ul>
-    <li><b>Sugestões</b> - Este separador, funciona quando a web aplicação encontra cadeias de texto ou semelhantes e atribui uma percentagem(%) de coincidência de tradução relativo ao que está a traduzir</li>
-    <li><b>Histórico</b> - Este separador regista termos que são iguais ou semelhantes que foram usados no passado e que podem ser aplicados à cadeia de texto que está a traduzir</li>
-    <li><b>Glossário</b> - Aqui consegue ver, os termos usados pelos tradutores, e pode também inserir novos termos para que as traduções sejam mais rápidas e facilitar outros tradutores na tradução
-        das cadeias de texto (este separador será explicado detalhadamente mais à frente)</li>
-    <li><b>Notas</b> - Aqui pode deixar as suas sugestões, ou outro tipo de observações relativo ao processo de tradução de uma cadeia de texto que será visível pelos outros tradutores</li>
-</ul>
-
-<p>Após efectuar a sua tradução tem duas opções, <i>Gravar</i> ou <i>Save All</i>. A primeira opção permite apenas guardar a cadeia de texto que acabou de traduzir, enquanto que a segunda opção serve
-   em casos que traduz muitas cadeias de texto e no fim guarda todas.</p>
-   
-<p>O Transifex permite ainda ter um glossário para que possamos introduzir termos que se repetem e classificá-los como nome, pronome, verbo, adjectivo, de forma ajudar a optimizar a sua tradução e ajudar
-   a clarificar os outros tradutores em caso de dúvidas na tradução. Para poder aceder ao glossário, quando está na tradução, clique no separador <i>Glossário</i>, e de seguida, clique em
-   <i>Abrir Glossário</i>. A forma do glossário é apresentada na figura seguinte.</p>
-
-<div class="post-img">
-    <a href="http://qgis.pt/blog/images/posts/glossario.png" rel="prettyPhoto" title="">
-        <img class="img-responsive thumbnail" src="http://qgis.pt/blog/images/posts/glossario.png" width="500"  alt="Interface do Glossário">
-    </a>
-</div>
-
-<p>Ao clicarmos no <i>Adicionar Termo</i>, irá aparecer a seguinte janela.</p>
-
-<div class="post-img">
-    <a href="http://qgis.pt/blog/images/posts/adicionartermo.png" rel="prettyPhoto" title="">
-        <img class="img-responsive thumbnail" src="http://qgis.pt/blog/images/posts/adicionartermo.png" width="500"  alt="Adicionar Termo no glossário">
-    </a>
-</div>
-
-<p>Nesta interface, pode adicionar o <i>Termo</i> em inglês que quer referir, no campo <i>Parte do Discurso</i> irá adicionar o tipo (Nome, Pronome, Adjectivo, Verbo, Advérbio, Preposição, 
-   Conjunção, Interjeição). Para finalizar, na caixa <i>Tradução</i>, insira o texto em português e clique em <i>Gravar</i>.</p>
-
-<p>Esperamos que este tutorial facilite a sua contribuição para a tradução do QGIS. Caso tenha dúvidas, não hesite em usar a <i>mailing list qgis-pt</i> para as esclarecer.</p>
-
-<br />
-<img class="gravatar img-circle" src="http://www.gravatar.com/avatar/0edb9f3a1e5191476215ce32183d80a4></img>
 ]]></content>
   </entry>
   

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Biologia | QGIS-PT]]></title>
+  <link href="http://qgis.pt/categories/biologia/atom.xml" rel="self"/>
+  <link href="http://qgis.pt/"/>
+  <updated>2016-02-14T21:20:03+00:00</updated>
+  <id>http://qgis.pt/</id>
+  <author>
+    <name><![CDATA[Grupo de Utilizadores QGIS PT]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Preparação De Mapas Com Quadrículas Quilométricas UTM WGS84 Para a Apresentação Em Atlas De Distribuição]]></title>
+    <link href="http://qgis.pt/2015/12/28/preparacao-de-mapas-com-quadriculas-quilometricas-utm-wgs84-para-a-apresentacao-em-atlas-de-distribuicao/"/>
+    <updated>2015-12-28T12:06:53+00:00</updated>
+    <id>http://qgis.pt/2015/12/28/preparacao-de-mapas-com-quadriculas-quilometricas-utm-wgs84-para-a-apresentacao-em-atlas-de-distribuicao</id>
+    <content type="html"><![CDATA[<p>O tutorial <strong>Preparação de mapas com quadrículas quilométricas UTM WGS84 para a apresentação em atlas de distribuição</strong> apresenta um conjunto de procedimentos executados em QGIS, quer para a criação da própria grelha UTM WGS84, quer para a execução dos mapas com dados específicos relativos a uma situação concreta.</p>
+
+
+
+
+<!-- more -->
+
+
+
+
+<p>Adicionalmente, é apresentada uma funcionalidade que permite atribuir a cada registo pontual a indicação da quadrícula UTM WGS84 em que se insere.</p>
+
+
+
+
+<p>Por fim, é apresentada a possibilidade de inserir nos mapas um tema adicional, como forma de enriquecer a informação a representar e comunicar.</p>
+
+
+
+
+<br />
+
+
+
+
+<p align="center">
+<iframe src="https://www.slideshare.net/slideshow/embed_code/key/FkCRdwFDMOxPB0" width="427" height="356" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px; margin-bottom:5px; max-width: 100%;" allowfullscreen> </iframe> <div style="margin-bottom:5px"> <strong> <a href="https://www.slideshare.net/nlourei/qgis-tutorial-sobre-preparao-de-mapas-com-quadrcula-utm-wgs84" title="QGIS - tutorial sobre preparação de mapas com quadrícula UTM WGS84" target="_blank">QGIS - tutorial sobre preparação de mapas com quadrícula UTM WGS84</a> </strong> from <strong><a href="http://www.slideshare.net/nlourei" target="_blank">Nuno de Santos Loureiro</a></strong> </div>
+</p>
+
+
+
+
+<br />
+
+
+<p><img class="gravatar img-circle" src="http://www.gravatar.com/avatar/0cf6eca2f6e9a2fa258fde83f3900053></img></p>
+]]></content>
+  </entry>
+  
+</feed>
