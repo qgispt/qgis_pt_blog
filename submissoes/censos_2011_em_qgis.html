@@ -1,0 +1,74 @@
+---
+title: "Visualizar dados dos Censos 2011 com o QGIS"
+categories: [ qgis]
+author: Alexandre Neto
+---
+
+<style>
+img {
+    max-width:100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+    }
+</style>empo
+
+<p>A Base Geográfica de Referenciação da Informação (BGRI), que outrora foi paga, está há já algum tempo disponível a todos até ao nível da subsecção estatística e com um total de 122 variáveis dos censos 2011 (organizados por população residente, população presente, famílias, alojamento e edifícios). A <a href="http://mapas.ine.pt/download/index2011.phtml">página</a> para download, permite descarregar os dados totais para Portugal, ou por regiões e concelhos.</p>
+
+<a href="http://sigsemgrilhetas.files.wordpress.com/2013/05/screenshot-from-2013-05-03-194654.png"><img class="aligncenter size-large wp-image-157" src="http://sigsemgrilhetas.files.wordpress.com/2013/05/screenshot-from-2013-05-03-194654.png?w=584" alt="Screenshot from 2013-05-03 19:46:54" width="584" height="450" /></a>
+
+<p>O zip descarregado contém diversos ficheiros, nomeadamente um shapefile (shp, shx e dbf) com os poligonos das subsecções estatísticas e um ficheiro de texto (csv) contendo os valores das variáveis dos censos 2011 (assim como  uma nota explicativa das mesmas).</p>
+
+<p>A página de ajuda refere que é possível abrir estes dados recorrendo a software open source, como o <a href="http://qgis.org/">QGIS</a> ou <a href="http://www.gvsig.org/web/">gvSIG</a>, mas não exemplifica como fazê-lo. A tarefa, embora não seja difícil, obriga a uns quanto passos. Vamos ver quais são.</p>
+
+<h2>Abrir os ficheiros no QGIS</h2>
+
+<h3>Dados geográficos (SHP)</h3>
+<p>Os dados geográficos, ao nível da subsecção estatística, estão guardados no ficheiro <em>ESRI Shapefile</em> (*.shp) que abrimos usando o botão <em><strong>Adicionar camada vectorial <img class="alignnone  wp-image-1346" src="https://sigsemgrilhetas.files.wordpress.com/2013/05/add_vector.png" alt="add_vector" width="21" height="21" />  (</strong></em>ou através do menu <em><strong>camada &gt; adicionar camada &gt; Adicionar camada vectorial...</strong></em>). Usando o botão <em><strong>pesquisar</strong></em> indique a localização do ficheiro com a extensão "*.shp" (lembre-se que terá de ter opção "Todos os Ficheiros" ou "ESRI Shapefile" para que o ficheiros esteja visível). Para evitar problemas com acentos e cedilhas deve escolher uma <em><strong>codificação</strong></em> que suporte os nossos caracteres especiais, nomeadamente o "ISO-8859-1" ou "latin1", que, como podem ver neste <a href="https://pt.wikipedia.org/wiki/ISO_8859-1">link</a>, é essencialmente a mesma coisa).</p>
+
+<img src="https://sigsemgrilhetas.files.wordpress.com/2013/05/screenshot-from-2016-02-13-144846.png" alt="Screenshot from 2016-02-13 14:48:46" width="521" height="251" />
+
+<p>Depois de aberto o ficheiro, há que definir o sistema de coordenadas de referência correcto para a camada, que, tal como podemos ver pelos <a  href="http://mapas.ine.pt/download/metadados/bgri11.html">metadados</a>, para portugal continental é o ETRS89/PT-TM06 (EPSG:3763). Isso é feito clicando com botão direito sobre a camada e escolhendo a opção <em><strong>Definir SRC da camada</strong></em>. A forma mais fácil de encontrar o sistema desejado é introduzir o seu código EPSG no campo do filtro.</p>
+
+<img src="https://sigsemgrilhetas.files.wordpress.com/2013/05/screenshot-from-2016-02-13-144928.png" alt="Screenshot from 2016-02-13 14:49:28" width="534" height="591" />
+
+<h3>Dados alfanuméricos (CSV)</h3>
+
+<p>Os dados alfanuméricos dos censos 2011 são guardados num ficheiro CSV (<em>Comma Separated Values</em>), que não é mais que ficheiros simples de texto em que os valores são separados por vírgulas, ponto-e-vírgulas, ou espaços, e podem ser delimitados, por exemplo, por aspas, e que podem ter ou não uma linha de cabeçalho com os nomes dos campos.</p>
+
+<p>Como se pode ver no excerto abaixo, no nosso caso os valores são  separados por ponto e vírgula, e contêm uma linha de cabeçalho com os nomes dos campos.</p>
+
+<pre>ANO;GEO_COD;GEO_COD_DSG;NIVEL;NIVEL_DSG;N_EDIFICIOS_CLASSICOS;N_EDIFICIOS_CLASSICOS_1OU2;...
+2011;'PT;PT;1;Total Nacional;3544389;3219791;...
+2011;'1;Continente;2;NUT1;3353610;3035969;...
+2011;'17;Lisboa;3;NUT2;448957;322603;...
+2011;'171;Grande Lisboa;4;NUT3;277387;184975;...
+...</pre>
+
+<p>Por omissão, o QGIS (através do <a href="http://www.gdal.org/ogr/">OGR</a>) lê todos os campos do CSV como sendo do tipo texto (string). No entanto, se quisermos definir explicitamente o tipo de dados de cada campo, podemos usar uma técnica que aprendi com o <a href="http://www.linkedin.com/in/hfpmartins">Hugo Martins</a>. Na mesma pasta, cria-se um ficheiro de texto com o mesmo nome que o csv, mas com a extensão .csvt, e, numa só linha, separado por virgulas e dentro de aspas, especificamos cada um dos tipos de dados dos campos (<em>integer</em>, <em>real</em>, <em>string</em>, <em>date</em> (YYYY-MM-DD), <em>time</em> (HH:MM:SS+nn) e <em>datetime</em> (YYYY-MM-DD HH:MM:SS+nn)).</p>
+
+<p>Para facilitar, criei um ficheiro csvt com as características necessárias que podem descarregá-lo <a href="https://dl.dropboxusercontent.com/u/5088211/BGRI2011_PT.csvt">aqui</a>. (Nota: o nome do ficheiro terá de ser alterado consoante o nível a que descarregaram a informação, e.g., BGRI2011_PT.csvt --&gt; BGRI2011_1105.csvt.</a></p>
+
+<p>Depois de preparado o CSVT e de o colocarmos na mesma pasta que o CSV, podemos abrir o CSV no QGIS. Para isso usamos o botão <strong>Adicionar camada de texto delimitado <img class="alignnone  wp-image-1429" src="https://sigsemgrilhetas.files.wordpress.com/2013/05/icon_texto_delimitado.png" alt="icon_texto_delimitado" width="20" height="20" /> </strong>(ou através do menu <strong>camada &gt; adicionar camada &gt; Adicionar camada de texto delimitado...</strong></em>). Começamos por indicar a localização do ficheiro usando o botão <em><strong>Procurar...</strong></em>. Mais uma vez, devemos garantir que usamos uma codificação compatível, a ISO-8859-1. Em formato de ficheiro escolhemos <em><strong>Delimitadores personalizados</strong></em> e, como já tínhamos visto anteriormente, seleccionamos a opção <em><strong>Ponto e vírgula. </strong></em>Seleccionamos a caixa <em><strong>Primeiro registo tem nome dos campos </strong></em>e escolhemos<em><strong> Sem geometria </strong></em>em Definição de geometria.</p>
+
+<p>No final da caixa de diálogo podemos ver uma amostra de como ficará o nosso ficheiro dentro do QGIS. Se repararem no campo <em>GEO_COD</em> todos os valores têm antes um apóstrofe (') - penso que colocado propositadamente para obrigar os valores a serem considerados texto em programas como o Excel ou o Calc - de que nos vamos ter de livrar. Para isso, voltamos às opções de <em><strong>Delimitadores personalizados</strong></em> e na opção <em><strong>Escape</strong></em> colocamos um apóstrofe (') que será ignorado em <strong><span style="text-decoration: underline;">todos os campos e respectivos valores</span></strong> (felizmente, no nosso caso não existem apóstrofes noutros campos, caso contrário teríamos de editar o ficheiro num editor de texto para os salvaguardar) . A caixa de diálogo com todas as opções necessárias deve parecer-se com a imagem abaixo.</p>
+
+<img src="https://sigsemgrilhetas.files.wordpress.com/2013/05/screenshot-from-2016-02-14-010426.png" alt="Screenshot from 2016-02-14 01:04:26" width="962" height="571" />
+
+<h2>Unir as tabelas de atributos</h2>
+
+<p>Agora que temos as duas camadas no QGIS, já só falta relacionar a componente geográfica à alfanumérica. Uma vez que têm ambas um campo em comum isto pode ser feito através de uma união (virtual). Para isso, temos de abrir as propriedades da camada "geométrica" (botão direito do rato sobre a camada, <em><strong>Propriedades</strong></em>)  e, no separador <strong><em>Uniões</em></strong>, adicionar uma nova união clicando no botão <img class="alignnone  wp-image-1514" src="https://sigsemgrilhetas.files.wordpress.com/2013/05/mactionsignplus.png" alt="mActionSignPlus" width="17" height="17" />. No menu seguinte, é necessário definir a <em><strong>Camada a unir</strong></em> a tabela resultante do CSV, o <em><strong>Campo a unir</strong></em> como "GEO_COD" e o <em><strong>Campo alvo</strong></em> como "BGRI11" (contém o código da subsecção estatística). Podemos ainda definir quais os campos do CSV queremos unir, e que prefixo lhe dar. Para tornar a visualização dos dados mais rápida, aconselha-se a seleccionar a opção de memorizar a camada unida em memória virtual.</p>
+
+<img src="https://sigsemgrilhetas.files.wordpress.com/2013/05/screenshot-from-2016-02-14-152402.png" alt="Screenshot from 2016-02-14 15:24:02" width="505" height="423" />
+
+<p>Finalizado o processo, a camada com os dados geográficos tem agora novos campos originários do CSV, tantos quantos os escolhidos,  e precedidos de um prefixo. No meu caso apenas adicionei um campo N_INDIVIDUOS_RESIDENT e usei o prefixo BGRI11_, como se pode constatar na imagem abaixo.</p>
+
+<img src="https://sigsemgrilhetas.files.wordpress.com/2013/05/screenshot-from-2016-02-14-152628.png" alt="Screenshot from 2016-02-14 15:26:28" width="690" height="383" />
+
+<p> Assim, torna-se possível usar os dados dos Censos 2011 para efectuar análise espacial, ou simplesmente para criar mapas. </p>
+
+<img src="https://sigsemgrilhetas.files.wordpress.com/2013/05/censos2011_porto.jpeg" alt="censos2011_porto" width="566" height="566" />
+
+<p><strong>Nota:</strong> Neste exemplo trabalhou-se ao nível da subsecção estatística, mas poderia usar-se outro nível de informação desde que combinasse os campos e se dissolvesse os polígonos de antemão.</p>
+
+{% gravatar senhor.neto@gmail.com %}
