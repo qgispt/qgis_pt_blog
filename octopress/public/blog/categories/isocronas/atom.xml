@@ -1,0 +1,392 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Isocronas | QGIS-PT]]></title>
+  <link href="http://qgis.pt/categories/isocronas/atom.xml" rel="self"/>
+  <link href="http://qgis.pt/"/>
+  <updated>2016-02-21T08:35:03+00:00</updated>
+  <id>http://qgis.pt/</id>
+  <author>
+    <name><![CDATA[Grupo de Utilizadores QGIS PT]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Análise De Redes Com O QGIS]]></title>
+    <link href="http://qgis.pt/2016/02/21/analise-de-redes-com-o-qgis/"/>
+    <updated>2016-02-21T08:32:24+00:00</updated>
+    <id>http://qgis.pt/2016/02/21/analise-de-redes-com-o-qgis</id>
+    <content type="html"><![CDATA[<p>Graças ao trabalho do Médéric Ribreux <a href="https://medspx.fr/" target="_blank">[0]</a>, o QGIS passará a integrar, a partir da versão 1.14 LTR, um conjunto de funcionalidades de análise de redes, através das ferramentas v.net.* <a href="https://grass.osgeo.org/grass70/manuals/v.net.html" target="_blank">[1]</a> do GRASS, integradas no Processing.</p>
+
+
+
+
+<p>Apesar destas ferramentas provirem e serem executadas pelo GRASS, o modelo de implementação no Processing permite que a sua utilização no QGIS seja significativamente mais simples e intuitiva do que na versão original, já que a construção do modelo topológico de redes é feito de forma transparente para o utilizador.</p>
+
+
+
+
+<!-- more -->
+
+
+
+
+<p>Assim, para executar a maior parte das análises, basta dispor de uma layer de linhas (arcs) e outra[s] de pontos (nodes).</p>
+
+
+
+
+<p>Para já, estas ferramentas só funcionam com o GRASS 7.0.x como base. No entanto, está prevista a adaptação para utilização com o GRASS 6.4 e com o GRASS 7.1.x <a href="https://github.com/qgis/QGIS/pull/2628" target="_blank">[2]</a>.</p>
+
+
+
+
+<p>De seguida apresentam-se alguns exercícios de aplicação destas ferramentas.</p>
+
+
+
+
+<h3>Preparação da layer de linhas (rede viária)</h3>
+
+
+
+
+<p>A layer de linhas a utilizar pode, por exemplo, conter a rede viária de um determinado local. No presente caso, vai utilizar-se um extrato da rede viária da cidade de Pinhel.</p>
+
+
+
+
+<p>Em termos de estrutura não é necessário seguir nenhum modelo rígido, bastando que a rede esteja topologicamente correta. Uma questão importante prende-se com os troços de sentido único ou de trânsito proibido, já que as ferramentas que se irão utilizar, permitem distinguir essas situações através da tabela de atributos.</p>
+
+
+
+
+<p>Desta forma, nos troços de sentido único, vai ser necessário verificar o sentido em que a linha foi vetorizada.</p>
+
+
+
+
+<p>A figura seguinte apresenta, a verde, os troços das ruas com duplo sentido, e a vermelho, os troços de sentido único. Note-se que a seta representa o sentido em que cada um desses troços foi digitalizado.</p>
+
+
+
+
+<div class="post-img">
+    <a href="http://qgis.pt/blog/images/posts/1_analise_redes.jpg" rel="prettyPhoto" title="">
+        <img class="img-responsive thumbnail" src="http://qgis.pt/blog/images/posts/1_analise_redes.jpg" width="500"  alt="Rede viária da cidade de Pinhel">
+    </a>
+</div>
+
+
+
+
+<p>Analisando a imagem em pormenor, pode verificar-se que existe um troço que tem o sentido de vetorização contrário ao sentido de trânsito, o que iria causar um erro na análise de redes. Portanto, é importante verificar todos os troços e orientar a direção dos que forem de sentido único na direção em que se processa o trânsito. </p>
+
+
+
+
+<div class="post-img">
+    <a href="http://qgis.pt/blog/images/posts/2_analise_redes.jpg" rel="prettyPhoto" title="">
+        <img class="img-responsive thumbnail" src="http://qgis.pt/blog/images/posts/2_analise_redes.jpg" width="500"  alt="Troço com sentido de vetorização contrário ao sentido de trânsito">
+    </a>
+</div>
+
+
+
+
+<p>Para corrigir este erro, é necessário inverter a direção do troço. Para o efeito, pode utilizar-se o plugin "Swap Vector Direction" do QGIS (Menu Plugins -> Manage and Install Plugins…):</p>
+
+
+
+
+<div class="post-img">
+    <a href="http://qgis.pt/blog/images/posts/3_analise_redes.jpg" rel="prettyPhoto" title="">
+        <img class="img-responsive thumbnail" src="http://qgis.pt/blog/images/posts/3_analise_redes.jpg" width="500"  alt="Plugin Swap Vector Direction">
+    </a>
+</div>
+
+
+
+
+<p>Depois de instalado, basta colocar a layer em edição, selecionar o(s) troço(s) a inverter e clicar no ícone da ferramenta:</p>
+
+
+
+
+<div class="post-img">
+    <a href="http://qgis.pt/blog/images/posts/4_analise_redes.jpg" rel="prettyPhoto" title="">
+        <img class="img-responsive thumbnail" src="http://qgis.pt/blog/images/posts/4_analise_redes.jpg" width="500"  alt="Inverter a direção da geometria">
+    </a>
+</div>
+
+
+
+
+<p>Após as geometrias estarem de acordo com o sentido de trânsito, vai ser necessário indicar, num campo da tabela de atributos, que estes troços são de sentido único. Para isso, é necessário compreender a noção de "custo" nas análises de redes. Para  interiorizar este conceito, basta pensar nas pesquisas que vulgarmente se fazem nas aplicações de GPS para automóvel. Quando se pretende deslocar do ponto A para o ponto B, a aplicação questiona se se deseja calcular a rota mais curta ou a rota mais rápida. Nesse caso, a aplicação coloca à disposição do utilizador dois parâmetros que vão servir de "custo" para o cálculo do percurso: a distância e o tempo de deslocação.</p>
+
+
+
+
+<p>A distância é o parâmetro de “custo” mais simples de utilizar, já que basta calcular o comprimento de cada troço da rede viária (no QGIS, Field Calculator -> função $length).</p>
+
+
+
+
+<p>Para usar o tempo de deslocação também não é complexo, mas é necessário saber qual é a velocidade média/máxima em cada troço. Tendo esse valor em Km/h, basta aplicar a fórmula no Field Calcular:</p>
+
+
+
+
+<pre>
+    ($length/1000) x 60 / [Velocidade média em Km2]
+</pre>
+
+
+
+
+<p>Seguindo a mesma lógica, podem usar-se outros parâmetro para o "custo", nomeadamente, o declive dos troços.</p>
+
+
+
+
+<p>Nos exemplos seguintes vai usar-se, simplesmente, a distância.</p>
+
+
+
+
+<p>Desta forma, cria-se um campo na tabela de atributos para calcular o comprimento de todos os troços (Field calculator -> Novo campo decimal (real) -> "dois_senti"):</p>
+
+
+
+
+<div class="post-img">
+    <a href="http://qgis.pt/blog/images/posts/5_analise_redes.jpg" rel="prettyPhoto" title="">
+        <img class="img-responsive thumbnail" src="http://qgis.pt/blog/images/posts/5_analise_redes.jpg" width="500"  alt="Comprimento de todos os troços">
+    </a>
+</div>
+
+
+
+
+<p>De seguida, cria-se um novo campo, mas com o nome "um_senti":</p>
+
+
+
+
+<div class="post-img">
+    <a href="http://qgis.pt/blog/images/posts/6_analise_redes.jpg" rel="prettyPhoto" title="">
+        <img class="img-responsive thumbnail" src="http://qgis.pt/blog/images/posts/6_analise_redes.jpg" width="500"  alt="Comprimento dos troços no sentido inverso">
+    </a>
+</div>
+
+
+
+
+<p>Finalmente, selecionam-se todos os troços com sentido único da rede viária e atribui-se-lhe o valor "-1":</p>
+
+
+
+
+<div class="post-img">
+    <a href="http://qgis.pt/blog/images/posts/7_analise_redes.jpg" rel="prettyPhoto" title="">
+        <img class="img-responsive thumbnail" src="http://qgis.pt/blog/images/posts/7_analise_redes.jpg" width="500"  alt="Troços de sentido unico">
+    </a>
+</div>
+
+
+
+
+<p>Com isto vai poder indicar-se que o troço está bloqueado no sentido inverso ao da vetorização. Todos os restantes troços serão praticáveis em ambos os sentidos e terão, para um lado e para o outro, um "custo" semelhante. Se se estivesse a considerar o declive do terreno no parâmetro "custo", então já se poderia refletir aqui um "custo" distinto, consoante a direção fosse a da subida ou da descida da rua.</p>
+
+
+
+
+<p>Deste modo, a layer de linhas está pronta para ser utilizada.</p>
+
+
+
+
+<h3>Distância entre dois pontos (v.net.distance)</h3>
+
+
+
+
+<p>Para calcular a distância entre dois pontos, criam-se duas novas layers de pontos, uma para inserir o ponto de início e outra o ponto de destino.</p>
+
+
+
+
+<p>De seguida, corre-se a ferramenta v.net.distance do Processing, indicando: a layer da rede viária; a layer com o ponto de início; a layer com o ponto de destino; a margem que deve ser dada para unir os pontos de início e destino à rede, caso estes não estejam sobrepostos; o campo com o valor do "custo" para todos os troços; o campo com o valor do "custo" para os troços de sentido único</p>
+
+
+
+
+<div class="post-img">
+    <a href="http://qgis.pt/blog/images/posts/8_analise_redes.jpg" rel="prettyPhoto" title="">
+        <img class="img-responsive thumbnail" src="http://qgis.pt/blog/images/posts/8_analise_redes.jpg" width="500"  alt="Ferramenta v.net.distance">
+    </a>
+</div>
+
+
+
+
+<p>Curiosamente, a ferramenta calcula o percurso no sentido contrário, ou seja, do ponto de destino para o ponto de início, pelo que se se pretender o percurso exatamente na direção início -> destino, têm de se inverter as layers que se definem na ferramenta v.net.distance. O resultado é o da figura seguinte, onde se pode observar que o sentido do trânsito foi devidamente respeitado.</p>
+
+
+
+
+<div class="post-img">
+    <a href="http://qgis.pt/blog/images/posts/9_analise_redes.jpg" rel="prettyPhoto" title="">
+        <img class="img-responsive thumbnail" src="http://qgis.pt/blog/images/posts/9_analise_redes.jpg" width="500"  alt="Caminho mais curto com a ferramenta v.net.distance">
+    </a>
+</div>
+
+
+
+
+<p>Utilizando a mesma ferramenta, poderia calcular-se a distância de "muitos-para-muitos", como mostra o exemplo do seu manual <a href="https://grass.osgeo.org/grass70/manuals/v.net.distance.html" target="_blank">[3]</a>, onde é calculado o caminho mais curto e a distância a partir de um conjunto de escolas (círculos a verde), até às unidades de saúde mais próximas (cruzes a vermelho).</p>
+
+
+
+
+<div class="post-img">
+    <a href="http://qgis.pt/blog/images/posts/10_analise_redes.png" rel="prettyPhoto" title="">
+        <img class="img-responsive thumbnail" src="http://qgis.pt/blog/images/posts/10_analise_redes.png" width="500"  alt="Caminho mais curto das escolas para os hospitais">
+    </a>
+</div>
+
+
+
+
+<h3>Divisão da rede através de isolinhas de custo (v.net.iso)</h3>
+
+
+
+
+<p>Esta ferramenta é muito útil quando se está a usar o tempo de deslocação como parâmetro de "custo", uma vez que devolve como resultado, as isócronas dos tempos de deslocação.</p>
+
+
+
+
+<p>Neste caso, vai calcular-se a distância a partir de um conjunto de serviços existentes na cidade de Pinhel, com a ferramenta v.net.iso.</p>
+
+
+
+
+<div class="post-img">
+    <a href="http://qgis.pt/blog/images/posts/11_analise_redes.jpg" rel="prettyPhoto" title="">
+        <img class="img-responsive thumbnail" src="http://qgis.pt/blog/images/posts/11_analise_redes.jpg" width="500"  alt="Ferramenta v.net.iso">
+    </a>
+</div>
+
+
+
+
+<p>Nota apenas para o campo "Costs for isolines", onde se definem os valores de "custo" que, neste caso, diz respeito à distância em metros. O resultado é o da figura seguinte.</p>
+
+
+
+
+<div class="post-img">
+    <a href="http://qgis.pt/blog/images/posts/12_analise_redes.jpg" rel="prettyPhoto" title="">
+        <img class="img-responsive thumbnail" src="http://qgis.pt/blog/images/posts/12_analise_redes.jpg" width="500"  alt="Isócronas com a ferramenta v.net.iso">
+    </a>
+</div>
+
+
+
+
+<h3>O problema do caixeiro-viajante (v.net.salesman)</h3>
+
+
+
+
+<p>O Problema do Caixeiro Viajante é um problema que tenta determinar a menor rota para percorrer uma série de cidades (visitando uma única vez cada uma delas), regressando à cidade de origem. Trata-se de um problema de otimização NP-difícil inspirado na necessidade dos vendedores realizarem entregas em diversos locais (as cidades), percorrendo o menor caminho possível e reduzindo, dessa forma, o tempo necessário para a viagem e os possíveis custos com transporte e combustível <a href="https://pt.wikipedia.org/wiki/Problema_do_caixeiro-viajante" target="_blank">[4]</a>.</p>
+
+
+
+
+<p>Este algoritmo também se encontra no Processing e vai usar-se para calcular o percurso mais curto que permite percorrer todos os serviços inventariados no exemplo anterior.</p>
+
+
+
+
+<div class="post-img">
+    <a href="http://qgis.pt/blog/images/posts/13_analise_redes.jpg" rel="prettyPhoto" title="">
+        <img class="img-responsive thumbnail" src="http://qgis.pt/blog/images/posts/13_analise_redes.jpg" width="500"  alt="Ferramenta v.net.salesman">
+    </a>
+</div>
+
+
+
+
+<p>São devolvidos dois resultados, um correspondendo à geometria do percurso otimizado, e o outro a uma tabela alfanumérica onde é apresentada a sequência ótima de visita aos serviços, identificados pelo respetivo ID (9 -> 4 -> 5 -> 6 -> 7 -> 8 -> 3 -> 1 -> 2), bem como o "custo" associado.</p>
+
+
+
+
+<div class="post-img">
+    <a href="http://qgis.pt/blog/images/posts/14_analise_redes.jpg" rel="prettyPhoto" title="">
+        <img class="img-responsive thumbnail" src="http://qgis.pt/blog/images/posts/14_analise_redes.jpg" width="500"  alt="Percurso otimizado com a ferramenta v.net.salesman">
+    </a>
+</div>
+
+
+
+
+<br />
+
+
+
+
+<p>Para além das apresentadas, existem mais 17 ferramentas v.net.* no Processing, prontas para resolver muitos problemas de análise de redes.</p>
+
+
+
+
+<div class="post-img">
+    <a href="http://qgis.pt/blog/images/posts/15_analise_redes.jpg" rel="prettyPhoto" title="">
+        <img class="img-responsive thumbnail" src="http://qgis.pt/blog/images/posts/15_analise_redes.jpg" width="500"  alt="Ferramentas de análise de redes disponíveis no Processing">
+    </a>
+</div>
+
+
+
+
+<br />
+
+
+
+
+<h3>Referências</h3>
+
+
+
+
+<p>[0] <a href="https://medspx.fr/" target="_blank">https://medspx.fr/</a></p>
+
+
+<p>[1] <a href="https://grass.osgeo.org/grass70/manuals/v.net.html" target="_blank">https://grass.osgeo.org/grass70/manuals/v.net.html</a></p>
+
+
+<p>[2] <a href="https://github.com/qgis/QGIS/pull/2628" target="_blank">https://github.com/qgis/QGIS/pull/2628</a></p>
+
+
+<p>[3] <a href="https://grass.osgeo.org/grass70/manuals/v.net.distance.html" target="_blank">https://grass.osgeo.org/grass70/manuals/v.net.distance.html</a></p>
+
+
+<p>[4] <a href="https://pt.wikipedia.org/wiki/Problema_do_caixeiro-viajante" target="_blank">https://pt.wikipedia.org/wiki/Problema_do_caixeiro-viajante</a></p>
+
+
+
+
+<br />
+
+
+<p><img class="gravatar img-circle" src="http://www.gravatar.com/avatar/b0add1ef3ca3cc327be0625799cd1d96></img></p>
+]]></content>
+  </entry>
+  
+</feed>
