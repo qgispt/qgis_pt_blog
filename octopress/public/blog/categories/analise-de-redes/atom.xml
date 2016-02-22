@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Análise De Redes | QGIS-PT]]></title>
   <link href="http://qgis.pt/categories/analise-de-redes/atom.xml" rel="self"/>
   <link href="http://qgis.pt/"/>
-  <updated>2016-02-21T08:35:03+00:00</updated>
+  <updated>2016-02-22T12:59:40+00:00</updated>
   <id>http://qgis.pt/</id>
   <author>
     <name><![CDATA[Grupo de Utilizadores QGIS PT]]></name>
@@ -18,7 +18,7 @@
     <link href="http://qgis.pt/2016/02/21/analise-de-redes-com-o-qgis/"/>
     <updated>2016-02-21T08:32:24+00:00</updated>
     <id>http://qgis.pt/2016/02/21/analise-de-redes-com-o-qgis</id>
-    <content type="html"><![CDATA[<p>Graças ao trabalho do Médéric Ribreux <a href="https://medspx.fr/" target="_blank">[0]</a>, o QGIS passará a integrar, a partir da versão 1.14 LTR, um conjunto de funcionalidades de análise de redes, através das ferramentas v.net.* <a href="https://grass.osgeo.org/grass70/manuals/v.net.html" target="_blank">[1]</a> do GRASS, integradas no Processing.</p>
+    <content type="html"><![CDATA[<p>Graças ao trabalho do Médéric Ribreux <a href="https://medspx.fr/" target="_blank">[0]</a>, o QGIS passará a integrar, a partir da versão 2.14 LTR, um conjunto de funcionalidades de análise de redes, através das ferramentas v.net.* <a href="https://grass.osgeo.org/grass70/manuals/v.net.html" target="_blank">[1]</a> do GRASS, integradas no Processing.</p>
 
 
 
@@ -140,7 +140,7 @@
 
 
 <pre>
-    ($length/1000) x 60 / [Velocidade média em Km2]
+    ($length/1000) x 60 / [Velocidade média em Km/h]
 </pre>
 
 
@@ -385,7 +385,7 @@
 <br />
 
 
-<p><img class="gravatar img-circle" src="http://www.gravatar.com/avatar/a282661f74a5b6b1c3282b07c666c6a3></img></p>
+<p><img class="gravatar img-circle" src="http://www.gravatar.com/avatar/31d3f792ca2120621a43536f8b71127a></img></p>
 ]]></content>
   </entry>
   

@@ -4,7 +4,7 @@
   <title><![CDATA[QGIS-PT]]></title>
   <link href="http://qgis.pt/atom.xml" rel="self"/>
   <link href="http://qgis.pt/"/>
-  <updated>2016-02-21T08:35:03+00:00</updated>
+  <updated>2016-02-22T12:59:40+00:00</updated>
   <id>http://qgis.pt/</id>
   <author>
     <name><![CDATA[Grupo de Utilizadores QGIS PT]]></name>
@@ -18,7 +18,7 @@
     <link href="http://qgis.pt/2016/02/21/analise-de-redes-com-o-qgis/"/>
     <updated>2016-02-21T08:32:24+00:00</updated>
     <id>http://qgis.pt/2016/02/21/analise-de-redes-com-o-qgis</id>
-    <content type="html"><![CDATA[<p>Graças ao trabalho do Médéric Ribreux <a href="https://medspx.fr/" target="_blank">[0]</a>, o QGIS passará a integrar, a partir da versão 1.14 LTR, um conjunto de funcionalidades de análise de redes, através das ferramentas v.net.* <a href="https://grass.osgeo.org/grass70/manuals/v.net.html" target="_blank">[1]</a> do GRASS, integradas no Processing.</p>
+    <content type="html"><![CDATA[<p>Graças ao trabalho do Médéric Ribreux <a href="https://medspx.fr/" target="_blank">[0]</a>, o QGIS passará a integrar, a partir da versão 2.14 LTR, um conjunto de funcionalidades de análise de redes, através das ferramentas v.net.* <a href="https://grass.osgeo.org/grass70/manuals/v.net.html" target="_blank">[1]</a> do GRASS, integradas no Processing.</p>
 
 <p>Apesar destas ferramentas provirem e serem executadas pelo GRASS, o modelo de implementação no Processing permite que a sua utilização no QGIS seja significativamente mais simples e intuitiva do que na versão original, já que a construção do modelo topológico de redes é feito de forma transparente para o utilizador.</p>
 
@@ -77,7 +77,7 @@
 <p>Para usar o tempo de deslocação também não é complexo, mas é necessário saber qual é a velocidade média/máxima em cada troço. Tendo esse valor em Km/h, basta aplicar a fórmula no Field Calcular:</p>
 
 <pre>
-	($length/1000) x 60 / [Velocidade média em Km2]
+	($length/1000) x 60 / [Velocidade média em Km/h]
 </pre>
 
 <p>Seguindo a mesma lógica, podem usar-se outros parâmetro para o &#8220;custo&#8221;, nomeadamente, o declive dos troços.</p>
