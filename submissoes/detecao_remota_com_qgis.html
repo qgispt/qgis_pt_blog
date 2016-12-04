@@ -73,11 +73,11 @@ Dessas 6 missões, 3 já possuem satélites em órbita:</p>
     <li>Sentinel-6 : nova geração de satélites de monitorização do nível do mar.</li>
 </ul>
 
-<p>A outra limitação referida, relativa aos custos dos softwares, também já foi amplamente ultrapassada, existindo, neste momento, diversos softwares open source de Deteção Remota <a href="http://gisgeography.com/open-source-remote-sensing-software-packages" target="_blank">[10]</a>, onde também se inclui o SNAP da Agência Espacial Europeia <a href="http://step.esa.int/main/toolboxes/snap" target="_blank">[11]</a> e, naturalmente, o QGIS, que possui cada vez mais valências para Deteção Remota e Processamento Digital de Imagem, ao integrar ferramentas do GRASS <a href="https://grass.osgeo.org" target="_blank">[12]</a>, SAGA <a href="http://www.saga-gis.org" target="_blank">[13]</a>, Orfeo <a href="http://orfeo-toolbox.org" target="_blank">[14]</a>, GDAL <a href="http://www.gdal.org" target="_blank">[15]</a> e o Semi-Automatic Classification Plugin <a href="https://fromgistors.blogspot.com" target="_blank">[16]</a>.</p>
+<p>A outra limitação referida, relativa aos custos dos softwares, também já foi amplamente ultrapassada, existindo, neste momento, diversos softwares open source de Deteção Remota <a href="http://gisgeography.com/open-source-remote-sensing-software-packages" target="_blank">[10]</a> <a href="http://www.grss-ieee.org/open-source-software-related-to-geoscience-and-remote-sensing" target="_blank">[11]</a>, onde também se inclui o SNAP da Agência Espacial Europeia <a href="http://step.esa.int/main/toolboxes/snap" target="_blank">[12]</a> e, naturalmente, o QGIS, que possui cada vez mais valências para Deteção Remota e Processamento Digital de Imagem, ao integrar ferramentas do GRASS <a href="https://grass.osgeo.org" target="_blank">[13]</a>, SAGA <a href="http://www.saga-gis.org" target="_blank">[14]</a>, Orfeo <a href="http://orfeo-toolbox.org" target="_blank">[15]</a>, GDAL <a href="http://www.gdal.org" target="_blank">[16]</a> e o Semi-Automatic Classification Plugin <a href="https://fromgistors.blogspot.com" target="_blank">[17]</a>.</p>
 
-<p>O Semi-Automatic Classification Plugin (SCP) é um projeto desenvolvido pelo Luca Congedo <a href="https://www.linkedin.com/in/lucacongedogis" target="_blank">[17]</a>, um Engenheiro do Ambiente e investigador, que trabalha na área dos Sistemas de Informação Geográfica e da Deteção Remota desde 2009. O SCP é um plugin para o QGIS, que permite descarregar imagens Sentinel-2, Landsat e ASTER, fazer o pré-processamento, a classificação e o pós-processamento, de forma bastante simples e ágil, encontrando-se totalmente integrado no QGIS.</p>
+<p>O Semi-Automatic Classification Plugin (SCP) é um projeto desenvolvido pelo Luca Congedo <a href="https://www.linkedin.com/in/lucacongedogis" target="_blank">[18]</a>, um Engenheiro do Ambiente e investigador, que trabalha na área dos Sistemas de Informação Geográfica e da Deteção Remota desde 2009. O SCP é um plugin para o QGIS, que permite descarregar imagens Sentinel-2, Landsat e ASTER, fazer o pré-processamento, a classificação e o pós-processamento, de forma bastante simples e ágil, encontrando-se totalmente integrado no QGIS.</p>
 
-<p>Este plugin possui um manual bastante completo e abrangente, sendo ainda complementado por uma série de vídeos/tutoriais disponibilizados pelo próprio autor <a href="https://fromgistors.blogspot.com" target="_blank">[16]</a>. Para além destes, começa a haver um grande conjunto de tutoriais dispersos pela Internet, sobre a utilização do SCP. O melhor e mais completo exemplo, em língua portuguesa, é o conjunto de tutoriais, em vídeo, disponibilizados pelo Professor Gonçalo Vieira <a href="http://vieira.weebly.com" target="_blank">[18]</a>, docente do IGOT (Universidade de Lisboa) e investigador do Centro de Estudos Geográficos, como suporte à unidade curricular de Deteção Remota e SIG aplicados ao Ordenamento do Território. Como se irá ver de seguida, este conjunto de vídeos percorre os diversos passos de um projeto de Deteção Remota.</p>
+<p>Este plugin possui um manual bastante completo e abrangente, sendo ainda complementado por uma série de vídeos/tutoriais disponibilizados pelo próprio autor <a href="https://fromgistors.blogspot.com" target="_blank">[17]</a>. Para além destes, começa a haver um grande conjunto de tutoriais dispersos pela Internet, sobre a utilização do SCP. O melhor e mais completo exemplo, em língua portuguesa, é o conjunto de tutoriais, em vídeo, disponibilizados pelo Professor Gonçalo Vieira <a href="http://vieira.weebly.com" target="_blank">[19]</a>, docente do IGOT (Universidade de Lisboa) e investigador do Centro de Estudos Geográficos, como suporte à unidade curricular de Deteção Remota e SIG aplicados ao Ordenamento do Território. Como se irá ver de seguida, este conjunto de vídeos percorre os diversos passos de um projeto de Deteção Remota.</p>
 
 <p>O exemplo irá debruçar-se sobre a utilização de imagens do satélite <b>Sentinel-2A</b>, da ESA.</p>
 
@@ -85,7 +85,7 @@ Dessas 6 missões, 3 já possuem satélites em órbita:</p>
 
 <div class="post-img">
     <a href="{{ site.url }}/blog/images/posts/5_scp_comparacao_bandas_sentinel_landsat.png" rel="prettyPhoto" title="">
-        {% img img-responsive thumbnail http://qgis.pt/blog/images/posts/5_scp_comparacao_bandas_sentinel_landsat.png 500 '' 'Figura 5 - Comparação de bandas dos satélites Sentinel-2, Landsat 7 e Landsat 8 [19]' %}
+        {% img img-responsive thumbnail http://qgis.pt/blog/images/posts/5_scp_comparacao_bandas_sentinel_landsat.png 500 '' 'Figura 5 - Comparação de bandas dos satélites Sentinel-2, Landsat 7 e Landsat 8 [20]' %}
     </a>
 </div>
 
@@ -101,7 +101,7 @@ Dessas 6 missões, 3 já possuem satélites em órbita:</p>
 
 <p><b>Windows, instalação via OSGeo4W -</b> basta abrir o OSGeo4W, selecionar “Advanced Install”, pesquisar e instalar os pacotes (Libs) python-numpy, python-scipy e matplotlib, caso não estejam já instalados.</p>
 
-<p><b>Windows, instalação Standalone -</b> à partida os pacotes estarão instalados mas, caso não estejam, sugere-se seguir o tutorial de instalação do plugin photo2shape <a href="http://qgis.pt/blog/2015/10/02/importar-fotografias-georreferenciadas-para-o-qgis" target="_blank">[20]</a>, na parte que diz respeito à instalação/utilização do PyPi (Python Package Index).</p>
+<p><b>Windows, instalação Standalone -</b> à partida os pacotes estarão instalados mas, caso não estejam, sugere-se seguir o tutorial de instalação do plugin photo2shape <a href="http://qgis.pt/blog/2015/10/02/importar-fotografias-georreferenciadas-para-o-qgis" target="_blank">[21]</a>, na parte que diz respeito à instalação/utilização do PyPi (Python Package Index).</p>
 
 <p>Depois destas dependências satisfeitas, instala-se o SCP propriamente dito, a partir do menu Módulos -> Gerir e Instalar Módulos. No gestor de módulos, faz-se a pesquisa por “Semi-Automatic Classification” e “Instalar módulo”.</p>
 
@@ -119,7 +119,7 @@ Dessas 6 missões, 3 já possuem satélites em órbita:</p>
 
 <h3>2) Aquisição dos Dados / Imagens</h3>
 
-<p>Existem inúmeras formas de aceder às imagens dos sensores de Deteção Remota, podendo o download ser feito a partir dos sites das respetivas agências <a href="https://scihub.copernicus.eu" target="_blank">[21]</a> <a href="http://earthexplorer.usgs.gov" target="_blank">[22]</a>, ou de sites de terceiros.</p>
+<p>Existem inúmeras formas de aceder às imagens dos sensores de Deteção Remota, podendo o download ser feito a partir dos sites das respetivas agências <a href="https://scihub.copernicus.eu" target="_blank">[22]</a> <a href="http://earthexplorer.usgs.gov" target="_blank">[23]</a>, ou de sites de terceiros.</p>
 
 <p>Contudo, o SCP facilita muito essa tarefa, na medida em que é possível fazer o download das imagens, diretamente a partir do QGIS. O vídeo seguinte (em inglês) apresenta o processo de download de imagens Sentinel-2 a partir do SCP (até ao minuto 4:41):</p>
 
@@ -191,9 +191,9 @@ O comportamento de um dado objeto ao longo do espectro eletromagnético traduz-s
 
 <h3>Agradecimentos Especiais</h3>
 
-<p><b>Professor Gonçalo Vieira</b> <a href="http://vieira.weebly.com" target="_blank">[18]</a>, pelos contributos e pela disponibilização da série de tutoriais aqui apresentados.</p>
+<p><b>Professor Gonçalo Vieira</b> <a href="http://vieira.weebly.com" target="_blank">[19]</a>, pelos contributos e pela disponibilização da série de tutoriais aqui apresentados.</p>
 
-<p><b>Luca Congedo</b> <a href="https://www.linkedin.com/in/lucacongedogis" target="_blank">[17]</a>, pelo desenvolvimento do SCP e pela elaboração do respetivo manual, conteúdos e tutoriais em vídeo, um dos quais aqui apresentado.</p>
+<p><b>Luca Congedo</b> <a href="https://www.linkedin.com/in/lucacongedogis" target="_blank">[18]</a>, pelo desenvolvimento do SCP e pela elaboração do respetivo manual, conteúdos e tutoriais em vídeo, um dos quais aqui apresentado.</p>
 
 <br />
 
@@ -210,18 +210,19 @@ O comportamento de um dado objeto ao longo do espectro eletromagnético traduz-s
 <p>[8] <a href="https://en.wikipedia.org/wiki/Normalized_Difference_Vegetation_Index" target="_blank">https://en.wikipedia.org/wiki/Normalized_Difference_Vegetation_Index</a></p>
 <p>[9] <a href="https://en.wikipedia.org/wiki/Landsat_program" target="_blank">https://en.wikipedia.org/wiki/Landsat_program</a></p>
 <p>[10] <a href="http://gisgeography.com/open-source-remote-sensing-software-packages" target="_blank">http://gisgeography.com/open-source-remote-sensing-software-packages</a></p>
-<p>[11] <a href="http://step.esa.int/main/toolboxes/snap" target="_blank">http://step.esa.int/main/toolboxes/snap</a></p>
-<p>[12] <a href="https://grass.osgeo.org" target="_blank">https://grass.osgeo.org</a></p>
-<p>[13] <a href="http://www.saga-gis.org" target="_blank">http://www.saga-gis.org</a></p>
-<p>[14] <a href="http://orfeo-toolbox.org" target="_blank">http://orfeo-toolbox.org</a></p>
-<p>[15] <a href="http://www.gdal.org" target="_blank">http://www.gdal.org</a></p>
-<p>[16] <a href="https://fromgistors.blogspot.com" target="_blank">https://fromgistors.blogspot.com</a></p>
-<p>[17] <a href="https://www.linkedin.com/in/lucacongedogis" target="_blank">https://www.linkedin.com/in/lucacongedogis</a></p>
-<p>[18] <a href="http://vieira.weebly.com" target="_blank">http://vieira.weebly.com</a></p>
-<p>[19] <a href="http://landsat.gsfc.nasa.gov/sentinel-2a-launches-our-compliments-our-complements" target="_blank">http://landsat.gsfc.nasa.gov/sentinel-2a-launches-our-compliments-our-complements</a></p>
-<p>[20] <a href="http://qgis.pt/blog/2015/10/02/importar-fotografias-georreferenciadas-para-o-qgis" target="_blank">http://qgis.pt/blog/2015/10/02/importar-fotografias-georreferenciadas-para-o-qgis</a></p>
-<p>[21] <a href="https://scihub.copernicus.eu" target="_blank">https://scihub.copernicus.eu</a></p>
-<p>[22] <a href="http://earthexplorer.usgs.gov" target="_blank">http://earthexplorer.usgs.gov</a></p>
+<p>[11] <a href="http://www.grss-ieee.org/open-source-software-related-to-geoscience-and-remote-sensing" target="_blank">http://www.grss-ieee.org/open-source-software-related-to-geoscience-and-remote-sensing</a></p>
+<p>[12] <a href="http://step.esa.int/main/toolboxes/snap" target="_blank">http://step.esa.int/main/toolboxes/snap</a></p>
+<p>[13] <a href="https://grass.osgeo.org" target="_blank">https://grass.osgeo.org</a></p>
+<p>[14] <a href="http://www.saga-gis.org" target="_blank">http://www.saga-gis.org</a></p>
+<p>[15] <a href="http://orfeo-toolbox.org" target="_blank">http://orfeo-toolbox.org</a></p>
+<p>[16] <a href="http://www.gdal.org" target="_blank">http://www.gdal.org</a></p>
+<p>[17] <a href="https://fromgistors.blogspot.com" target="_blank">https://fromgistors.blogspot.com</a></p>
+<p>[18] <a href="https://www.linkedin.com/in/lucacongedogis" target="_blank">https://www.linkedin.com/in/lucacongedogis</a></p>
+<p>[19] <a href="http://vieira.weebly.com" target="_blank">http://vieira.weebly.com</a></p>
+<p>[20] <a href="http://landsat.gsfc.nasa.gov/sentinel-2a-launches-our-compliments-our-complements" target="_blank">http://landsat.gsfc.nasa.gov/sentinel-2a-launches-our-compliments-our-complements</a></p>
+<p>[21] <a href="http://qgis.pt/blog/2015/10/02/importar-fotografias-georreferenciadas-para-o-qgis" target="_blank">http://qgis.pt/blog/2015/10/02/importar-fotografias-georreferenciadas-para-o-qgis</a></p>
+<p>[22] <a href="https://scihub.copernicus.eu" target="_blank">https://scihub.copernicus.eu</a></p>
+<p>[23] <a href="http://earthexplorer.usgs.gov" target="_blank">http://earthexplorer.usgs.gov</a></p>
 <p>Venâncio, Pedro - Aplicação de Dados de Detecção Remota à Cartografia Geológica da Região de Viseu. Coimbra: Departamento de Ciências da Terra da Faculdade de Ciências e Tecnologia da Universidade de Coimbra, 2007. Estágio Científico da Licenciatura em Geologia.</p>
 
 <br />
