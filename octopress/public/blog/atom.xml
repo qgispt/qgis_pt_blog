@@ -4,7 +4,7 @@
   <title><![CDATA[QGIS-PT]]></title>
   <link href="http://qgis.pt/atom.xml" rel="self"/>
   <link href="http://qgis.pt/"/>
-  <updated>2016-04-01T11:42:30+01:00</updated>
+  <updated>2016-12-14T17:46:56+00:00</updated>
   <id>http://qgis.pt/</id>
   <author>
     <name><![CDATA[Grupo de Utilizadores QGIS PT]]></name>
@@ -12,6 +12,237 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Deteção Remota Com O QGIS]]></title>
+    <link href="http://qgis.pt/2016/12/14/detecao-remota-com-o-qgis/"/>
+    <updated>2016-12-14T17:44:01+00:00</updated>
+    <id>http://qgis.pt/2016/12/14/detecao-remota-com-o-qgis</id>
+    <content type="html"><![CDATA[<p>A Deteção Remota é considerada uma técnica de observação de objetos e fenómenos à distância. Deste modo, pode dizer-se que os primeiros dados de Deteção Remota foram obtidos em 1858/59, em Paris, na forma de fotografia aérea, por Gaspard-Félix Tournachon, a partir de um balão de ar quente <a href="https://pt.wikipedia.org/wiki/F%C3%A9lix_Nadar" target="_blank">[0]</a>.</p>
+
+<div class="post-img">
+    <a href="http://qgis.pt/blog/images/posts/1_scp_foto_aerea_paris.png" rel="prettyPhoto" title="">
+        <img class="img-responsive thumbnail" src="http://qgis.pt/blog/images/posts/1_scp_foto_aerea_paris.png" width="500"  alt="Figura 1 - Vista aérea de Paris, 1859 [1]">
+    </a>
+</div>
+
+<p>Mais tarde, em 1906, foi captada uma outra imagem aérea emblemática, por George Lawrence, mostrando a devastação provocada pelo sismo de São Francisco. Esta foi obtida por uma câmara com cerca de 22Kg, instalada a bordo de um papagaio <a href="http://www.bigmapblog.com/2012/kite-photo-of-post-quake-san-francisco-1906" target="_blank">[2]</a>.</p>
+
+<div class="post-img">
+    <a href="http://qgis.pt/blog/images/posts/2_scp_sismo_sao_francisco.jpg" rel="prettyPhoto" title="">
+        <img class="img-responsive thumbnail" src="http://qgis.pt/blog/images/posts/2_scp_sismo_sao_francisco.jpg" width="500"  alt="Figura 2 - Vista aérea da devastação provocada pelo terramoto de 1906 [3]">
+    </a>
+</div>
+
+<p>Os grandes avanços na Deteção Remota deram-se durante as duas Grandes Guerras e durante a Guerra Fria. Com o términos desses conflitos, a técnica disseminou-se pela comunidade civil, aumentando progressivamente o leque de aplicações, sendo hoje infindável a lista de opções de utilização de dados de sensores remotos. Cartografia, agricultura, florestas, hidrologia, geologia, oceanografia, meteorologia, monitorização de fenómenos ambientais, de catástrofes naturais e tecnológicas, são apenas algumas das suas aplicações mais comuns.</p>
+
+<p>Assim, a Deteção Remota é definida como a ciência da aquisição, processamento e interpretação de imagens obtidas por meios aéreos e por satélite, que registam a interação entre o terreno e a radiação eletromagnética. Dado que o conceito de Deteção Remota implica um distanciamento importante entre o sensor que capta o sinal e o objeto observado, esta pode ser considerada como o processo subjacente a todas as formas e técnicas de medição, tratamento e interpretação de fenómenos longínquos.</p>
+
+<p>A Deteção Remota por satélite baseia-se no princípio de que todos os objetos da superfície terrestre interagem com a energia que recebem do Sol, ou do próprio satélite (no caso de sistemas de Deteção Remota ativos), sob a forma de energia eletromagnética (Rabaça, 2001 [4]).</p>
+
+<div class="post-img">
+    <a href="http://qgis.pt/blog/images/posts/3_scp_espectro_eletromagnetico.png" rel="prettyPhoto" title="">
+        <img class="img-responsive thumbnail" src="http://qgis.pt/blog/images/posts/3_scp_espectro_eletromagnetico.png" width="500"  alt="Figura 3 – Espectro Eletromagnético [5]">
+    </a>
+</div>
+
+<p>Os principais sistemas de Deteção Remota dividem-se, portanto, entre:</p>
+
+<ul>
+    <li>Sistemas óticos, que detetam a radiação eletromagnética refletida ou emitida pela superfície terrestre, designados sistemas de Deteção Remota passivos;</li>
+    <li>Dispositivos de microondas, designados RADAR (“RAdio Detection And Ranging”) que, quando produzem o sinal que ilumina o alvo, são designados sistemas de Deteção Remota ativos (Fonseca & Fernandes, 2004 [6]).</li>
+</ul>
+
+<p>Os sistemas óticos centram-se numa parte do espectro que inclui a luz visível (aquela que é percetível pelos nossos olhos) e a radiação infravermelha (invisível para os nossos olhos). Esta região específica é onde tende a concentrar-se a maior parte da energia proveniente do Sol, que atinge a atmosfera terrestre, e onde a maioria dos processos vivos ocorrem, como por exemplo, a fotossíntese das plantas. Existe, nesta zona do espectro, uma denominada “janela atmosférica”, que permite a passagem de quase toda a radiação solar, através da atmosfera. Noutras zonas, como é o caso da região do ultravioleta, a atmosfera, através da camada do Ozono, absorve praticamente a totalidade da radiação solar.</p>
+
+<p>Deste modo, percebe-se que os sensores instalados a bordo dos satélites conseguem captar radiação para além daquela que os olhos humanos conseguem percecionar, e isso trouxe grandes avanços à Observação da Terra. </p>
+
+<p>Por exemplo, a clorofila das plantas, que conduz a fotossíntese, absorve a parte visível da radiação eletromagnética, essencialmente nos comprimentos de onda do azul e do vermelho. Já na região do infravermelho próximo (NIR), os pigmentos de clorofila não absorvem tanto a radiação, sendo grande parte dessa energia refletida, podendo ser captada pelos sensores infravermelhos dos satélites. </p>
+
+<div class="post-img">
+    <a href="http://qgis.pt/blog/images/posts/4_scp_curva_espetral_vegetacao.gif" rel="prettyPhoto" title="">
+        <img class="img-responsive thumbnail" src="http://qgis.pt/blog/images/posts/4_scp_curva_espetral_vegetacao.gif" width="500"  alt="Figura 4 – Curva espectral da vegetação [7]">
+    </a>
+</div>
+
+<p>A imagem apresenta a curva espectral característica da vegetação, onde se pode observar precisamente esse comportamento, com dois picos de absorção na zona do azul e do vermelho (cerca de 90% da radiação é absorvida), e um pico de transmissão na região do infravermelho próximo (cerca de 40 a 50% da energia é refletida). O pequeno pico de refletância na zona do verde, é aquele que confere a tonalidade verde à vegetação aos olhos humanos.</p>
+
+<p>Assim, as plantas aparecem muito brilhantes e claras nas imagens / bandas do infravermelho próximo. Quanto mais clorofila estiver presente na planta, mais saudável ela é, mais ativa é fotossinteticamente e mais refletância apresenta nessas bandas. O contraste da resposta da vegetação ao longo do espetro eletromagnético, permite criar imagens e índices (como por exemplo, o NDVI <a href="https://en.wikipedia.org/wiki/Normalized_Difference_Vegetation_Index" target="_blank">[8]</a>), onde se distinguem claramente zonas com e sem vegetação, bem como permite fazer a distinção entre tipos e estádios de desenvolvimento da vegetação. No infravermelho médio, observam-se três comprimentos de onda de forte absorção da radiação, devido essencialmente ao conteúdo em água da vegetação.</p>
+
+<p>Desta pequena introdução se percebe a importância e o potencial da Deteção Remota nos diversos domínios do saber. </p>
+
+<p>Contudo, existiram durante bastante tempo, duas grandes limitações à sua utilização generalizada, que se prendiam, essencialmente, com os custos das imagens e dos respetivos softwares de processamento.</p>
+
+<p>Esta realidade começou a alterar-se com a disponibilização aberta e gratuita dos dados do programa norte-americano de Observação da Terra, Landsat <a href="https://en.wikipedia.org/wiki/Landsat_program" target="_blank">[9]</a>, cujo primeiro satélite foi lançado em 1972 (Landsat 1), encontrando-se atualmente em órbita o Landsat 8, lançado em 2013.</p>
+
+<p>Mais recentemente, numa parceria entre a Comissão Europeia e a Agência Espacial Europeia (ESA), foi desenvolvido o programa Copernicus, do qual fazem parte 6 missões Sentinel, e que prevê uma continuidade a longo prazo e uma complementaridade entre os diversos sensores e instrumentos, para variadíssimas aplicações, desde as mais científicas, às mais aplicadas, disponibilizando essa informação, de forma aberta e gratuita, sem interrupções ou hiatos. 
+Dessas 6 missões, 3 já possuem satélites em órbita:</p>
+
+<ul>
+    <li>Sentinel-1: constelação de 3 satélites (2 já lançados) que usam sensores RADAR, com o objetivo de monitorizar a Terra sólida - topografia, geologia, catástrofes naturais, calotes polares e sua dinâmica, etc.;</li>
+    <li>Sentinel-2: constelação de 2 satélites, o primeiro lançado em 2015 e o segundo previsto para 2017, que usam sensores óticos multiespetrais, de alta resolução espacial (até 10m) e temporal (5 dias, a partir do lançamento do 2.º satélite). Têm como objetivo a monitorização da vegetação, solo, águas interiores e zonas costeiras, assim como o apoio aos serviços de emergência;</li>
+    <li>Sentinel-3: constelação de 2 satélites, tendo o primeiro sido lançado recentemente, com a finalidade de monitorizar a superfície, a cor e a temperatura dos oceanos e dos continentes;</li>
+    <li>Sentinel-4 : nova geração de satélites meteorológicos (geoestacionários);</li>
+    <li>Sentinel-5 : nova geração de satélites meteorológicos de órbita polar;</li>
+    <li>Sentinel-6 : nova geração de satélites de monitorização do nível do mar.</li>
+</ul>
+
+<p>A outra limitação referida, relativa aos custos dos softwares, também já foi amplamente ultrapassada, existindo, neste momento, diversos softwares open source de Deteção Remota <a href="http://gisgeography.com/open-source-remote-sensing-software-packages" target="_blank">[10]</a> <a href="http://www.grss-ieee.org/open-source-software-related-to-geoscience-and-remote-sensing" target="_blank">[11]</a>, onde também se inclui o SNAP da Agência Espacial Europeia <a href="http://step.esa.int/main/toolboxes/snap" target="_blank">[12]</a> e, naturalmente, o QGIS, que possui cada vez mais valências para Deteção Remota e Processamento Digital de Imagem, ao integrar ferramentas do GRASS <a href="https://grass.osgeo.org" target="_blank">[13]</a>, SAGA <a href="http://www.saga-gis.org" target="_blank">[14]</a>, Orfeo <a href="http://orfeo-toolbox.org" target="_blank">[15]</a>, GDAL <a href="http://www.gdal.org" target="_blank">[16]</a> e o Semi-Automatic Classification Plugin <a href="https://fromgistors.blogspot.com" target="_blank">[17]</a>.</p>
+
+<p>O Semi-Automatic Classification Plugin (SCP) é um projeto desenvolvido pelo Luca Congedo <a href="https://www.linkedin.com/in/lucacongedogis" target="_blank">[18]</a>, um Engenheiro do Ambiente e investigador, que trabalha na área dos Sistemas de Informação Geográfica e da Deteção Remota desde 2009. O SCP é um plugin para o QGIS, que permite descarregar imagens Sentinel-2, Landsat e ASTER, fazer o pré-processamento, a classificação e o pós-processamento, de forma bastante simples e ágil, encontrando-se totalmente integrado no QGIS.</p>
+
+<p>Este plugin possui um manual bastante completo e abrangente, sendo ainda complementado por uma série de vídeos/tutoriais disponibilizados pelo próprio autor <a href="https://fromgistors.blogspot.com" target="_blank">[17]</a>. Para além destes, começa a haver um grande conjunto de tutoriais dispersos pela Internet, sobre a utilização do SCP. O melhor e mais completo exemplo, em língua portuguesa, é o conjunto de tutoriais, em vídeo, disponibilizados pelo Professor Gonçalo Vieira <a href="http://vieira.weebly.com" target="_blank">[19]</a>, docente do IGOT (Universidade de Lisboa) e investigador do Centro de Estudos Geográficos, como suporte à unidade curricular de Deteção Remota e SIG aplicados ao Ordenamento do Território. Como se irá ver de seguida, este conjunto de vídeos percorre os diversos passos de um projeto de Deteção Remota.</p>
+
+<p>O exemplo irá debruçar-se sobre a utilização de imagens do satélite <b>Sentinel-2A</b>, da ESA.</p>
+
+<p>O gráfico seguinte apresenta, em comparação, as bandas dos satélites Sentinel-2, Landsat 7 e Landsat 8.</p>
+
+<div class="post-img">
+    <a href="http://qgis.pt/blog/images/posts/5_scp_comparacao_bandas_sentinel_landsat.png" rel="prettyPhoto" title="">
+        <img class="img-responsive thumbnail" src="http://qgis.pt/blog/images/posts/5_scp_comparacao_bandas_sentinel_landsat.png" width="500"  alt="Figura 5 - Comparação de bandas dos satélites Sentinel-2, Landsat 7 e Landsat 8 [20]">
+    </a>
+</div>
+
+<h3>1) Instalação do Semi-Automatic Classification Plugin (SCP)</h3>
+
+<p>O processo de instalação do SCP é feito exatamente da mesma forma que os restantes plugins. É, no entanto, necessário ter instalados, previamente, alguns pacotes de software, que são requisitos do SCP, nomeadamente: GDAL/OGR, Numpy, SciPy e Matplotlib. À partida, e independentemente do Sistema Operativo em que se estiver a trabalhar com o QGIS, o GDAL/OGR e o Matplotlib estarão já instalados, pois são acrescentados, por defeito, durante a instalação do QGIS. Os outros dois módulos (Numpy e SciPy), que acrescentam capacidades de computação científica à linguagem de programação Python, poderão, ou não, estar instalados. Este processo depende também do Sistema Operativo e da forma que se utilizou para a instalação do QGIS.</p>
+
+<p><b>Linux -</b> usar um gestor de pacotes gráfico, como o Synaptic, ou a consola / terminal simplesmente com:</p>
+
+<pre>
+	sudo apt-get install python-numpy python-scipy python-matplotlib
+</pre>
+
+<p><b>Windows, instalação via OSGeo4W -</b> basta abrir o OSGeo4W, selecionar “Advanced Install”, pesquisar e instalar os pacotes (Libs) python-numpy, python-scipy e matplotlib, caso não estejam já instalados.</p>
+
+<p><b>Windows, instalação Standalone -</b> à partida os pacotes estarão instalados mas, caso não estejam, sugere-se seguir o tutorial de instalação do plugin photo2shape <a href="http://qgis.pt/blog/2015/10/02/importar-fotografias-georreferenciadas-para-o-qgis" target="_blank">[21]</a>, na parte que diz respeito à instalação/utilização do PyPi (Python Package Index).</p>
+
+<p>Depois destas dependências satisfeitas, instala-se o SCP propriamente dito, a partir do menu Módulos -> Gerir e Instalar Módulos. No gestor de módulos, faz-se a pesquisa por “Semi-Automatic Classification” e “Instalar módulo”.</p>
+
+<div class="post-img">
+    <a href="http://qgis.pt/blog/images/posts/6_scp_instalacao_scp.jpg" rel="prettyPhoto" title="">
+        <img class="img-responsive thumbnail" src="http://qgis.pt/blog/images/posts/6_scp_instalacao_scp.jpg" width="500"  alt="Figura 6 - Instalação do Semi-Automatic Classification Plugin">
+    </a>
+</div>
+
+<div class="post-img">
+    <a href="http://qgis.pt/blog/images/posts/7_scp_qgis_com_scp.png" rel="prettyPhoto" title="">
+        <img class="img-responsive thumbnail" src="http://qgis.pt/blog/images/posts/7_scp_qgis_com_scp.png" width="500"  alt="Figura 7 - QGIS com o Semi-Automatic Classification Plugin">
+    </a>
+</div>
+
+<h3>2) Aquisição dos Dados / Imagens</h3>
+
+<p>Existem inúmeras formas de aceder às imagens dos sensores de Deteção Remota, podendo o download ser feito a partir dos sites das respetivas agências <a href="https://scihub.copernicus.eu" target="_blank">[22]</a> <a href="http://earthexplorer.usgs.gov" target="_blank">[23]</a>, ou de sites de terceiros.</p>
+
+<p>Contudo, o SCP facilita muito essa tarefa, na medida em que é possível fazer o download das imagens, diretamente a partir do QGIS. O vídeo seguinte (em inglês) apresenta o processo de download de imagens Sentinel-2 a partir do SCP (até ao minuto 4:41):</p>
+
+<iframe width="640" height="360" src="https://www.youtube.com/embed/FcETq8OWM0k?start=35" frameborder="0" allowfullscreen="allowfullscreen"> </iframe> <br />
+
+<h3>3) Pré-Processamento das Imagens - Correção Atmosférica</h3>
+
+<p>O primeiro passo, após o download das imagens, consiste na aplicação da correção atmosférica (conversão do valor dos pixéis para reflectância). Este processo é explicado no vídeo seguinte, do Professor Gonçalo Vieira:</p>
+
+<iframe width="640" height="360" src="https://www.youtube.com/embed/m3XFvvVrU24" frameborder="0" allowfullscreen="allowfullscreen"> </iframe> <br />
+
+<h3>4) Pré-Processamento das Imagens - Recorte pela Área de Interesse</h3>
+
+<p>As imagens Sentinel-2 têm uma grande extensão espacial e são bastante pesadas. Uma imagem Sentinel-2 completa possui mais de 6 GB e abrange uma faixa com 290 km de largura. No SCP é possível fazer o download de “granules” individuais mas, mesmo essas, possuem 109,8 km de lado, o que perfaz mais de 12.000 km2 de área, por cada “granule” individual.</p>
+
+<p>Assim, é recomendável recortar as diversas bandas da imagem pela área de interesse, antes de efetuar qualquer processamento subsequente.</p>
+
+<iframe width="640" height="360" src="https://www.youtube.com/embed/8UHey-bQJGs" frameborder="0" allowfullscreen="allowfullscreen"> </iframe> <br />
+
+<h3>5) Criação de Imagens Compósitas RGB</h3>
+
+<p>Um primeiro procedimento conducente à interpretação das imagens de satélite, consiste na criação de imagens RGB, isto é, imagens coloridas, que agregam informação de 3 bandas individuais, cada uma das quais pertencente a uma região específica do espetro eletromagnético. Este processo permite evidenciar, por exemplo, características que não são percetíveis ao olho humano, pois correspondem a regiões diferentes do visível.</p>
+
+<iframe width="640" height="360" src="https://www.youtube.com/embed/LWvDEE1Evxg" frameborder="0" allowfullscreen="allowfullscreen"> </iframe> <br />
+
+<h3>6) Classificação da Imagem</h3>
+
+<p>Um dos processos fulcrais de análise de uma imagem de satélite consiste na sua classificação, que tem como principal objetivo a criação de cartografia temática, representativa da superfície terrestre.
+O comportamento de um dado objeto ao longo do espectro eletromagnético traduz-se na sua assinatura espectral. A classificação surge como um processo de extração de informação que analisa as assinaturas espectrais de cada pixel, separando-os em classes consoante a similaridade das suas assinaturas, a qual é determinada pela refletância relativa do pixel ao longo dos diferentes comprimentos de onda [4]. </p>
+
+<p>Existem dois tipos básicos de classificação digital:</p>
+
+<ul>
+    <li>Classificação Não-Supervisionada, na qual o software separa os pixéis por classes, sem qualquer tipo de intervenção do operador;</li>
+    <li>Classificação Supervisionada, na qual o operador define, na imagem, áreas, designadas “áreas de treino”, que são representativas de cada classe.</li>
+</ul>
+
+<h3>6.1) Classificação Não-Supervisionada</h3>
+
+<p>Este tipo de classificação é útil quando não se dispõe de um conhecimento prévio da área de trabalho. O método parte do pressuposto de que, considerando que as diferentes assinaturas espectrais se aglomeram, formando distintas classes espectrais, então estas deverão corresponder a diferentes classes temáticas.</p>
+
+<p>No vídeo seguinte, o Professor Gonçalo Vieira apresenta duas formas de proceder à classificação não-supervisionada de imagens, através da aplicação de uma classificação em clusters, no QGIS.</p>
+
+<iframe width="640" height="360" src="https://www.youtube.com/embed/9_OJEjdKOJc" frameborder="0" allowfullscreen="allowfullscreen"> </iframe> <br />
+
+<h3>6.2) Classificação Supervisionada</h3>
+
+<p>A classificação supervisionada requer um conhecimento prévio do terreno e implica a seleção de pequenas áreas representativas das classes, que posteriormente são utilizadas como referência estatística de toda a classificação. A fase que consiste na delimitação das várias classes que entram na classificação denomina-se fase de treino e é dela que depende, em grande medida, o sucesso da mesma.</p>
+
+<p>Este processo é muito bem explicado pelo Professor Gonçalo Vieira no vídeo seguinte.</p>
+
+<iframe width="640" height="360" src="https://www.youtube.com/embed/t5D6JT7adYY" frameborder="0" allowfullscreen="allowfullscreen"> </iframe> <br />
+
+<h3>7) Pós-Processamento - Avaliação do Erro Associado à Classificação</h3>
+
+<p>A avaliação quantitativa do erro associado a cada uma das classes resultantes do processo de classificação é um passo fundamental para determinar a precisão do mapa temático obtido e para validar os resultados. Esta tarefa consiste, basicamente, no confronto entre o mapa classificado e um conjunto de amostras independentes, isto é, amostras de classes conhecidas (áreas de validação) que não foram utilizadas como amostras de treino para o classificador, de forma a realizar uma classificação cruzada, que gera uma tabela ou matriz de contingências. No vídeo seguinte, o Professor Gonçalo Vieira mostra como gerar essa matriz no QGIS, com o SCP.</p>
+
+<iframe width="640" height="360" src="https://www.youtube.com/embed/k1yjcJPb1WI" frameborder="0" allowfullscreen="allowfullscreen"> </iframe> <br />
+
+<br />
+
+<p>Desta forma, ficam patentes os principais procedimentos envolvidos num projeto de Deteção Remota com sensores óticos. Note-se que se podem utilizar exatamente os mesmos procedimentos, com imagens Landsat ou ASTER, ambas acessíveis diretamente a partir do SCP. </p>
+
+<p>O  Semi-Automatic Classification Plugin dispõe, ainda, de diversos recursos adicionais, tanto de pré- como de pós-processamento, permitindo também executar operações de álgebra de mapas entre as diversas bandas das imagens, assim como correr as diversas ferramentas em modo “batch”.</p>
+
+<p>O SCP veio, sem dúvida, enriquecer de forma substancial o QGIS em termos de capacidades no âmbito da Deteção Remota e do Processamento Digital de Imagem.</p>
+
+<br />
+
+<h3>Agradecimentos Especiais</h3>
+
+<p><b>Professor Gonçalo Vieira</b> <a href="http://vieira.weebly.com" target="_blank">[19]</a>, pelos contributos e pela disponibilização da série de tutoriais aqui apresentados.</p>
+
+<p><b>Luca Congedo</b> <a href="https://www.linkedin.com/in/lucacongedogis" target="_blank">[18]</a>, pelo desenvolvimento do SCP e pela elaboração do respetivo manual, conteúdos e tutoriais em vídeo, um dos quais aqui apresentado.</p>
+
+<br />
+
+<h3>Referências</h3>
+
+<p>[0] <a href="https://pt.wikipedia.org/wiki/F%C3%A9lix_Nadar" target="_blank">https://pt.wikipedia.org/wiki/F%C3%A9lix_Nadar</a></p>
+<p>[1] <a href="http://www.proprofs.com/flashcards/story.php?title=history-of-photography-midterm" target="_blank">http://www.proprofs.com/flashcards/story.php?title=history-of-photography-midterm</a></p>
+<p>[2] <a href="http://www.bigmapblog.com/2012/kite-photo-of-post-quake-san-francisco-1906" target="_blank">http://www.bigmapblog.com/2012/kite-photo-of-post-quake-san-francisco-1906</a></p>
+<p>[3] <a href="http://earthquake.usgs.gov/regional/nca/1906/kap/lawrence.php" target="_blank">http://earthquake.usgs.gov/regional/nca/1906/kap/lawrence.php</a></p>
+<p>[4] Rabaça, Teresa - Caracterização Geoambiental da Região de Penamacor-Idanha por Aplicação de Técnicas de Detecção Remota. Coimbra: Departamento de Ciências da Terra da Faculdade de Ciências e Tecnologia da Universidade de Coimbra, 2001. Dissertação para obtenção do grau de Mestre.</p>
+<p>[5] <a href="http://www.seos-project.eu/modules/remotesensing/remotesensing-c01-p01.html" target="_blank">http://www.seos-project.eu/modules/remotesensing/remotesensing-c01-p01.html</a></p>
+<p>[6] Fonseca, Ana & Fernandes, João - Detecção Remota. 1a Edição. Lisboa: Lidel, 2004.</p>
+<p>[7] <a href="http://www.gov.scot/Publications/2009/11/06110108/6" target="_blank">http://www.gov.scot/Publications/2009/11/06110108/6</a></p>
+<p>[8] <a href="https://en.wikipedia.org/wiki/Normalized_Difference_Vegetation_Index" target="_blank">https://en.wikipedia.org/wiki/Normalized_Difference_Vegetation_Index</a></p>
+<p>[9] <a href="https://en.wikipedia.org/wiki/Landsat_program" target="_blank">https://en.wikipedia.org/wiki/Landsat_program</a></p>
+<p>[10] <a href="http://gisgeography.com/open-source-remote-sensing-software-packages" target="_blank">http://gisgeography.com/open-source-remote-sensing-software-packages</a></p>
+<p>[11] <a href="http://www.grss-ieee.org/open-source-software-related-to-geoscience-and-remote-sensing" target="_blank">http://www.grss-ieee.org/open-source-software-related-to-geoscience-and-remote-sensing</a></p>
+<p>[12] <a href="http://step.esa.int/main/toolboxes/snap" target="_blank">http://step.esa.int/main/toolboxes/snap</a></p>
+<p>[13] <a href="https://grass.osgeo.org" target="_blank">https://grass.osgeo.org</a></p>
+<p>[14] <a href="http://www.saga-gis.org" target="_blank">http://www.saga-gis.org</a></p>
+<p>[15] <a href="http://orfeo-toolbox.org" target="_blank">http://orfeo-toolbox.org</a></p>
+<p>[16] <a href="http://www.gdal.org" target="_blank">http://www.gdal.org</a></p>
+<p>[17] <a href="https://fromgistors.blogspot.com" target="_blank">https://fromgistors.blogspot.com</a></p>
+<p>[18] <a href="https://www.linkedin.com/in/lucacongedogis" target="_blank">https://www.linkedin.com/in/lucacongedogis</a></p>
+<p>[19] <a href="http://vieira.weebly.com" target="_blank">http://vieira.weebly.com</a></p>
+<p>[20] <a href="http://landsat.gsfc.nasa.gov/sentinel-2a-launches-our-compliments-our-complements" target="_blank">http://landsat.gsfc.nasa.gov/sentinel-2a-launches-our-compliments-our-complements</a></p>
+<p>[21] <a href="http://qgis.pt/blog/2015/10/02/importar-fotografias-georreferenciadas-para-o-qgis" target="_blank">http://qgis.pt/blog/2015/10/02/importar-fotografias-georreferenciadas-para-o-qgis</a></p>
+<p>[22] <a href="https://scihub.copernicus.eu" target="_blank">https://scihub.copernicus.eu</a></p>
+<p>[23] <a href="http://earthexplorer.usgs.gov" target="_blank">http://earthexplorer.usgs.gov</a></p>
+<p>Venâncio, Pedro - Aplicação de Dados de Detecção Remota à Cartografia Geológica da Região de Viseu. Coimbra: Departamento de Ciências da Terra da Faculdade de Ciências e Tecnologia da Universidade de Coimbra, 2007. Estágio Científico da Licenciatura em Geologia.</p>
+
+<br />
+<img class="gravatar img-circle" src="http://www.gravatar.com/avatar/8248cd896ad16c4ef53d0558d8e62a18></img>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Análise De Redes Com O QGIS]]></title>
@@ -2904,65 +3135,6 @@ foram todos os utilizadores que estiveram presentes e que contribuiram para um d
 também a nossa gratidão a todos os que decidiram efectuar um donativo ao projecto QGIS: conseguimos reunir <b>570€</b> que estão neste momento a ser utilizados para o <i>bugfixing</i> da próxima versão do QGIS (2.4)!</p>
 
 <p><b>A todos o nosso obrigado!</b> Contamos com as vossas opiniões, sugestões e colaboração na construção desta comunidade.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Instalação Do QGIS via OSGeo4W]]></title>
-    <link href="http://qgis.pt/2014/06/18/instalacao-do-qgis-via-osgeo4w/"/>
-    <updated>2014-06-18T18:22:27+01:00</updated>
-    <id>http://qgis.pt/2014/06/18/instalacao-do-qgis-via-osgeo4w</id>
-    <content type="html"><![CDATA[<p>Este post aborda o processo de instalação do QGIS em ambiente Windows utilizando o instalador OSGeo4W.<p>
-<!-- more -->Efetue o download do instalador segundo a versão do seu sistema operativo (32/64bits) utilizando o seguinte <a href="http://trac.osgeo.org/osgeo4w/" target="_blank">link</a>.<p>
-
-<h4>Etapas de instalação</h4>
-<p>Deve-se executar o instalador e escolher como tipo de instalação a opção <b><i>Advanced install</i></b>. Nas seguintes opções, deverá proceder segundo as instruções abaixo:</p>
-<ul>
-    <li>Selecionar a opção <b><i>Install from internet</i></b>;</li>
-	<li>Aceitar a diretoria <b><i>C:\OSGeo4w</i></b> como o local de instalação do software;</li>
-	<li>Aceitar o local proposto para guardar os ficheiros de instalação;</li>
-	<li>Definir o tipo de ligação para que o instalador possa aceder à internet. Atenção à eventual existência de um proxy na sua ligação à internet;</li>
-	<li>Assim que os pacotes de instalação são acedidos, como mostra a imagem abaixo, são mostradas as várias opções de categoria a instalar;</li>
-</ul>
-<div class="post-img">
-    <a href="http://qgis.pt/blog/images/posts/setup_osgeo4w_image001.png" rel="prettyPhoto" title="">
-        <img class="img-responsive thumbnail" src="http://qgis.pt/blog/images/posts/setup_osgeo4w_image001.png" width="500"  alt="Diversas categorias de software">
-    </a>
-</div>
-<ul>
-    <li>Clique no botão + da opção <b><i>Commandline_Utilities</i></b> e depois em cima de <b>Skip</b> para a opção <b><i>setup:OSGeo4W Installer/Updater</i></b>. Esta opção permitirá criar no menu OSGeo4W uma entrada designada por Setup, a qual permitirá depois aceder de forma rápida a este instalador;</li>
-	<li>Clique novamente no botão + da opção <b><i>Desktop</i></b> e selecione <b><i>qgis:QGIS Desktop</i></b> para instalar a versão corrente do QGIS. Se desejar, pode-se também instalar a versão que está em desenvolvimento, ativando para isso a opção <b><i>qgis-dev:QGIS nightly build of the master</i></b>;</li>
-	<li>Na secção <b><i>Libs</i></b> verifique se está ativa a opção <b><i>qgis-grass-plugin</i></b>. Esta opção permite ativar o plugin GRASS GIS para trabalhar dentro do QGIS;</li>
-	<li>Por fim, clique no botão <b><i>Seguinte</i></b> e aguarde enquanto o instalador procede à instalação do QGIS;</li>
-	<li>No final de todo o processo, clique em <b><i>Concluir</i></b>. No menu <b><i>Iniciar>Programas>OSGeo4W</i></b> escolha a opção <b><i>QGIS Desktop 2.X</i></b>. Se tudo correu bem, o QGIS será iniciado.</li>
-</ul>
-<div class="post-img">
-    <a href="http://qgis.pt/blog/images/posts/setup_osgeo4w_image002.png" rel="prettyPhoto" title="">
-        <img class="img-responsive thumbnail" src="http://qgis.pt/blog/images/posts/setup_osgeo4w_image002.png" width="500"  alt="Iniciar o QGIS">
-    </a>
-</div>
-
-<h4>Atualizar o QGIS com o OSGeo4W</h4>
-<p>Para atualizar o QGIS, deve-se iniciar o Setup do OSGeo4W existente no menu <b><i>Iniciar>Programas>OSGeo4W</i></b>. Aceite todas as opções até à secção de pacotes de instalação. Uma vez aqui, deve-se verificar se existem atualizações ao QGIS. Se existirem, basta selecioná-las e prosseguir com a instalação.</p> 
-<div class="post-img">
-    <a href="http://qgis.pt/blog/images/posts/setup_osgeo4w_image003.png" rel="prettyPhoto" title="">
-        <img class="img-responsive thumbnail" src="http://qgis.pt/blog/images/posts/setup_osgeo4w_image003.png" width="500"  alt="Atualização do QGIS">
-    </a>
-</div>
-
-<h4>Desinstalar o OSGeo4W</h4>
-<p>Os pacotes de software podem ser desinstalados. Para isso deve-se correr de novo o Setup do OSGeo4W e na seção <b><i>Desktop Default</i></b> seleccionar de modo a fazer <b>Uninstall</b> nos pacotes desejados.
-Atualmente não existem formas de desinstalar o OSGeo4W. No entanto, se for necessário o fazer, deve desinstalar todos os pacotes da forma descrita anteriormente e apagar a pasta existente em C:\OSGeo4W.</p> 
-<div class="post-img">
-    <a href="http://qgis.pt/blog/images/posts/setup_osgeo4w_image004.png" rel="prettyPhoto" title="">
-        <img class="img-responsive thumbnail" src="http://qgis.pt/blog/images/posts/setup_osgeo4w_image004.png" width="500"  alt="Desinstalação de software">
-    </a>
-</div>
-
-<p>Através deste instalador, podemos afirmar que o utilizador QGIS estará sempre em dia com as atualizações/correções que vão sendo feitas ao QGIS.</p>
-
-<p>Esperamos que este post o possa ajudar no que diz respeito à instalação e atualização do QGIS. 
-<br />
 ]]></content>
   </entry>
   
