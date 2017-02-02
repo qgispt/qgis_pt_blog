@@ -107,8 +107,14 @@
         <lastmod>2016-12-14T17:46:42+00:00</lastmod>
     </url>
     <url>
+        <loc>
+            http://qgis.pt/2017/02/02/processamento-de-dados-de-radar-sentinel-1-com-o-qgis/
+        </loc>
+        <lastmod>2017-02-02T21:27:53+00:00</lastmod>
+    </url>
+    <url>
         <loc>http://qgis.pt/archives/</loc>
-        <lastmod>2016-12-14T17:46:42+00:00</lastmod>
+        <lastmod>2017-02-02T21:27:53+00:00</lastmod>
     </url>
     <url>
         <loc>http://qgis.pt/robots.txt</loc>
@@ -116,6 +122,6 @@
     </url>
     <url>
         <loc>http://qgis.pt/</loc>
-        <lastmod>2016-12-14T17:46:42+00:00</lastmod>
+        <lastmod>2017-02-02T21:27:53+00:00</lastmod>
     </url>
 </urlset>

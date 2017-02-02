@@ -4,7 +4,7 @@
   <title><![CDATA[QGIS-PT]]></title>
   <link href="http://qgis.pt/atom.xml" rel="self"/>
   <link href="http://qgis.pt/"/>
-  <updated>2016-12-14T17:46:56+00:00</updated>
+  <updated>2017-02-02T21:30:12+00:00</updated>
   <id>http://qgis.pt/</id>
   <author>
     <name><![CDATA[Grupo de Utilizadores QGIS PT]]></name>
@@ -12,6 +12,468 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Processamento De Dados De RADAR (Sentinel-1) Com O QGIS]]></title>
+    <link href="http://qgis.pt/2017/02/02/processamento-de-dados-de-radar-sentinel-1-com-o-qgis/"/>
+    <updated>2017-02-02T21:25:06+00:00</updated>
+    <id>http://qgis.pt/2017/02/02/processamento-de-dados-de-radar-sentinel-1-com-o-qgis</id>
+    <content type="html"><![CDATA[<p>No último post do bog, fez-se uma breve introdução à Deteção Remota e apresentaram-se algumas das capacidades do QGIS no domínio do Processamento Digital de Imagens óticas, centradas na parte do espectro eletromagnético que inclui a luz visível e a radiação infravermelha.</p>
+
+<div class="post-img">
+    <a href="http://qgis.pt/blog/images/posts/1_espectro_eletromagnetico.png" rel="prettyPhoto" title="">
+        <img class="img-responsive thumbnail" src="http://qgis.pt/blog/images/posts/1_espectro_eletromagnetico.png" width="500"  alt="Figura 1 - Espectro Eletromagnético [0].">
+    </a>
+</div>
+
+<p>Falou-se, no entanto, da existência de dispositivos que trabalham na região das microondas, designados RADAR (“RAdio Detection And Ranging”) que, quando produzem o sinal que ilumina o alvo, são designados sistemas de Deteção Remota ativos (Fonseca & Fernandes, 2004 [1]).</p>
+
+<p>Assim, o RADAR é uma forma “ativa” de Deteção Remota, na medida em que o sinal é gerado artificialmente pelo sensor e enviado para a Terra através de feixes, sendo depois medida a energia refletida pelos alvos, que pode ser convertida para grandezas geofísicas.</p>
+
+<p>Como estes sistemas não dependem da energia do Sol, podem ser usados de dia e de noite e sob quaisquer condições atmosféricas, pois conseguem penetrar a cobertura de nuvens. Requerem, no entanto, muito mais energia para funcionar, e os dados obtidos são mais difíceis de processar e interpretar.</p>
+
+<p>Neste artigo, após um breve enquadramento teórico do tema, necessário à compreensão das características desta vertente da Deteção Remota, vão apresentar-se algumas das capacidades do QGIS para o processamento de dados de RADAR.</p>
+
+<!-- more -->
+
+<br />
+
+<h3>Detetores de RADAR</h3>
+
+<p>As microondas cobrem a banda do espectro dos comprimentos de onda de 1mm a 1m, sensivelmente. Os detetores nestas bandas operam através das nuvens, nevoeiro, poeiras, assim como, através da chuva, dado que estes comprimentos de onda não são afetados pela dispersão atmosférica, que perturba comprimentos de onda mais curtos. Esta característica permite aos detetores de RADAR a recolha de imagens sob quaisquer condições atmosféricas (Fonseca & Fernandes, 2004 [1]).</p>
+
+<p>A Deteção Remota passiva, na banda das microondas, baseia-se no facto de todos os objetos emitirem energia nessa região, embora em muito pequena quantidade. A energia emitida naturalmente pelos objetos está relacionada com a sua temperatura e teor de humidade. A Deteção Remota passiva nestas bandas tem aplicações meteorológicas, hidrológicas e oceanográficas.</p>
+
+<p>Os detetores ativos de microondas são os mais utilizados, fornecendo, eles próprios, a fonte de radiação que ilumina os alvos na superfície terrestre.</p>
+
+<p>A forma mais comum de detetores ativos de microondas é o RADAR (“RAdio Detection And Ranging”). O detetor emite um sinal de microondas em direção ao alvo e deteta a porção reenviada do sinal original. A intensidade do sinal reenviado é medida para discriminar entre diferentes alvos e o intervalo de tempo entre os sinais transmitido e refletido determina a distância ao alvo (Fonseca & Fernandes, 2004 [1]).</p>
+
+<br />
+
+<h3>Aquisição da Informação</h3>
+
+<p>O sistema RADAR consiste essencialmente num transmissor, um recetor, uma antena e um sistema eletrónico de processamento e registo de dados. O emissor gera curtos impulsos sucessivos de microondas, a intervalos regulares, que são focados pela antena num feixe. O feixe RADAR ilumina a superfície terrestre obliquamente (Figura 2).</p>
+
+<div class="post-img">
+    <a href="http://qgis.pt/blog/images/posts/2_sistemas_radar.png" rel="prettyPhoto" title="">
+        <img class="img-responsive thumbnail" src="http://qgis.pt/blog/images/posts/2_sistemas_radar.png" width="500"  alt="Figura 2 - Sistemas de obtenção de imagens do sistema RADAR (Sabins, 1997 [2]).">
+    </a>
+</div>
+
+<p>A antena recebe uma porção da energia transmitida, retrorefletida por vários objetos. Medindo o intervalo de tempo entre o envio de um impulso e a receção do eco retrorefletido por diferentes alvos, pode determinar-se a sua distância relativamente ao sistema de RADAR e, consequentemente, a sua posição. Conforme a plataforma se desloca na sua trajetória, registando e processando os sinais retrorefletidos, é constituída uma imagem bidimensional da superfície (Fonseca & Fernandes, 2004 [1])</p>
+
+<p>A intensidade do sinal recebido pela antena varia em função do tipo de mecanismo de retroreflexão, e este depende do tipo de superfície que recebe o sinal proveniente da antena. Uma superfície suave, como um corpo de água, dá origem a um sinal de baixa intensidade; uma superfície rugosa dá origem a um sinal de intensidade média a elevada; uma esquina ou canto (comum em zonas urbanas) dá origem a um sinal de intensidade muito elevada; a vegetação dá origem a sinais de intensidade média, com grande variabilidade espacial (Fonseca & Fernandes, 2004 [1]). A figura 3 mostra estes mecanismos de retroreflexão e a 4 apresenta a resposta do terreno a um impulso de RADAR.</p>
+
+<div class="post-img">
+    <a href="http://qgis.pt/blog/images/posts/3_mecanismos_retroflexao.png" rel="prettyPhoto" title="">
+        <img class="img-responsive thumbnail" src="http://qgis.pt/blog/images/posts/3_mecanismos_retroflexao.png" width="500"  alt="Figura 3 - Mecanismos de retroreflexão em função da superfície refletora (Fonseca & Fernandes, 2004 [1]).">
+    </a>
+</div>
+
+<div class="post-img">
+    <a href="http://qgis.pt/blog/images/posts/4_resposta_do_terreno.png" rel="prettyPhoto" title="">
+        <img class="img-responsive thumbnail" src="http://qgis.pt/blog/images/posts/4_resposta_do_terreno.png" width="500"  alt="Figura 4 - Resposta do terreno a um impulso de microondas (Sabins, 1997 [2]).">
+    </a>
+</div>
+
+<p>A zona do espectro eletromagnético correspondente às microondas é muito larga, existindo várias bandas às quais foram atribuídas letras de código (Figura 5): bandas Ka, K, Ku, bandas muito curtas, usadas nos radares mais antigos; banda X, usada em sistemas militares de reconhecimento e cartografia; banda C, utilizada em sistemas como o AirSAR da NASA, o ERS-1, ERS-2 e o Sentinel-1 da ESA e o RADARSAT da Agência Espacial Canadiana; bandas S e L, utilizadas no satélite SEASAT da NASA, no JERS-1 da Agência Espacial Japonesa e no ALMAZ, da ex-URSS; a banda P, banda larga utilizada nos sistemas experimentais aerotransportados da NASA (Fonseca & Fernandes, 2004 [1]).</p>
+
+<div class="post-img">
+    <a href="http://qgis.pt/blog/images/posts/5_comprimentos_onda_radar.png" rel="prettyPhoto" title="">
+        <img class="img-responsive thumbnail" src="http://qgis.pt/blog/images/posts/5_comprimentos_onda_radar.png" width="500"  alt="Figura 5 - Comprimentos de onda e frequências usados em Deteção Remota por RADAR. Entre parêntesis estão os comprimentos de onda mais comuns (Sabins, 1997 [2]).">
+    </a>
+</div>
+
+<p>A polarização do sinal (orientação do campo elétrico) é importante no processo de aquisição de imagens de RADAR. Os impulsos de energia eletromagnética vibram em todas as direções. Em Deteção Remota por RADAR filtram-se os impulsos para que a vibração seja feita num único plano.</p>
+
+<p>Os sistemas mais antigos apenas permitiam um modo de polarização (ou vertical ou horizontal). No entanto, para aumentar o conteúdo de informação dos sinais de RADAR, os novos sistemas possuem polarização múltipla, como é o caso do Sentinel-1 da ESA, havendo então 4 combinações possíveis de radiação transmitida e refletida:</p>
+
+<ul>
+    <li>HH: para transmissão horizontal e receção horizontal;</li>
+    <li>VV: para transmissão vertical e receção vertical;</li>
+    <li>HV: para transmissão horizontal e receção vertical (cruzada);</li>
+    <li>VH: para transmissão vertical e receção horizontal (cruzada).</li>
+</ul>
+
+<br />
+
+<h3>Geometria de Aquisição das Imagens de RADAR</h3>
+
+<p>A geometria de aquisição é muito diferente da dos sistemas óticos.</p>
+
+<div class="post-img">
+    <a href="http://qgis.pt/blog/images/posts/6_geometria_aquisicao_radar.png" rel="prettyPhoto" title="">
+        <img class="img-responsive thumbnail" src="http://qgis.pt/blog/images/posts/6_geometria_aquisicao_radar.png" width="500"  alt="Figura 6 - Geometria de aquisição da imagem de RADAR (Fonseca & Fernandes, 2004 [1]).">
+    </a>
+</div>
+
+<p>A plataforma progride na trajetória de voo, com o nadir a definir o traço da órbita na superfície terrestre. O feixe de microondas é transmitido obliquamente, num ângulo perpendicular à direção de voo, iluminando uma faixa afastada do nadir. O alcance refere-se à dimensão, à largura da faixa, perpendicular à direção de voo, enquanto o azimute se refere à dimensão, ao longo da faixa, paralela à direção de voo. A porção da faixa da imagem mais próxima do traço nadiral da trajetória da plataforma designa-se por alcance próximo, enquanto que a parte da faixa mais afastada do nadir se designa por alcance afastado (Fonseca & Fernandes, 2004 [1]).</p>
+
+<p>Esta geometria de aquisição provoca distorções geométricas nas imagens. Essas distorções estão relacionadas com a geometria lateral de aquisição das imagens e com o facto do RADAR ser, essencialmente, um dispositivo de medição de distâncias. Existem, portanto, diversos tipos de distorções (de escala, encurtamento, cavalgamento, efeitos de sombra, etc.) que é necessário corrigir em fase de processamento das imagens.</p>
+
+<br />
+
+<h3>Vantagens do RADAR face aos Detetores Óticos</h3>
+
+<p>O RADAR apresenta algumas características que o colocam em destaque sobre os detetores óticos, das quais se destacam:</p>
+
+<ul>
+    <li>a interação da radiação com as nuvens ou radiação é reduzida ou mesmo anulada, devido ao elevado comprimento de onda;</li>
+    <li>enquanto a refletância nas imagens obtidas por detetores óticos está relacionada com as propriedades moleculares dos objetos, as imagens de RADAR dependem de características macroscópicas da superfície como: rugosidade, propriedades dielétricas (relacionadas com o teor de humidade), características geométricas das áreas urbanas, características estruturais da vegetação, orientação das estruturas relativamente à direção de visão do feixe, etc.;</li>
+    <li>as imagens têm uma boa resolução espacial, são obtidas sob quaisquer condições meteorológicas, de dia ou de noite e independentemente das condições de iluminação; estas características fazem com que as imagens de RADAR sejam de grande utilidade para a monitorização da superfície em áreas de grande nebulosidade.</li>
+</ul>
+
+<p>Das aplicações mais comuns, destacam-se:</p>
+
+<ul>
+    <li>altimetria e topografia;</li>
+    <li>agricultura: monitorização de culturas, estimativas de produção, etc.;</li>
+    <li>controlo de tráfego e poluição marítimas (por exemplo, derrames de petróleo);</li>
+    <li>aplicações militares;</li>
+    <li>produção de cartas temáticas: geológicas, ocupação do solo, etc.;</li>
+    <li>cartografia de zonas húmidas;</li>
+    <li>monitorização de calotes polares, deteção e monitorização de icebergs, etc.;</li>
+    <li>monitorização de cheias e inundações;</li>
+    <li>monitorização da deformação da crusta terrestre, decorrente de fenómenos tectónicos (atividade sísmica e vulcânica) ou outros (subsidência causada pela sobre-exploração de georrecursos).</li>
+</ul>
+
+<br />
+
+<h3>Aquisição de Dados Radar</h3>
+
+<p>Tal como já foi referido para os dados óticos, o acesso a imagens de RADAR não esteve, durante muitos anos, ao alcance de todos, atendendo aos elevados custos e à necessidade de possuir conhecimentos e software específico para o seu processamento e interpretação.</p>
+
+<p>Contudo, numa parceria entre a Comissão Europeia e a Agência Espacial Europeia (ESA), foi planeado e desenvolvido o programa Copernicus, do qual fazem parte 6 missões Sentinel, disponibilizando imagens de diversas regiões do espectro eletromagnético, de forma aberta e gratuita, sem interrupções ou hiatos. Dessas 6 missões, destaca-se a missão Sentinel-1, constituída por uma constelação de 2 satélites (Sentinel-1A e Sentinel-1B) que usam sensores de RADAR, com o objetivo de monitorizar a Terra - topografia, geologia, catástrofes naturais e humanitárias, calotes polares e sua dinâmica, floresta, água e solos, etc.</p>
+
+<p>Assim, a missão Sentinel-1 constitui-se como uma fonte de dados de RADAR, na banda C da região das microondas, fornecendo informação sob quaisquer condições atmosféricas, de dia e de noite, com cobertura global e alta resolução espacial e temporal.</p>
+
+<p>O Sentinel-1 poderá obter imagens, a intervalos regulares, de todas as massas continentais e oceânicas, zonas costeiras, assim como das rotas de navegação marítima, em águas europeias, com elevada resolução.</p>
+
+<p>O Radar de Abertura Sintética (Synthetic Aperture Radar - SAR) do Sentinel-1 permite adquirir dados em 4 modos distintos (mantém-se a descrição original, para evitar erros de tradução) <a href="https://sentinels.copernicus.eu/web/sentinel/user-guides/sentinel-1-sar/overview" target="_blank">[3]</a>:</p>
+
+<div class="post-img">
+    <a href="http://qgis.pt/blog/images/posts/7_modos_aquisicao_sentinel-1.jpg" rel="prettyPhoto" title="">
+        <img class="img-responsive thumbnail" src="http://qgis.pt/blog/images/posts/7_modos_aquisicao_sentinel-1.jpg" width="500"  alt="Figura 7 - Modos de aquisição do Sentinel-1 [4].">
+    </a>
+</div>
+
+<ul>
+    <li><i>Stripmap (SM) - (80 km Swath, 5 x 5 m spatial resolution) - A standard SAR stripmap imaging mode where the ground swath is illuminated with a continuous sequence of pulses, while the antenna beam is pointing to a fixed azimuth and elevation angle;</i></li>
+    <li><i>Interferometric Wide swath (IW) - (250 km Swath, 5x20 m spatial resolution) - Data is acquired in three swaths using the Terrain Observation with Progressive Scanning SAR (TOPSAR) imaging technique. In IW mode, bursts are synchronised from pass to pass to ensure the alignment of interferometric pairs. IW is Sentinel-1&#8217;s primary operational mode over land;</i></li>
+    <li><i>Extra Wide swath (EW) - (400 km Swath, 25 x 100 m spatial resolution) - Data is acquired in five swaths using the TOPSAR imaging technique. EW mode provides very large swath coverage at the expense of spatial resolution;</i></li>
+    <li><i>Wave (WV) - (20 km x 20 km, 5 x 20 m spatial resolution) - Data is acquired in small stripmap scenes called &#8220;vignettes&#8221;, situated at regular intervals of 100 km along track. The vignettes are acquired by alternating, acquiring one vignette at a near range incidence angle while the next vignette is acquired at a far range incidence angle. WV is Sentinel-1&#8217;s operational mode over open ocean.</i></li>
+</ul>
+
+<p>Os produtos Sentinel-1, distribuídos pela ESA, possuem os seguintes níveis de processamento:</p>
+
+<div class="post-img">
+    <a href="http://qgis.pt/blog/images/posts/8_niveis_processamento_sentinel_1.png" rel="prettyPhoto" title="">
+        <img class="img-responsive thumbnail" src="http://qgis.pt/blog/images/posts/8_niveis_processamento_sentinel_1.png" width="500"  alt="Figura 8 - Níveis de processamento das imagens Sentinel-1, em função do modo de aquisição [5].">
+    </a>
+</div>
+
+<ul>
+    <li><i>Level-0 Raw data (for specific usage);</i></li>
+    <li><i>Level-1 Processed Single Look Complex (SLC) data comprising complex imagery with amplitude and phase (systematic distribution limited to specific relevant areas);</i></li>
+    <li><i>Level-1 Ground Range Detected (GRD) Geo-referenced data with multi-looked intensity only (systematically distributed);</i></li>
+    <li><i>Level-2 Ocean (OCN) data for retrieved geophysical parameters of the ocean (systematically distributed).</i></li>
+</ul>
+
+<p>As imagens Sentinel-1 possuem um nome com o seguinte significado:</p>
+
+<div class="post-img">
+    <a href="http://qgis.pt/blog/images/posts/9_nome_imagens_sentinel_1.jpg" rel="prettyPhoto" title="">
+        <img class="img-responsive thumbnail" src="http://qgis.pt/blog/images/posts/9_nome_imagens_sentinel_1.jpg" width="500"  alt="Figura 9 - Nome das imagens Sentinel-1 [6].">
+    </a>
+</div>
+
+<p>Informações mais detalhadas acerca deste satélite e dos seus produtos podem ser obtidas no Sentinel-1 User Handbook <a href="https://sentinels.copernicus.eu/documents/247904/685163/Sentinel-1_User_Handbook" target="_blank">[7]</a>.</p>
+
+<br />
+
+<h3>Processamento de Dados RADAR no QGIS</h3>
+
+<p>O QGIS, por si só, não possui ferramentas capazes de processar dados de RADAR, visto tratar-se de uma área específica da Deteção Remota. No entanto, à semelhança do que acontece em muitas outras vertentes, aproveitando a facilidade e as capacidades de integração disponibilizadas pelo QGIS, são já vários os plugins que permitem processar dados de RADAR, a partir da sua interface. De entre eles, destaca-se o plugin <b>Processing BEAM and SNAP algorithm Provider</b>, desenvolvido no âmbito do Water Observation Information System (WOIS), Projeto TIGER-NET, financiado pela Agência Espacial Europeia como parte de uma iniciativa mais alargada denominada TIGER, que pretende promover a utilização de dados de Observação da Terra para a melhoria da gestão integrada da água em África (Integrated Water Resources Management - IWRM) <a href="http://www.tiger-net.org" target="_blank">[8]</a>.</p>
+
+<p>Este plugin faz a ponte entre o QGIS e o SNAP, um software Open Source de Processamento Digital de Imagem, da Agência Espacial Europeia. A integração processa-se de forma análoga ao GRASS, ao SAGA ou ao OTB, isto é, depois de instalado, as ferramentas surgem integradas no Processing, o que permite, não só, correr as ferramentas do SNAP a partir do QGIS, como também corrê-las em lote (batch) e inclusive integrar essas ferramentas em modelos gráficos, que depois são executados de modo sequencial, tal como acontece com os modelos do Processing.</p>
+
+<br />
+
+<h3>Preparação do Ambiente</h3>
+
+<p>Antes de se instalar o plugin propriamente dito, começam por se instalar os pré-requisitos, neste caso, a última versão do SNAP (atualmente, a v5.0). Na página oficial do software <a href="http://step.esa.int/main/download" target="_blank">[9]</a>, existem binários para os diferentes Sistemas Operativos (Linux, Windows e MacOS). O ideal, caso não haja limitações de espaço em disco, será optar pelo instalador completo “All Toolboxes”, que inclui as ferramentas para processamento de dados das 3 missões Sentinel, e ainda das missões SMOS e PROBA-V.</p>
+
+<p>Durante a instalação do SNAP, vai ser necessário ativar a interface snappy (SNAP Python module), que irá permitir “chamar” o SNAP a partir do QGIS e correr os algoritmos de forma transparente para o utilizador. Nota: no caso de estarem a instalar a versão de 64 bits do SNAP no Windows, a versão do Python terá também de ser de 64 bits. Caso não tenham essa versão instalada, basta descarregar o instalador adequado a partir do site do Python <a href="https://www.python.org/downloads/windows" target="_blank">[10]</a>.</p>
+
+<p>Depois disso, basta correr o assistente de instalação do SNAP.</p>
+
+<div class="post-img">
+    <a href="http://qgis.pt/blog/images/posts/10_snap_instalation_wizard.png" rel="prettyPhoto" title="">
+        <img class="img-responsive thumbnail" src="http://qgis.pt/blog/images/posts/10_snap_instalation_wizard.png" width="500"  alt="Figura 10 - Assistente de instalação do SNAP.">
+    </a>
+</div>
+
+<div class="post-img">
+    <a href="http://qgis.pt/blog/images/posts/11_snap_snappy.png" rel="prettyPhoto" title="">
+        <img class="img-responsive thumbnail" src="http://qgis.pt/blog/images/posts/11_snap_snappy.png" width="500"  alt="Figura 11 - Ativação da interface snappy (SNAP Python module).">
+    </a>
+</div>
+
+<div class="post-img">
+    <a href="http://qgis.pt/blog/images/posts/12_snap_instalation_wizard.png" rel="prettyPhoto" title="">
+        <img class="img-responsive thumbnail" src="http://qgis.pt/blog/images/posts/12_snap_instalation_wizard.png" width="500"  alt="Figura 12 - Conclusão da instalação do SNAP.">
+    </a>
+</div>
+
+<p>Ao executar o SNAP pela primeira vez, é feita uma verificação de atualizações disponíveis, devendo essas atualizações ser instaladas e o SNAP reiniciado.</p>
+
+<p>Após a instalação do SNAP e da configuração da interface snappy, passa-se à instalação do plugin <b>Processing BEAM and SNAP algorithm Provider</b>, já no QGIS. O processo é muito simples, através do Gestor de Plugins do QGIS:</p>
+
+<div class="post-img">
+    <a href="http://qgis.pt/blog/images/posts/13_gestor_plugins_qgis.png" rel="prettyPhoto" title="">
+        <img class="img-responsive thumbnail" src="http://qgis.pt/blog/images/posts/13_gestor_plugins_qgis.png" width="500"  alt="Figura 13 - Instalação, a partir do Gestor de Plugins do QGIS.">
+    </a>
+</div>
+
+<p>Por fim, no menu Processing -> Options -> Providers -> SNAP Toolbox, ativa-se a ferramenta, as diversas toolboxes e define-se o caminho para a pasta de instalação do SNAP, que irá depender do Sistema Operativo utilizado e da opção selecionada no assistente de instalação.</p>
+
+<div class="post-img">
+    <a href="http://qgis.pt/blog/images/posts/14_plugin_config_linux_win.png" rel="prettyPhoto" title="">
+        <img class="img-responsive thumbnail" src="http://qgis.pt/blog/images/posts/14_plugin_config_linux_win.png" width="500"  alt="Figura 14 - Exemplos de configuração do plugin em Linux e Windows.">
+    </a>
+</div>
+
+<p>Para concluir, deve reiniciar-se o QGIS, ficando o plugin pronto a utilizar.</p>
+
+<div class="post-img">
+    <a href="http://qgis.pt/blog/images/posts/15_plugin_processing.png" rel="prettyPhoto" title="">
+        <img class="img-responsive thumbnail" src="http://qgis.pt/blog/images/posts/15_plugin_processing.png" width="500"  alt="Figura 15 - Processing com as ferramentas do plugin Processing BEAM and SNAP algorithm Provider.">
+    </a>
+</div>
+
+<br />
+
+<h3>Cartografia [quase-automática] de Cheias e Inundações no QGIS, com imagens Sentinel-1</h3>
+
+<p>A cartografia de cheias e inundações é, como se viu anteriormente, uma entre as inúmeras aplicações das imagens de RADAR. Para exemplificar o uso e processamento de imagens Sentinel-1 no QGIS, irá fazer-se uma avaliação das áreas inundadas no Baixo Mondego, em Janeiro de 2016 <a href="http://sicnoticias.sapo.pt/pais/2016-01-12-Baixo-Mondego-recupera-das-cheias-duas-estradas-continuam-cortadas" target="_blank">[11]</a>.</p>
+
+<p>A imagem seguinte apresenta um esquema da metodologia que irá ser utilizada para a identificação das áreas inundadas.</p>
+
+<div class="post-img">
+    <a href="http://qgis.pt/blog/images/posts/16_modelo_cheias_inundacoes.png" rel="prettyPhoto" title="">
+        <img class="img-responsive thumbnail" src="http://qgis.pt/blog/images/posts/16_modelo_cheias_inundacoes.png" width="500"  alt="Figura 16 - Modelo de processamento de imagens Sentinel-1, para a cartografia de áreas inundadas.">
+    </a>
+</div>
+
+<p>A metodologia apresentada baseia-se na deteção de alterações (change detection) entre duas imagens do mesmo local, uma obtida antes do evento hidrológico e outra, de preferência, no pico do evento, embora isso esteja dependente da data de passagem do satélite. Esta metodologia segue, genericamente, os procedimentos descritos no âmbito do Projeto RASOR <a href="https://github.com/altamiraInformation/rasor-floodMap" target="_blank">[12]</a>.</p>
+
+<p>De forma resumida, o modelo executa os seguintes processos:</p>
+
+<ol>
+	<li>Importação das duas imagens;</li>
+    <li>Aplicação das informações precisas referentes à posição e velocidade do satélite, no momento da aquisição;</li>
+    <li>Calibração Radiométrica dos pixéis das imagens, na polarização VV;</li>
+    <li>Recorte das imagens pela área de interesse, escolhida pelo utilizador (este passo é importante, atendendo à dimensão das imagens, permitindo reduzir o tempo de processamento e limitando as operações à região de interesse);</li>
+    <li>Co-registo das imagens, que inclui a união das bandas de polarização VV de cada uma das imagens e, através de uma correlação cruzada, o alinhamento preciso dos pixéis, assegurando que representam exatamente a mesma parcela de terreno, para que possam ser, posteriormente, comparados;</li>
+    <li>Correção geométrica (ortorretificação) das imagens, utilizando um Modelo Digital do Elevação, para passar da geometria do satélite para a geometria do terreno;</li>
+    <li>Cálculo de índices entre as duas imagens corrigidas (diferença, rácio, imagem pós-evento);</li>
+    <li>Criação de uma imagem compósita (RGB), com as bandas resultantes do cálculo dos índices anteriores;</li>
+    <li>Aplicação de um filtro para redução do ruído característico das imagens de RADAR, denominado speckle;</li>
+    <li>Aplicação de uma classificação não-supervisionada (análise de clusters), que vai originar uma imagem com 5 classes, uma das quais representará as áreas inundadas.</li>
+</ol>
+
+<p>Como o modelo é de uso global, foi submetido para integração <a href="https://github.com/DHI-GRAS/processing_gpf/pull/35" target="_blank">[13]</a> no plugin, encontrando-se já à disposição, por defeito, de quem instala o <b>Processing BEAM and SNAP algorithm Provider</b> no QGIS.</p>
+
+<br />
+
+<h3>Download das imagens Sentinel-1</h3>
+
+<p>As imagens das diversas missões Sentinel encontram-se à disposição dos utilizadores no site “Sentinels Scientific Data Hub” <a href="https://scihub.copernicus.eu/dhus/#/home" target="_blank">[14]</a>, bastando, para o efeito, fazer o registo (sign up) gratuito na plataforma.</p>
+
+<p>De seguida, faz-se o login e pesquisam-se os dados pretendidos, selecionando a área de interesse, o intervalo de datas e o tipo de imagens.</p>
+
+<div class="post-img">
+    <a href="http://qgis.pt/blog/images/posts/17_pesquisa_imagens_sentinel.png" rel="prettyPhoto" title="">
+        <img class="img-responsive thumbnail" src="http://qgis.pt/blog/images/posts/17_pesquisa_imagens_sentinel.png" width="500"  alt="Figura 17 - Pesquisa de imagens Sentinel-1, entre dezembro de 2015 e janeiro de 2016, na região do Baixo Mondego.">
+    </a>
+</div>
+
+<p>Para o presente exercício, devem descarregar-se as seguintes imagens:</p>
+
+<pre>
+    Mission: Sentinel-1; Instrument: SAR-C; Sensing Date: 2015-12-09T18:27:03.639Z; Size: 1.62 GB
+    Nome: S1A_IW_GRDH_1SDV_20151209T182703_20151209T182728_008969_00CDAE_7536
+</pre>
+
+<pre>
+    Mission: Sentinel-1; Instrument: SAR-C; Sensing Date: 2016-01-14T18:27:02.129Z; Size: 1.62 GB
+    Nome: S1A_IW_GRDH_1SDV_20160114T182702_20160114T182727_009494_00DC7A_23D5
+</pre>
+
+<div class="post-img">
+    <a href="http://qgis.pt/blog/images/posts/18_download_imagem_sentinel_1.png" rel="prettyPhoto" title="">
+        <img class="img-responsive thumbnail" src="http://qgis.pt/blog/images/posts/18_download_imagem_sentinel_1.png" width="500"  alt="Figura 18 - Download da imagem Sentinel-1 de 2016-01-14.">
+    </a>
+</div>
+
+<p>Os dados são descarregados em ficheiros comprimidos, do tipo ZIP, e assim devem ser mantidos.</p>
+
+<br />
+
+<h3>Execução do Modelo</h3>
+
+<p>Coloca-se o QGIS com o Sistema de Referência EPSG: 4326 (WGS84 Lat/Lon): Project Properties -> CRS -> Enable ‘on the fly’ CRS transformation (OTF). Esta configuração é importante para, mais adiante, passar as coordenadas da área de interesse ao modelo, neste sistema de referência.</p>
+
+<div class="post-img">
+    <a href="http://qgis.pt/blog/images/posts/19_configuracao_crs_wgs84.png" rel="prettyPhoto" title="">
+        <img class="img-responsive thumbnail" src="http://qgis.pt/blog/images/posts/19_configuracao_crs_wgs84.png" width="500"  alt="Figura 19 - Configuração do CRS do QGIS em EPSG: 4326.">
+    </a>
+</div>
+
+<p>De seguida, por exemplo com o plugin QuickMapServices, carrega-se uma imagem de base, como a Google Hybrid, centra-se a zona entre a Figueira da Foz e a Barragem da Aguieira no canvas e executa-se o modelo S1 Flood Analysis, disponível em Processing -> SNAP Toolbox -> S1 Graphs.</p>
+
+<div class="post-img">
+    <a href="http://qgis.pt/blog/images/posts/20_interface_modelo_flood_analysis.png" rel="prettyPhoto" title="">
+        <img class="img-responsive thumbnail" src="http://qgis.pt/blog/images/posts/20_interface_modelo_flood_analysis.png" width="500"  alt="Figura 20 - Interface do modelo S1 Flood Analysis.">
+    </a>
+</div>
+
+<p>No modelo, apenas é necessário indicar o caminho para os ficheiros ZIP, da imagem de referência (slave) e da imagem do pico da inundação (master), no caso concreto, a imagem de 9 de dezembro de 2015 e a imagem de 14 de janeiro de 2016, respetivamente.</p>
+
+<p>A data das imagens é muito importante, uma vez que vai ser necessário substituir [manualmente], nas fórmulas</p>
+
+<ul>
+    <li>Difference:
+        <pre>
+            log(abs(Sigma0_VV_mst_ddMMMYYYY – Sigma0_VV_slv1_ddMMMYYYY))
+        </pre>
+    </li>
+    <li>Flood:
+        <pre>
+            Sigma0_VV_mst_ddMMMYYYY
+        </pre>
+    </li>
+    <li>Ratio:
+        <pre>
+            log(abs(Sigma0_VV_mst_ddMMMYYYY / Sigma0_VV_slv1_ddMMMYYYY))
+        </pre>
+    </li>
+</ul>
+
+<p>os ddMMMYYYY, pelas datas das imagens de referência (slv1) e do pico da inundação (mst), na forma DiaMêsAno, sendo o dia indicado sempre com dois algarismos e o mês pelas três primeiras letras do mês, em inglês (Jan, Feb, Mar, Apr, May, Jun, Jul, Aug, Sep, Oct, Nov, Dec).</p>
+
+<p>Assim, atendendo a que as imagens são de 9 de dezembro de 2015 e de 14 de janeiro de 2016, as fórmulas ficarão:</p>
+
+<ul>
+    <li>Difference:
+        <pre>
+            log(abs(Sigma0_VV_mst_14Jan2016 – Sigma0_VV_slv1_09Dec2015))
+        </pre>
+    </li>
+    <li>Flood:
+        <pre>
+            Sigma0_VV_mst_14Jan2016
+        </pre>
+    </li>
+    <li>Ratio:
+        <pre>
+            log(abs(Sigma0_VV_mst_14Jan2016 / Sigma0_VV_slv1_09Dec2015))
+        </pre>
+    </li>
+</ul>
+
+<p>No campo Extent coloca-se a extensão geográfica (xmin, xmax, ymin, ymax) da área a avaliar, em WGS84 Lat/Lon. Esta poderá ser obtida a partir do canvas do QGIS (Select extent on canvas).</p>
+
+<p>Dependendo da capacidade do computador, a seleção de áreas muito grandes poderá conduzir a tempos de processamento de várias horas ou, em caso de máquinas com pouca memória RAM, a crashes do modelo. Por esse motivo, deve começar por se testar o modelo em áreas geográficas pequenas e utilizar um computador com, pelo menos, 8 GB de RAM.</p>
+
+<p>Finalmente, escolhe-se a pasta e o nome para o ficheiro de saída, e executa-se o modelo.</p>
+
+<div class="post-img">
+    <a href="http://qgis.pt/blog/images/posts/21_interface_modelo_flood_analysis_2.png" rel="prettyPhoto" title="">
+        <img class="img-responsive thumbnail" src="http://qgis.pt/blog/images/posts/21_interface_modelo_flood_analysis_2.png" width="500"  alt="Figura 21 - Opções do modelo.">
+    </a>
+</div>
+
+<p>No exemplo, selecionou-se uma área entre a Figueira da Foz e a Barragem da Aguieira, num computador com 16 GB de RAM e um processador i7-6700HQ, tendo o processamento demorado cerca de 1h15.</p>
+
+<p>O resultado da execução do modelo é um raster inteiro de 8 bits, com o 255 como valor null, e com 5 classes (0, 1, 2, 3 e 4), cada uma agregando pixéis com características semelhantes. Nas propriedades desse raster, no QGIS, coloca-se o 255 como valor transparente (Additional no data value), e aplica-se uma simbologia &#8216;Singleband pseudocolor&#8217;, para distinguir os pixéis das diferentes classes.</p>
+
+<div class="post-img">
+    <a href="http://qgis.pt/blog/images/posts/22_resultado_do_modelo.png" rel="prettyPhoto" title="">
+        <img class="img-responsive thumbnail" src="http://qgis.pt/blog/images/posts/22_resultado_do_modelo.png" width="500"  alt="Figura 22 - Resultado do modelo.">
+    </a>
+</div>
+
+<p>Facilmente se percebe que as zonas a vermelho (classe 4) serão zonas inundadas, enquanto a azul (classe 2) surgem os leitos habituais dos cursos de água, assim como alguns corpos de água interiores.</p>
+
+<div class="post-img">
+    <a href="http://qgis.pt/blog/images/posts/23_resultado_do_modelo.png" rel="prettyPhoto" title="">
+        <img class="img-responsive thumbnail" src="http://qgis.pt/blog/images/posts/23_resultado_do_modelo.png" width="500"  alt="Figura 23 - Resultado do modelo.">
+    </a>
+</div>
+
+<div class="post-img">
+    <a href="http://qgis.pt/blog/images/posts/24_resultado_do_modelo.png" rel="prettyPhoto" title="">
+        <img class="img-responsive thumbnail" src="http://qgis.pt/blog/images/posts/24_resultado_do_modelo.png" width="500"  alt="Figura 24 - Resultado do modelo.">
+    </a>
+</div>
+
+<p>Pode reduzir-se o número de pixéis isolados, correndo a ferramenta GDAL Sieve <a href="http://www.gdal.org/gdal_sieve.html" target="_blank">[15]</a>, disponível no Processing.</p>
+
+<div class="post-img">
+    <a href="http://qgis.pt/blog/images/posts/25_resultado_do_modelo_gdal_sieve.png" rel="prettyPhoto" title="">
+        <img class="img-responsive thumbnail" src="http://qgis.pt/blog/images/posts/25_resultado_do_modelo_gdal_sieve.png" width="500"  alt="Figura 25 - Resultado do modelo, após uma remoção de pixéis isolados.">
+    </a>
+</div>
+
+<p>Por fim, com a ferramenta r.to.vect <a href="https://grass.osgeo.org/grass72/manuals/r.to.vect.html" target="_blank">[16]</a> do GRASS (também disponível no Processing), pode converter-se o ficheiro raster para vetor. Após mais uma limpeza de polígonos espúrios, o resultado foi o seguinte:</p>
+
+<div class="post-img">
+    <a href="http://qgis.pt/blog/images/posts/26_resultado_final.jpg" rel="prettyPhoto" title="">
+        <img class="img-responsive thumbnail" src="http://qgis.pt/blog/images/posts/26_resultado_final.jpg" width="500"  alt="Figura 26 - Resultado final do modelo, em formato vetorial.">
+    </a>
+</div>
+
+<br />
+
+<h3>Conclusão</h3>
+
+<p>Seria interessante dispor de dados de campo relativos à inundação de Janeiro de 2016, para validar os resultados obtidos e para determinar o nível de confiança do modelo utilizado.</p>
+
+<p>Os parâmetros do modelo podem ser facilmente alterados, para testar valores distintos, assim como, em vez da classificação não-supervisionada, poderá ser usada uma classificação supervisionada, com áreas de treino em locais que se saiba terem sido afetados pelo evento. Desse modo, os resultados poderão ser mais precisos.</p>
+
+<p>De qualquer forma, o modelo apresentado permite, muito rapidamente, conhecer o território e as populações afetadas por cheias e inundações, podendo ainda, com o Modelo Digital de Elevação, conhecer a altura da coluna de água em cada um dos locais, sendo então possível confrontar esses dados de observação por satélite, com caráter sinóptico, com os resultados de modelos hidrológicos e hidráulicos, e com dados de observação de campo.</p>
+
+<p>Assim, pode constatar-se que o QGIS, sendo um software completo de Sistemas de Informação Geográfica, que inclui soluções Desktop, Web (Servidor e Cliente) e de campo <a href="http://www.qgis.org/en/site/about/features.html" target="_blank">[17]</a>, na vertente Desktop vai bem mais além das capacidades habituais de um software de SIG, possuindo valências avançadas no domínio do Processamento Digital de Imagens de sensores óticos e de sensores de RADAR, num ambiente bastante amigável e integrando todo esse ecossistema que pode ser utilizado em simultâneo, o que permite, por exemplo, no final deste processamento, disponibilizar rapidamente um serviço WMS com as áreas potencialmente inundadas, para utilização por outros serviços e entidades, em diferentes dispositivos, em gabinete ou no campo.</p>
+
+<br />
+
+<h3>Referências</h3>
+
+<p>[0] <a href="http://www.seos-project.eu/modules/remotesensing/remotesensing-c01-p01.html" target="_blank">http://www.seos-project.eu/modules/remotesensing/remotesensing-c01-p01.html</a></p>
+<p>[1] Fonseca, Ana & Fernandes, João - Detecção Remota. 1a Edição. Lisboa: Lidel, 2004.</p>
+<p>[2] Sabins, Floyd F. - Remote Sensing - Principles and Interpretation. 3rd Edition. New York: W. H. Freeman and Company, 1997.</p>
+<p>[3] <a href="https://sentinels.copernicus.eu/web/sentinel/user-guides/sentinel-1-sar/overview" target="_blank">https://sentinels.copernicus.eu/web/sentinel/user-guides/sentinel-1-sar/overview</a></p>
+<p>[4] <a href="https://sentinels.copernicus.eu/web/sentinel/user-guides/sentinel-1-sar/acquisition-modes" target="_blank">https://sentinels.copernicus.eu/web/sentinel/user-guides/sentinel-1-sar/acquisition-modes</a></p>
+<p>[5] <a href="https://sentinels.copernicus.eu/web/sentinel/user-guides/sentinel-1-sar/product-types-processing-levels" target="_blank">https://sentinels.copernicus.eu/web/sentinel/user-guides/sentinel-1-sar/product-types-processing-levels</a></p>
+<p>[6] <a href="https://sentinels.copernicus.eu/web/sentinel/user-guides/sentinel-1-sar/naming-conventions" target="_blank">https://sentinels.copernicus.eu/web/sentinel/user-guides/sentinel-1-sar/naming-conventions</a></p>
+<p>[7] <a href="https://sentinels.copernicus.eu/documents/247904/685163/Sentinel-1_User_Handbook" target="_blank">https://sentinels.copernicus.eu/documents/247904/685163/Sentinel-1_User_Handbook</a></p>
+<p>[8] <a href="http://www.tiger-net.org" target="_blank">http://www.tiger-net.org</a></p>
+<p>[9] <a href="http://step.esa.int/main/download" target="_blank">http://step.esa.int/main/download</a></p>
+<p>[10] <a href="https://www.python.org/downloads/windows" target="_blank">https://www.python.org/downloads/windows</a></p>
+<p>[11] <a href="http://sicnoticias.sapo.pt/pais/2016-01-12-Baixo-Mondego-recupera-das-cheias-duas-estradas-continuam-cortadas" target="_blank">http://sicnoticias.sapo.pt/pais/2016-01-12-Baixo-Mondego-recupera-das-cheias-duas-estradas-continuam-cortadas</a></p>
+<p>[12] <a href="https://github.com/altamiraInformation/rasor-floodMap" target="_blank">https://github.com/altamiraInformation/rasor-floodMap</a></p>
+<p>[13] <a href="https://github.com/DHI-GRAS/processing_gpf/pull/35" target="_blank">https://github.com/DHI-GRAS/processing_gpf/pull/35</a></p>
+<p>[14] <a href="https://scihub.copernicus.eu/dhus/#/home" target="_blank">https://scihub.copernicus.eu/dhus/#/home</a></p>
+<p>[15] <a href="http://www.gdal.org/gdal_sieve.html" target="_blank">http://www.gdal.org/gdal_sieve.html</a></p>
+<p>[16] <a href="https://grass.osgeo.org/grass72/manuals/r.to.vect.html" target="_blank">https://grass.osgeo.org/grass72/manuals/r.to.vect.html</a></p>
+<p>[17] <a href="http://www.qgis.org/en/site/about/features.html" target="_blank">http://www.qgis.org/en/site/about/features.html</a></p>
+<p>Venâncio, Pedro - Aplicação de Dados de Detecção Remota à Cartografia Geológica da Região de Viseu. Coimbra: Departamento de Ciências da Terra da Faculdade de Ciências e Tecnologia da Universidade de Coimbra, 2007. Estágio Científico da Licenciatura em Geologia.</p>
+
+<br />
+<img class="gravatar img-circle" src="http://www.gravatar.com/avatar/8248cd896ad16c4ef53d0558d8e62a18></img>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Deteção Remota Com O QGIS]]></title>
@@ -3036,105 +3498,6 @@ actualização. Mas para algo rápido e simples, as acções Python têm muito p
 
 <br />
 <img class="gravatar img-circle" src="http://www.gravatar.com/avatar/ad2bd7f23b8cd33f2412acdc462b6a13></img>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[2º Encontro De Utilizadores QGIS Portugal]]></title>
-    <link href="http://qgis.pt/2014/06/18/2o-encontro-de-utilizadores-qgis-portugal/"/>
-    <updated>2014-06-18T18:51:00+01:00</updated>
-    <id>http://qgis.pt/2014/06/18/2o-encontro-de-utilizadores-qgis-portugal</id>
-    <content type="html"><![CDATA[<p>O 2º Encontro de Utilizadores QGIS Portugal ocorreu no passado dia 2 de Junho na Faculdade de Ciências e Tecnologia da Universidade de Coimbra e
-<!-- more --> contou com cerca de 140 participantes. Enquanto organizadores achamos que o evento foi um sucesso apesar de se terem verificado algumas situações que poderão
-e deverão ser melhoradas na próxima edição. Fizemos um pedido à comunidade participante do evento que respondesse a um breve questionário para podermos avaliar
-o seu sucesso. Como comunidade aberta e transparente que somos, apresentamos os resultados obtidos através da resposta de 55 participantes do evento.</p>
-
-<div class="post-img">
-    <h3>Estatísticas gerais sobre o encontro</h3>
-    <a href="http://qgis.pt/blog/images/posts/stat_2014_geral.png" rel="prettyPhoto" title="">
-        <img class="img-responsive thumbnail" src="http://qgis.pt/blog/images/posts/stat_2014_geral.png" width="500"  alt="Estatísticas gerais sobre o encontro">
-    </a>
-</div>
-
-<div class="post-img">
-    <h3>Estatísticas sobre os workshops</h3>
-    <a href="http://qgis.pt/blog/images/posts/stat_2014_workshops.png" rel="prettyPhoto" title="">
-        <img class="img-responsive thumbnail" src="http://qgis.pt/blog/images/posts/stat_2014_workshops.png" width="500"  alt="Estatísticas sobre os workshops">
-    </a>
-</div>
-
-<p>Diversos utilizadores sugeriram também que as apresentações ficassem disponíveis <i>online</i>. A organização contactou todos os oradores que prontamente autorizaram a publicação
-das suas apresentações.</p>
-
-<table class="table table-striped">
-    <tr>
-        <th>Apresentação</th>
-        <th>Autor</th>
-    </tr>
-    <tr>
-        <td><a href="http://qgis.pt/presentation/grupo_utilizadores.html" target="_blank">Grupo de Utilizadores QGIS PT - apresentação e objectivos</a></td>
-        <td>Grupo de Utilizadores QGIS</td>
-    </tr>
-    <tr>
-        <td><a href="http://qgis.pt/apresentacoes_qgis2014/faunalia_qgis_day_2014.pdf" target="_blank">QGIS, um caso de sucesso: modelo de desenvolvimento (sustentável)</a></td>
-        <td>Giovanni Manghi, NaturalGIS</td>
-    </tr>
-    <tr>
-        <td><a href="http://qgis.pt/apresentacoes_qgis2014/cmpinhel.pdf" target="_blank">Caso de Estudo: CM de Pinhel</td>
-        <td>Pedro Venâncio</td>
-    </tr>
-    <tr>
-        <td><a href="http://qgis.pt/apresentacoes_qgis2014/mosorio.pdf" target="_blank">Experiências da utilização do QGIS no ensino de Arqueologia na FLUC</a></td>
-        <td>Prof. Marcos Osório (FLUC)</td>
-    </tr>
-    <tr>
-        <td><a href="http://qgis.pt/apresentacoes_qgis2014/cmsabugal.pdf" target="_blank">Caso de Estudo: CM de Sabugal + <a href="http://qgis.pt/apresentacoes_qgis2014/cmsabugal.mp4" target="_blank">video</a></a></td>
-        <td>Telmo Salgado</td>
-    </tr>
-    <tr>
-        <td><a href="http://qgis.pt/apresentacoes_qgis2014/jgaspar.pdf" target="_blank">Traduzir a documentação de QGIS, todos podem contribuir!</a> + <a href="http://qgis.pt/apresentacoes_qgis2014/jgaspar.avi" target="_blank">video</a></td>
-        <td>João Gaspar</td>
-    </tr>
-    <tr>
-        <td><a href="http://qgis.pt/apresentacoes_qgis2014/edia.pdf" target="_blank">Caso de Estudo: EDIA</a></td>
-        <td>Duarte Carreira</td>
-    </tr>
-    <tr>
-        <td><a href="http://qgis.pt/apresentacoes_qgis2014/jag.pdf" target="_blank">Tratamento de rasters de grande dimensão com a biblioteca GDAL e QGIS</a></td>
-        <td>Prof. José Alberto Gonçalves (UP)</td>
-    </tr>
-    <tr>
-        <td><a href="http://qgis.pt/apresentacoes_qgis2014/cmmealhada.pdf" target="_blank">Caso de Estudo: CM Mealhada</a></td>
-        <td>Hugo Fonseca</td>
-    </tr>
-    <tr>
-        <td><a href="http://qgis.pt/apresentacoes_qgis2014/isa.pdf" target="_blank">Experiência de uso do QGIS no ensino no ISA</a></td>
-        <td>Prof. Graça Abrantes (ISA)</td>
-</table>
-<table class="table table-striped">
-    <tr>
-        <th>Workshop</th>
-        <th>Autor</th>
-    </tr>
-    <tr>
-        <td><a href="http://qgis.pt/workshops_qgis2014/ws_introducao_qgis_day_2014.pdf" target="_blank">Introdução ao QGIS e suas funcionalidades</a></td>
-        <td>Giovanni Manghi</td>
-    </tr>
-    <tr>
-        <td><a href="http://qgis.pt/workshops_qgis2014/ws_processing_qgis_day_2014.pdf" target="_blank">Processamento e análise com QGIS</a> + <a href="http://qgis.pt/workshops_qgis2014/workshop_processing_qgis_day_2014.zip" target="_blank">dados</a></td>
-        <td>Pedro Venâncio</td>
-    </tr>
-    <tr>
-        <td><a href="http://qgis.pt/presentation/ws_qgis_server.html" target="_blank">WebGIS e serviços OGC (WMS, WFS, WCS) com QGIS Desktop/Server</a> + <a href="http://qgis.pt/workshops_qgis2014/workshop_server_qgis_day_2014.zip" target="_blank">dados</a></td>
-        <td>Hugo Martins</td>
-    </tr>
-</table>
-
-<p>Não poderíamos deixar de agradecer uma vez mais o apoio dos nossos patrocionadores (Faculdade de Ciências e Tecnologia da Universidade de Coimbra e NaturalGIS) sem os quais teria sido impossível realizar este encontro. Não menos importantes
-foram todos os utilizadores que estiveram presentes e que contribuiram para um dia fantástico de partilha de conhecimentos e <i>networking</i>. E porque nunca é demais realçar os objectivos atingidos, expressamos 
-também a nossa gratidão a todos os que decidiram efectuar um donativo ao projecto QGIS: conseguimos reunir <b>570€</b> que estão neste momento a ser utilizados para o <i>bugfixing</i> da próxima versão do QGIS (2.4)!</p>
-
-<p><b>A todos o nosso obrigado!</b> Contamos com as vossas opiniões, sugestões e colaboração na construção desta comunidade.</p>
 ]]></content>
   </entry>
   
